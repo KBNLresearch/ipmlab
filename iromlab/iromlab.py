@@ -747,10 +747,8 @@ def getConfiguration():
     config.tempDir = findElementText(configElt, './config/tempDir')
     config.secondsToTimeout = findElementText(configElt, './config/secondsToTimeout')
     config.prefixBatch = findElementText(configElt, './config/prefixBatch')
-    config.audioFormat = findElementText(configElt, './config/audioFormat')
     config.reportFormatString = findElementText(configElt, './config/reportFormatString')
     config.isoBusterExe = findElementText(configElt, './config/isoBusterExe')
-    config.dBpowerampConsoleRipExe = findElementText(configElt, './config/dBpowerampConsoleRipExe')
  
     # For below configuration variables, use default value if value cannot be
     # read from config file (this ensures v1 will work with old config files)
@@ -770,13 +768,6 @@ def getConfiguration():
     except:
         pass
     try:
-        if findElementText(configElt, './config/startOnFinalize') == "True":
-            config.startOnFinalize = True
-        else:
-            config.startOnFinalize = False
-    except:
-        pass
-    try:
         if findElementText(configElt, './config/enableSocketAPI') == "True":
             config.enableSocketAPI = True
         else:
@@ -788,33 +779,18 @@ def getConfiguration():
     config.rootDir = os.path.normpath(config.rootDir)
     config.tempDir = os.path.normpath(config.tempDir)
     config.isoBusterExe = os.path.normpath(config.isoBusterExe)
-    config.dBpowerampConsoleRipExe = os.path.normpath(config.dBpowerampConsoleRipExe)
-
-    # Paths to pre-packaged tools
-    config.shntoolExe = os.path.join(toolsDirUser, 'shntool', 'shntool.exe')
-    config.flacExe = os.path.join(toolsDirUser, 'flac', 'win64', 'flac.exe')
-    config.cdInfoExe = os.path.join(toolsDirUser, 'libcdio', 'win64', 'cd-info.exe')
 
     #"""Disable for Linux testing TODO re-enable in production version!!
     # Check if all files and directories exist, and exit if not
     checkDirExists(config.rootDir)
     checkDirExists(config.tempDir)
     checkFileExists(config.isoBusterExe)
-    checkFileExists(config.dBpowerampConsoleRipExe)
-    checkFileExists(config.shntoolExe)
-    checkFileExists(config.flacExe)
-    checkFileExists(config.cdInfoExe)
 
     # Check that cdDriveLetter points to an existing optical drive
     resultGetDrives = cdinfo.getDrives()
     cdDrives = resultGetDrives["drives"]
     if config.cdDriveLetter not in cdDrives:
         msg = '"' + config.cdDriveLetter + '" is not a valid optical drive!'
-        errorExit(msg)
-    #"""
-    # Check that audioFormat is wav or flac
-    if config.audioFormat not in ["wav", "flac"]:
-        msg = '"' + config.audioFormat + '" is not a valid audio format (expected "wav" or "flac")!'
         errorExit(msg)
 
 
