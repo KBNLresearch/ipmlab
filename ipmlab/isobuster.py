@@ -11,8 +11,8 @@ from . import shared
 def extractData(writeDirectory):
     """Extract data to disk image"""
 
-    # Temporary name for ISO file; base name
-    isoFileTemp = os.path.join(writeDirectory, "disc.iso")
+    # Temporary name for image file; base name
+    imageFileTemp = os.path.join(writeDirectory, "disc.img")
     logFile = os.path.join(writeDirectory, "isobuster.log")
     reportFile = os.path.join(writeDirectory, "isobuster-report.xml")
     
@@ -21,13 +21,14 @@ def extractData(writeDirectory):
 
     args = [config.isoBusterExe]
     args.append("".join(["/d:", config.driveLetter, ":"]))
-    args.append("".join(["/ei:", isoFileTemp]))
+    args.append("".join(["/ei:", imageFileTemp]))
     args.append("/et:u")
     args.append("/ep:oea")
     args.append("/ep:npc")
     args.append("/c")
     args.append("/m")
     args.append("/nosplash")
+    args.append("/s:1")
     args.append("".join(["/l:", logFile]))
     args.append("".join(["/tree:all:", reportFile, '?', reportFormatString]))
 
@@ -57,8 +58,8 @@ def extractData(writeDirectory):
         # Rename ISO image using volumeLabel as a base name
         # Any spaces in volumeLabel are replaced with dashes
         try:
-            isoFile = os.path.join(writeDirectory, volumeLabel.replace(' ', '-') + '.iso')
-            os.rename(isoFileTemp, isoFile)
+            imageFile = os.path.join(writeDirectory, volumeLabel.replace(' ', '-') + '.img')
+            os.rename(imageFileTemp, imageFile)
         except:
             pass
 
