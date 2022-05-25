@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""Post-install / configuration script for Iromlab"""
+"""Post-install / configuration script for Ipmlab"""
 
 import os
 import sys
@@ -62,7 +62,7 @@ def post_install():
     pythoncom.CoInitialize()
 
     # Package name
-    packageName = 'iromlab'
+    packageName = 'ipmlab'
 
     # Scripts directory (location of launcher script)
     scriptsDir = get_main_dir()
@@ -98,7 +98,7 @@ def post_install():
 
     if not os.path.isfile(configFileUser):
         # No config file in user dir, so copy it from location in package.
-        # Location is /iromlab/conf/config.xml in 'site-packages' directory
+        # Location is /ipmlab/conf/config.xml in 'site-packages' directory
         # if installed with pip)
 
         logging.info("Copying configuration file to user directory ...")
@@ -179,7 +179,7 @@ def post_install():
         msg = 'Failed to create desktop shortcut'
         errorExit(msg)
 
-    msg = 'Iromlab configuration completed successfully, click OK to exit!'
+    msg = 'Ipmlab configuration completed successfully, click OK to exit!'
     tkMessageBox.showinfo("Info", msg)
     os._exit(0)
 
@@ -220,7 +220,7 @@ class myGUI(tk.Frame):
 
     def build_gui(self):
         # Build GUI
-        self.root.title('Iromlab Configuration Tool')
+        self.root.title('Ipmlab Configuration Tool')
         self.root.option_add('*tearOff', 'FALSE')
         self.grid(column=0, row=0, sticky='ew')
         self.grid_columnconfigure(0, weight=1, uniform='a')

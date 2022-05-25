@@ -1,13 +1,7 @@
 #! /usr/bin/env python
 """
-Script for automated imaging / ripping of optical media using a Nimbie disc robot.
-
-Features:
-
-* Automated load / unload  / reject using dBpoweramp driver binaries
-* Disc type detection using libcdio's cd-info tool
-* Data CDs and DVDs are imaged to ISO file using IsoBuster
-* Audio CDs are ripped to WAV or FLAC using dBpoweramp
+Script for automated imaging of poertable media such as
+floppy discs and usb thumbdrives
 
 Author: Johan van der Knijff
 Research department,  KB / National Library of the Netherlands
@@ -37,7 +31,7 @@ from .kbapi import sru
 from .socketserver import server
 from . import cdworker
 
-__version__ = '1.0.8'
+__version__ = '0.0.1'
 config.version = __version__
 
 class carrierEntry(tk.Frame):
@@ -108,7 +102,7 @@ class carrierEntry(tk.Frame):
             msg = 'Cannot create batch folder ' + config.batchFolder
             tkMessageBox.showerror("Error", msg)
 
-        # Write Iromlab version to file in batch
+        # Write Ipmlab version to file in batch
         versionFile = os.path.join(config.batchFolder, 'version.txt')
         with open(versionFile, "w") as vf:
             vf.write(config.version + '\n')
@@ -402,7 +396,7 @@ class carrierEntry(tk.Frame):
         # Read configuration file
         getConfiguration()
         
-        self.root.title('iromlab v.' + config.version)
+        self.root.title('ipmlab v.' + config.version)
         self.root.option_add('*tearOff', 'FALSE')
         self.grid(column=0, row=0, sticky='ew')
         self.grid_columnconfigure(0, weight=1, uniform='a')
@@ -694,7 +688,7 @@ def getConfiguration():
         # Locate package directory
         packageDir = os.path.dirname(os.path.abspath(__file__))
         # Config directory
-        configDirUser = os.path.join(userDir, 'iromlab')
+        configDirUser = os.path.join(userDir, 'ipmlab')
         configFileUser = os.path.join(configDirUser, 'config.xml')
         # Tools directory
         toolsDirUser = os.path.join(packageDir, 'tools')

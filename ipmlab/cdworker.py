@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""This module contains iromlab's cdWorker code, i.e. the code that monitors
+"""This module contains ipmlab's cdWorker code, i.e. the code that monitors
 the list of jobs (submitted from the GUI) and does the actual imaging and ripping
 """
 

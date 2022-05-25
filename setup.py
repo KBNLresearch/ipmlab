@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Setup script for Iromlab"""
+"""Setup script for Ipmlab"""
 
 import codecs
 import os
@@ -33,9 +33,9 @@ INSTALL_REQUIRES = [
 ]
 PYTHON_REQUIRES = '>=3.2'
 
-setup(name='iromlab',
+setup(name='ipmlab',
       packages=find_packages(),
-      version=find_version('iromlab', 'iromlab.pyw'),
+      version=find_version('ipmlab', 'ipmlab.py'),
       license='Apache License 2.0',
       install_requires=INSTALL_REQUIRES,
       python_requires=PYTHON_REQUIRES,
@@ -47,23 +47,15 @@ setup(name='iromlab',
       author_email='johan.vanderknijff@kb.nl',
       maintainer='Johan van der Knijff',
       maintainer_email='johan.vanderknijff@kb.nl',
-      url='https://github.com/KBNLresearch/iromlab',
-      download_url=('https://github.com/KBNLresearch/iromlab/archive/' +
-                    find_version('iromlab', 'iromlab.pyw') + '.tar.gz'),
-      package_data={'iromlab': ['*.*', 'conf/*.*',
-                                'tools/*.*', 'tools/flac/*.*',
-                                'tools/flac/win64/*.*',
-                                'tools/flac/html/*.*',
-                                'tools/flac/html/images/*.*',
-                                'tools/flac/win32/*.*',
-                                'tools/shntool/*.*',
-                                'tools/shntool/doc/*.*',
-                                'tools/libcdio/*.*',
-                                'tools/libcdio/win64/*.*']},
+      url='https://github.com/KBNLresearch/ipmlab',
+      download_url=('https://github.com/KBNLresearch/ipmlab/archive/' +
+                    find_version('ipmlab', 'ipmlab.py') + '.tar.gz'),
+      package_data={'ipmlab': ['*.*', 'conf/*.*',
+                                'tools/*.*']},
       zip_safe=False,
       entry_points={'gui_scripts': [
-          'iromlab = iromlab.iromlab:main',
-          'iromlab-configure = iromlab.configure:main',
+          'ipmlab = ipmlab.ipmlab:main',
+          'ipmlab-configure = ipmlab.configure:main',
       ]},
       classifiers=[
           'Programming Language :: Python :: 3',]
