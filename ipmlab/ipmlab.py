@@ -770,11 +770,11 @@ def getConfiguration():
     checkDirExists(config.tempDir)
     checkFileExists(config.isoBusterExe)
 
-    # Check that driveLetter points to an existing optical drive
+    # Check that driveLetter points to an existing drive
     # TODO establish validity of drive in some other way
-    drives = ['C', 'D']
+    drives = ['A', 'C', 'D']
     if config.driveLetter not in drives:
-        msg = '"' + config.driveLetter + '" is not a valid optical drive!'
+        msg = '"' + config.driveLetter + '" is not a valid drive!'
         errorExit(msg)
 
 
