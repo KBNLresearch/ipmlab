@@ -726,7 +726,7 @@ def getConfiguration():
     configElt = ETree.Element("bogus")
     configElt.append(root)
 
-    config.cdDriveLetter = findElementText(configElt, './config/cdDriveLetter')
+    config.driveLetter = findElementText(configElt, './config/driveLetter')
     config.rootDir = findElementText(configElt, './config/rootDir')
     config.tempDir = findElementText(configElt, './config/tempDir')
     config.secondsToTimeout = findElementText(configElt, './config/secondsToTimeout')
@@ -770,11 +770,11 @@ def getConfiguration():
     checkDirExists(config.tempDir)
     checkFileExists(config.isoBusterExe)
 
-    # Check that cdDriveLetter points to an existing optical drive
+    # Check that driveLetter points to an existing optical drive
     # TODO establish validity of drive in some other way
-    cdDrives = ['C', 'D']
-    if config.cdDriveLetter not in cdDrives:
-        msg = '"' + config.cdDriveLetter + '" is not a valid optical drive!'
+    drives = ['C', 'D']
+    if config.driveLetter not in drives:
+        msg = '"' + config.driveLetter + '" is not a valid optical drive!'
         errorExit(msg)
 
 

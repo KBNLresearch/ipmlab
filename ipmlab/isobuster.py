@@ -8,8 +8,8 @@ from . import config
 from . import shared
 
 
-def extractData(writeDirectory, session, dataTrackLSNStart):
-    """Extract data to ISO image using specified session number"""
+def extractData(writeDirectory):
+    """Extract data to disk image"""
 
     # Temporary name for ISO file; base name
     isoFileTemp = os.path.join(writeDirectory, "disc.iso")
@@ -20,7 +20,7 @@ def extractData(writeDirectory, session, dataTrackLSNStart):
     reportFormatString = config.reportFormatString
 
     args = [config.isoBusterExe]
-    args.append("".join(["/d:", config.cdDriveLetter, ":"]))
+    args.append("".join(["/d:", config.driveLetter, ":"]))
     args.append("".join(["/ei:", isoFileTemp]))
     args.append("/et:u")
     args.append("/ep:oea")
@@ -28,7 +28,6 @@ def extractData(writeDirectory, session, dataTrackLSNStart):
     args.append("/c")
     args.append("/m")
     args.append("/nosplash")
-    args.append("".join(["/s:", str(session)]))
     args.append("".join(["/l:", logFile]))
     args.append("".join(["/tree:all:", reportFile, '?', reportFormatString]))
 

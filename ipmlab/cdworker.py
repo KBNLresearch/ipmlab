@@ -122,7 +122,7 @@ def processDisc(carrierData):
     if containsData:
         # TODO, either remove conditional block or establish containsData on some sensible test
         logging.info('*** Extracting data ***')
-        resultIsoBuster = isobuster.extractData(dirDisc, 1, 0)
+        resultIsoBuster = isobuster.extractData(dirDisc)
         statusIsoBuster = resultIsoBuster["log"].strip()
 
         if statusIsoBuster != "0":

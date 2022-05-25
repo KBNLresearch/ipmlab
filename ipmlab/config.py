@@ -2,7 +2,7 @@
 """Shared configuration constants"""
 
 version = ""
-cdDriveLetter = ""
+driveLetter = ""
 cdDeviceName = ""
 reportFormatString = ""
 isoBusterExe = ""

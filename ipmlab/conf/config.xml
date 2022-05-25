@@ -9,8 +9,8 @@ as ipmlab.py/ ipmlab.exe!
    spaces! (the Python os.path libs don't seem to like this!)
 -->
 
-<!-- CD drive letter -->
-<cdDriveLetter>I</cdDriveLetter>
+<!-- Drive letter -->
+<driveLetter>I</driveLetter>
 
 <!-- root directory - this is the default search path for creating / opening batches -->
 <rootDir>/home/johan/kb/testiromsgl</rootDir>
