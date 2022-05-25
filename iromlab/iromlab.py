@@ -36,8 +36,6 @@ from . import config
 from .kbapi import sru
 from .socketserver import server
 from . import cdworker
-from . import cdinfo
-
 
 __version__ = '1.0.8'
 config.version = __version__
@@ -126,11 +124,7 @@ class carrierEntry(tk.Frame):
                                     'title',
                                     'volumeID',
                                     'success',
-                                    'containsAudio',
-                                    'containsData',
-                                    'cdExtra',
-                                    'mixedMode',
-                                    'cdInteractive'])
+                                    'containsData'])
 
         # Open batch manifest in append mode
         bm = open(config.batchManifest, "a", encoding="utf-8")
@@ -177,10 +171,8 @@ class carrierEntry(tk.Frame):
 
             # Flag that is True if batch is open
             config.batchIsOpen = True
-            # Set readyToStart flag to True, except if startOnFinalize flag is activated,
-            # in which case readyToStart is set to True on finalisation
-            if not config.startOnFinalize:
-                config.readyToStart = True
+            # Set readyToStart flag to True,
+            config.readyToStart = True
 
 
     def on_open(self, event=None):
@@ -787,8 +779,8 @@ def getConfiguration():
     checkFileExists(config.isoBusterExe)
 
     # Check that cdDriveLetter points to an existing optical drive
-    resultGetDrives = cdinfo.getDrives()
-    cdDrives = resultGetDrives["drives"]
+    # TODO establish validity of drive in some other way
+    cdDrives = ['C', 'D']
     if config.cdDriveLetter not in cdDrives:
         msg = '"' + config.cdDriveLetter + '" is not a valid optical drive!'
         errorExit(msg)

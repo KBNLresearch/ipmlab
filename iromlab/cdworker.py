@@ -17,10 +17,7 @@ if platform.system() == "Windows":
     import wmi
 import _thread as thread
 from . import config
-from . import cdinfo
 from . import isobuster
-from . import dbpoweramp
-from . import verifyaudio
 from . import mdo
 
 def mediumLoaded(driveName):
