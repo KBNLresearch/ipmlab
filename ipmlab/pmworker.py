@@ -1,6 +1,5 @@
 #! /usr/bin/env python
-"""This module contains ipmlab's cdWorker code, i.e. the code that monitors
-the list of jobs (submitted from the GUI) and does the actual imaging and ripping
+"""This module contains the code that does the actual imaging
 """
 
 import sys
@@ -98,8 +97,8 @@ def checksumDirectory(directory):
     return wroteChecksums
 
 
-def processDisc(carrierData):
-    """Process one disc / job"""
+def processMedium(carrierData):
+    """Process one medium/carrier"""
 
     jobID = carrierData['jobID']
     PPN = carrierData['PPN']

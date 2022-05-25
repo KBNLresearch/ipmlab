@@ -29,7 +29,7 @@ from tkinter import ttk
 from . import config
 from .kbapi import sru
 from .socketserver import server
-from . import cdworker
+from . import pmworker
 
 __version__ = '0.0.1'
 config.version = __version__
@@ -346,7 +346,7 @@ class carrierEntry(tk.Frame):
                 self.submit_button.config(state='disabled')
                 
                 # Process carrier in separate thread
-                self.t1 = threading.Thread(target=cdworker.processDisc, args=[carrierData])
+                self.t1 = threading.Thread(target=pmworker.processMedium, args=[carrierData])
                 self.t1.start()
 
 

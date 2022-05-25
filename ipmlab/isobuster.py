@@ -55,7 +55,7 @@ def extractData(writeDirectory):
     volumeLabel = ''
 
     if volumeLabel != '':
-        # Rename ISO image using volumeLabel as a base name
+        # Rename image file using volumeLabel as a base name
         # Any spaces in volumeLabel are replaced with dashes
         try:
             imageFile = os.path.join(writeDirectory, volumeLabel.replace(' ', '-') + '.img')
