@@ -216,10 +216,8 @@ class carrierEntry(tk.Frame):
 
                 # Flag that is True if batch is open
                 config.batchIsOpen = True
-                # Set readyToStart flag to True, except if startOnFinalize flag is activated,
-                # in which case readyToStart is set to True on finalisation
-                if not config.startOnFinalize:
-                    config.readyToStart = True
+                # Set readyToStart flag to True
+                config.readyToStart = True
 
     def on_usepreviousPPN(self, event=None):
         """Add previously entered PPN to entry field"""
