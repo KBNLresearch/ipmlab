@@ -252,6 +252,7 @@ class carrierEntry(tk.Frame):
         """Process one record and add it to the queue after user pressed submit button"""
 
         config.processingDisc = True
+        mediumLoaded = False
 
         self.carrierNumber += 1
 
@@ -319,10 +320,18 @@ class carrierEntry(tk.Frame):
 
             msg = "Found title:\n\n'" + title + "'.\n\n Is this correct?"
             if tkMessageBox.askyesno("Confirm", msg):
-                # Prompt operator to insert carrier in disc robot
-                msg = ("Please load disc ('" + title + "', volume " + str(volumeNo) +
-                       ") into the disc loader, then press 'OK'")
-                tkMessageBox.showinfo("Load disc", msg)
+                # Prompt operator to insert medium
+                msg = ("Please load medium ('" + title + "', volume " + str(volumeNo) +
+                       "), then press 'OK'")
+                tkMessageBox.showinfo("Load medium", msg)
+
+                while not mediumLoaded:
+                    try:
+                        _ = os.listdir(config.driveLetter + ":\\")
+                        mediumLoaded = True
+                    except PermissionError:
+                        msg = ("no medium found, please load medium and press 'OK'")
+                        tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
                 jobID = str(uuid.uuid1())
