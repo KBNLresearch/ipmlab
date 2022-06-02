@@ -328,7 +328,7 @@ class carrierEntry(tk.Frame):
                     try:
                         _ = os.listdir(config.driveLetter + ":\\")
                         mediumLoaded = True
-                    except PermissionError:
+                    except PermissionError or OSError:
                         msg = ("no medium found, please load medium and press 'OK'")
                         tkMessageBox.showinfo("Load medium", msg)
 
