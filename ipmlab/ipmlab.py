@@ -8,6 +8,7 @@ Research department,  KB / National Library of the Netherlands
 
 """
 
+from ctypes import WinError
 import sys
 import os
 import csv
@@ -328,7 +329,7 @@ class carrierEntry(tk.Frame):
                     try:
                         _ = os.listdir(config.driveLetter + ":\\")
                         mediumLoaded = True
-                    except PermissionError or OSError:
+                    except(PermissionError, OSError):
                         msg = ("no medium found, please load medium and press 'OK'")
                         tkMessageBox.showinfo("Load medium", msg)
 
