@@ -102,7 +102,6 @@ def processMedium(carrierData):
 
     jobID = carrierData['jobID']
     PPN = carrierData['PPN']
-    containsData = True # Dummy variable, TODO remove later
 
     logging.info(''.join(['### Job identifier: ', jobID]))
     logging.info(''.join(['PPN: ', carrierData['PPN']]))
@@ -118,26 +117,19 @@ def processMedium(carrierData):
     if not os.path.exists(dirDisc):
         os.makedirs(dirDisc)
 
-    if containsData:
-        # TODO, either remove conditional block or establish containsData on some sensible test
-        logging.info('*** Extracting data ***')
-        resultIsoBuster = isobuster.extractData(dirDisc)
-        statusIsoBuster = resultIsoBuster["log"].strip()
+    logging.info('*** Extracting data ***')
+    resultIsoBuster = isobuster.extractData(dirDisc)
+    statusIsoBuster = resultIsoBuster["log"].strip()
 
-        if statusIsoBuster != "0":
-            success = False
-            logging.error("Isobuster exited with error(s)")
-
-        logging.info(''.join(['isobuster command: ', resultIsoBuster['cmdStr']]))
-        logging.info(''.join(['isobuster-status: ', str(resultIsoBuster['status'])]))
-        logging.info(''.join(['isobuster-log: ', statusIsoBuster]))
-        logging.info(''.join(['volumeIdentifier: ', str(resultIsoBuster['volumeIdentifier'])]))
-    
-    else:
-        # We end up here if no data were detected
+    if statusIsoBuster != "0":
         success = False
-        logging.error("Unable to identify disc type")
+        logging.error("Isobuster exited with error(s)")
 
+    logging.info(''.join(['isobuster command: ', resultIsoBuster['cmdStr']]))
+    logging.info(''.join(['isobuster-status: ', str(resultIsoBuster['status'])]))
+    logging.info(''.join(['isobuster-log: ', statusIsoBuster]))
+    logging.info(''.join(['volumeIdentifier: ', str(resultIsoBuster['volumeIdentifier'])]))
+    
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
         logging.info('*** Writing metadata from KB-MDO to file ***')
@@ -159,13 +151,9 @@ def processMedium(carrierData):
     # Create comma-delimited batch manifest entry for this carrier
 
     # VolumeIdentifier only defined for ISOs, not for pure audio CDs and CD Interactive!
-    if containsData:
-        # TODO, either remove conditional block or establish containsData on some sensible test
-        try:
-            volumeID = resultIsoBuster['volumeIdentifier'].strip()
-        except Exception:
-            volumeID = ''
-    else:
+    try:
+        volumeID = resultIsoBuster['volumeIdentifier'].strip()
+    except Exception:
         volumeID = ''
 
     # Put all items for batch manifest entry in a list
@@ -174,8 +162,7 @@ def processMedium(carrierData):
                          carrierData['volumeNo'],
                          carrierData['title'],
                          volumeID,
-                         str(success),
-                         str(containsData)])
+                         str(success)])
 
     # Open batch manifest in append mode
     bm = open(config.batchManifest, "a", encoding="utf-8")

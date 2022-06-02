@@ -119,8 +119,7 @@ class carrierEntry(tk.Frame):
                                     'volumeNo',
                                     'title',
                                     'volumeID',
-                                    'success',
-                                    'containsData'])
+                                    'success'])
 
         # Open batch manifest in append mode
         bm = open(config.batchManifest, "a", encoding="utf-8")
