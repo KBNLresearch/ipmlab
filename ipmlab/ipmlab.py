@@ -21,6 +21,8 @@ import logging
 import json
 import platform
 import queue
+if platform.system() == "Windows":
+    import win32api
 import tkinter as tk
 from tkinter import filedialog as tkFileDialog
 from tkinter import scrolledtext as ScrolledText
@@ -771,8 +773,13 @@ def getConfiguration():
     checkFileExists(config.isoBusterExe)
 
     # Check that driveLetter points to an existing drive
-    # TODO establish validity of drive in some other way
-    drives = ['A', 'C', 'D']
+    # Adapted from https://stackoverflow.com/a/827397/1209004
+    drives = win32api.GetLogicalDriveStrings()
+    # Var drives is one string with weird 3-byte separator
+    sepB = b'\x3a\x5c\x00'
+    # Separator string
+    sepS = sepB.decode('UTF-8')
+    drives = drives.split(sepS)[:-1]
     if config.driveLetter not in drives:
         msg = '"' + config.driveLetter + '" is not a valid drive!'
         errorExit(msg)
