@@ -320,11 +320,6 @@ class carrierEntry(tk.Frame):
 
             msg = "Found title:\n\n'" + title + "'.\n\n Is this correct?"
             if tkMessageBox.askyesno("Confirm", msg):
-                # Prompt operator to insert medium
-                msg = ("Please load medium ('" + title + "', volume " + str(volumeNo) +
-                       "), then press 'OK'")
-                tkMessageBox.showinfo("Load medium", msg)
-
                 while not mediumLoaded:
                     try:
                         _ = os.listdir(config.driveLetter + ":\\")
@@ -816,6 +811,9 @@ def main():
             time.sleep(0.1)
             if config.finishedDisc:
                 myCarrierEntry.t1.join()
+                # Prompt operator to remove medium
+                msg = ("Please remove the medium, then press 'OK'")
+                tkMessageBox.showinfo("Remove medium", msg)
                 myCarrierEntry.reset_carrier()
                 config.processingDisc = False
                 config.finishedDisc = False
