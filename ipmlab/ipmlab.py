@@ -62,13 +62,13 @@ class carrierEntry(tk.Frame):
         self.build_gui()
 
     def on_quit(self, event=None):
-        """Wait until the disc that is currently being pocessed has
+        """Wait until the medium that is currently being pocessed has
         finished, and quit (batch can be resumed by opening it in the File dialog)
         """
         config.quitFlag = True
         self.bExit.config(state='disabled')
         if config.batchIsOpen:
-            msg = 'User pressed Exit, quitting after current disc has been processed'
+            msg = 'User pressed Exit, quitting after current medium has been processed'
             tkMessageBox.showinfo("Info", msg)
 
         msg = 'Quitting because user pressed Exit, click OK to exit'
@@ -80,8 +80,8 @@ class carrierEntry(tk.Frame):
             os._exit(0)
         else:
             # User has created or opened a batch
-            # Wait until processingDisc flag is reset to False
-            while config.processingDisc:
+            # Wait until processingMedium flag is reset to False
+            while config.processingMedium:
                 time.sleep(2)
             # Wait 1 more second to avoid race condition
             time.sleep(2)           
@@ -251,7 +251,7 @@ class carrierEntry(tk.Frame):
     def on_submit(self, event=None):
         """Process one record and add it to the queue after user pressed submit button"""
 
-        config.processingDisc = True
+        config.processingMedium = True
         mediumLoaded = False
 
         self.carrierNumber += 1
@@ -809,14 +809,14 @@ def main():
             root.update_idletasks()
             root.update()
             time.sleep(0.1)
-            if config.finishedDisc:
+            if config.finishedMedium:
                 myCarrierEntry.t1.join()
                 # Prompt operator to remove medium
                 msg = ("Please remove the medium, then press 'OK'")
                 tkMessageBox.showinfo("Remove medium", msg)
                 myCarrierEntry.reset_carrier()
-                config.processingDisc = False
-                config.finishedDisc = False
+                config.processingMedium = False
+                config.finishedMedium = False
         except KeyboardInterrupt:
             if config.finishedBatch:
                 handlers = myCarrierEntry.logger.handlers[:]

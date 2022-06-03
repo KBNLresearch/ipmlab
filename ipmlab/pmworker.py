@@ -111,14 +111,14 @@ def processMedium(carrierData):
     # Initialise success status
     success = True
 
-    # Create output folder for this disc
-    dirDisc = os.path.join(config.batchFolder, jobID)
-    logging.info(''.join(['disc directory: ', dirDisc]))
-    if not os.path.exists(dirDisc):
-        os.makedirs(dirDisc)
+    # Create output folder for this medium
+    dirMedium = os.path.join(config.batchFolder, jobID)
+    logging.info(''.join(['medium directory: ', dirMedium]))
+    if not os.path.exists(dirMedium):
+        os.makedirs(dirMedium)
 
     logging.info('*** Extracting data ***')
-    resultIsoBuster = isobuster.extractData(dirDisc)
+    resultIsoBuster = isobuster.extractData(dirMedium)
     statusIsoBuster = resultIsoBuster["log"].strip()
 
     if statusIsoBuster != "0":
@@ -134,7 +134,7 @@ def processMedium(carrierData):
         # Fetch metadata from KBMDO and store as file
         logging.info('*** Writing metadata from KB-MDO to file ***')
 
-        successMdoWrite = mdo.writeMDORecord(PPN, dirDisc)
+        successMdoWrite = mdo.writeMDORecord(PPN, dirMedium)
         if not successMdoWrite:
             success = False
             reject = True
@@ -142,7 +142,7 @@ def processMedium(carrierData):
 
     # Generate checksum file
     logging.info('*** Computing checksums ***')
-    successChecksum = checksumDirectory(dirDisc)
+    successChecksum = checksumDirectory(dirMedium)
 
     if not successChecksum:
         success = False
@@ -174,9 +174,9 @@ def processMedium(carrierData):
     csvBm.writerow(rowBatchManifest)
     bm.close()
 
-    logging.info('*** Finished processing disc ***')
+    logging.info('*** Finished processing medium ***')
 
-    # Set finishedDisc flag
-    config.finishedDisc = True
+    # Set finishedMedium flag
+    config.finishedMedium = True
 
     return success
