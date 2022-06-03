@@ -32,6 +32,22 @@ def launchSubProcess(args):
     return(exitStatus, outputAsString, errorsAsString)
 
 
+def checkFileExists(fileIn):
+    """Check if file exists and exit if not"""
+    if not os.path.isfile(fileIn):
+        msg = "file " + fileIn + " does not exist!"
+        tkMessageBox.showerror("Error", msg)
+        sys.exit()
+
+
+def checkDirExists(dirIn):
+    """Check if directory exists and exit if not"""
+    if not os.path.isdir(dirIn):
+        msg = "directory " + dirIn + " does not exist!"
+        tkMessageBox.showerror("Error", msg)
+        sys.exit()
+
+
 def randomString(length):
     """Generate text string with random characters (a-z;A-Z;0-9)"""
     return ''.join(choice(string.ascii_letters + string.digits) for i in range(length))
