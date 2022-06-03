@@ -254,8 +254,6 @@ class carrierEntry(tk.Frame):
         config.processingMedium = True
         mediumLoaded = False
 
-        self.carrierNumber += 1
-
         # Fetch entered values (strip any leading / tralue whitespace characters)
         if config.enablePPNLookup:
             catid = self.catid_entry.get().strip()
@@ -331,6 +329,9 @@ class carrierEntry(tk.Frame):
                 # Create unique identifier for this job (UUID, based on host ID and current time)
                 jobID = str(uuid.uuid1())
 
+                # Update carrierNumber (only used to indicate order of all media in batch in widget)
+                self.carrierNumber += 1
+
                 # Set up dictionary that holds carrier data
                 carrierData = {}
                 carrierData['jobID'] = jobID
@@ -354,6 +355,15 @@ class carrierEntry(tk.Frame):
                 # Process carrier in separate thread
                 self.t1 = threading.Thread(target=pmworker.processMedium, args=[carrierData])
                 self.t1.start()
+            
+            else:
+                # Clear entry fields
+                if config.enablePPNLookup:
+                    self.catid_entry.delete(0, tk.END)
+                else:
+                    self.title_entry.delete(0, tk.END)
+                
+                self.volumeNo_entry.delete(0, tk.END)
 
 
     def setupLogger(self):
