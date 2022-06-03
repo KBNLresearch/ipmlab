@@ -66,17 +66,17 @@ class carrierEntry(tk.Frame):
         finished, and quit (batch can be resumed by opening it in the File dialog)
         """
         config.quitFlag = True
-        self.bExit.config(state='disabled')
+        self.bQuit.config(state='disabled')
         if config.batchIsOpen:
-            msg = 'User pressed Exit, quitting after current medium has been processed'
+            msg = 'User pressed Quit, quitting after current medium has been processed'
             tkMessageBox.showinfo("Info", msg)
 
-        msg = 'Quitting because user pressed Exit, click OK to exit'
+        msg = 'User pressed Quit, click OK to close ipmlab'
 
         if not config.readyToStart:
             # User hasn't yet created or opened a batch
             time.sleep(2)
-            tkMessageBox.showinfo("Exit", msg)
+            tkMessageBox.showinfo("Quit", msg)
             os._exit(0)
         else:
             # User has created or opened a batch
@@ -85,7 +85,7 @@ class carrierEntry(tk.Frame):
                 time.sleep(2)
             # Wait 1 more second to avoid race condition
             time.sleep(2)           
-            tkMessageBox.showinfo("Exit", msg)
+            tkMessageBox.showinfo("Quit", msg)
             os._exit(0)
 
     def on_create(self, event=None):
@@ -433,13 +433,13 @@ class carrierEntry(tk.Frame):
                                underline=0,
                                command=self.on_open)
         self.bOpen.grid(column=1, row=1, sticky='ew')
-        self.bExit = tk.Button(self,
-                               text="Exit",
+        self.bQuit = tk.Button(self,
+                               text="Quit",
                                height=2,
                                width=4,
                                underline=0,
                                command=self.on_quit)
-        self.bExit.grid(column=3, row=1, sticky='ew')
+        self.bQuit.grid(column=3, row=1, sticky='ew')
 
 
         ttk.Separator(self, orient='horizontal').grid(column=0, row=2, columnspan=4, sticky='ew')
@@ -518,7 +518,7 @@ class carrierEntry(tk.Frame):
         # Define bindings for keyboard shortcuts: buttons
         self.root.bind_all('<Control-Key-n>', self.on_create)
         self.root.bind_all('<Control-Key-o>', self.on_open)
-        self.root.bind_all('<Control-Key-e>', self.on_quit)
+        self.root.bind_all('<Control-Key-q>', self.on_quit)
         self.root.bind_all('<Control-Key-s>', self.on_submit)
 
         # TODO keyboard shortcuts for Radiobox selections: couldn't find ANY info on how to do this!
@@ -573,7 +573,7 @@ class carrierEntry(tk.Frame):
         # Update state of buttons / widgets
         self.bNew.config(state='normal')
         self.bOpen.config(state='normal')
-        self.bExit.config(state='normal')
+        self.bQuit.config(state='normal')
         self.submit_button.config(state='disabled')
         if config.enablePPNLookup:
             self.catid_entry.config(state='disabled')
@@ -847,8 +847,8 @@ def main():
                 for handler in handlers:
                     handler.close()
                     myCarrierEntry.logger.removeHandler(handler)
-                msg = 'Quitting because user pressed Exit, click OK to exit'
-                tkMessageBox.showinfo("Exit", msg)
+                msg = 'User pressed Quit, click OK to close ipmlab'
+                tkMessageBox.showinfo("Quit", msg)
                 os._exit(0)
 
 if __name__ == "__main__":
