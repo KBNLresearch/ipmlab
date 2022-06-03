@@ -30,7 +30,6 @@ from tkinter import scrolledtext as ScrolledText
 from tkinter import messagebox as tkMessageBox
 from tkinter import ttk
 from . import config
-from . import shared
 from .kbapi import sru
 from .socketserver import server
 from . import pmworker
@@ -638,6 +637,20 @@ def representsInt(s):
         return False
 
 
+def checkFileExists(fileIn):
+    """Check if file exists and exit if not"""
+    if not os.path.isfile(fileIn):
+        msg = "file " + fileIn + " does not exist!"
+        tkMessageBox.showerror("Error", msg)
+        sys.exit()
+
+def checkDirExists(dirIn):
+    """Check if directory exists and exit if not"""
+    if not os.path.isdir(dirIn):
+        msg = "directory " + dirIn + " does not exist!"
+        tkMessageBox.showerror("Error", msg)
+        sys.exit()
+
 def errorExit(error):
     """Show error message in messagebox and then exit after userv presses OK"""
     tkMessageBox.showerror("Error", error)
@@ -762,9 +775,9 @@ def getConfiguration():
 
     #"""Disable for Linux testing TODO re-enable in production version!!
     # Check if all files and directories exist, and exit if not
-    shared.checkDirExists(config.rootDir)
-    shared.checkDirExists(config.tempDir)
-    shared.checkFileExists(config.isoBusterExe)
+    checkDirExists(config.rootDir)
+    checkDirExists(config.tempDir)
+    checkFileExists(config.isoBusterExe)
 
     # Check that driveLetter points to an existing drive
     # Adapted from https://stackoverflow.com/a/827397/1209004

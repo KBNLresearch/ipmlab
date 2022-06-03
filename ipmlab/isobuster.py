@@ -37,9 +37,12 @@ def extractData(writeDirectory):
 
     status, out, err = shared.launchSubProcess(args)
 
-    ## TEST this is needed to avoid FileNotFoundError while testing in VM
-    time.sleep(2)
-    ## TEST
+    # For some reason sometimes a FileNotFoundError occurs on the log file, so
+    # we'll wait until it is actually available
+    logFileExists = False
+    while not logFileExists:
+        time.sleep(2)
+        logFileExists = os.path.isfile(logFile)
 
     # Open and read log file
     with io.open(logFile, "r", encoding="cp1252") as fLog:
