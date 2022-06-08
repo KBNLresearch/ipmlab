@@ -14,7 +14,7 @@ def extractData(writeDirectory):
     # Temporary name for image file; base name
     imageFileTemp = os.path.join(writeDirectory, "disc.img")
     logFile = os.path.join(writeDirectory, "isobuster.log")
-    reportFile = os.path.join(writeDirectory, "isobuster-report.xml")
+    reportFile = os.path.join(writeDirectory, "isobuster-report-<%FN>.xml")
     
     # Format string that defines DFXML output report
     reportFormatString = config.reportFormatString
