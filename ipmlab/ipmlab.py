@@ -743,7 +743,6 @@ def getConfiguration():
     config.driveLetter = findElementText(configElt, './config/driveLetter')
     config.rootDir = findElementText(configElt, './config/rootDir')
     config.tempDir = findElementText(configElt, './config/tempDir')
-    config.secondsToTimeout = findElementText(configElt, './config/secondsToTimeout')
     config.prefixBatch = findElementText(configElt, './config/prefixBatch')
     config.reportFormatString = findElementText(configElt, './config/reportFormatString')
     config.isoBusterExe = findElementText(configElt, './config/isoBusterExe')
