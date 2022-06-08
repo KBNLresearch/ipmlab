@@ -53,7 +53,6 @@ class carrierEntry(tk.Frame):
         self.log_queue = queue.Queue(-1)
         self.queue_handler = QueueHandler(self.log_queue)
         config.readyToStart = False
-        config.finishedBatch = False
         self.catidOld = ""
         self.titleOld = ""
         self.volumeNoOld = ""
@@ -84,9 +83,17 @@ class carrierEntry(tk.Frame):
             while config.processingMedium:
                 time.sleep(2)
             # Wait 1 more second to avoid race condition
-            time.sleep(2)           
+            time.sleep(2)
+            if config.enableSocketAPI:
+                self.t2.join()
+            handlers = self.logger.handlers[:]
+            for handler in handlers:
+                handler.close()
+                self.logger.removeHandler(handler)
+            msg = 'User pressed Quit, click OK to close ipmlab'
             tkMessageBox.showinfo("Quit", msg)
             os._exit(0)
+
 
     def on_create(self, event=None):
         """Create new batch in rootDir"""
@@ -154,6 +161,7 @@ class carrierEntry(tk.Frame):
             # Update state of buttons / widgets
             self.bNew.config(state='disabled')
             self.bOpen.config(state='disabled')
+            self.bFinalise.config(state='normal')
             if config.enablePPNLookup:
                 self.catid_entry.config(state='normal')
                 self.usepreviousPPN_button.config(state='normal')
@@ -206,6 +214,7 @@ class carrierEntry(tk.Frame):
                 self.bNew.config(state='disabled')
                 self.bOpen.config(state='disabled')
                 self.submit_button.config(state='normal')
+                self.bFinalise.config(state='normal')
                 if config.enablePPNLookup:
                     self.catid_entry.config(state='normal')
                     self.usepreviousPPN_button.config(state='normal')
@@ -220,6 +229,39 @@ class carrierEntry(tk.Frame):
                 config.batchIsOpen = True
                 # Set readyToStart flag to True
                 config.readyToStart = True
+
+    def on_finalise(self, event=None):
+        """Finalise batch after user pressed finalise button"""
+        msg = ("This will finalise the current batch.\n After finalising no further"
+               "media can be \nadded. Are you really sure you want to do this?")
+        if tkMessageBox.askyesno("Confirm", msg):
+            self.bFinalise.config(state='disabled')
+            self.submit_button.config(state='disabled')
+            if config.enablePPNLookup:
+                self.catid_entry.config(state='disabled')
+                self.usepreviousPPN_button.config(state='disabled')
+            else:
+                self.title_entry.config(state='disabled')
+                self.usepreviousTitle_button.config(state='disabled')
+            self.volumeNo_entry.delete(0, tk.END)
+            self.volumeNo_entry.config(state='disabled')
+
+            # Wait until processingMedium flag is reset to False
+            while config.processingMedium:
+                time.sleep(2)
+            
+            config.readyToStart = False
+            config.finishedBatch = True
+
+            handlers = self.logger.handlers[:]
+            for handler in handlers:
+                handler.close()
+                self.logger.removeHandler(handler)
+            # Notify user
+            msg = 'Finished processing this batch'
+            tkMessageBox.showinfo("Finished", msg)
+            # Reset the GUI
+            self.reset_gui()
 
     def on_usepreviousPPN(self, event=None):
         """Add previously entered PPN to entry field"""
@@ -433,6 +475,13 @@ class carrierEntry(tk.Frame):
                                underline=0,
                                command=self.on_open)
         self.bOpen.grid(column=1, row=1, sticky='ew')
+        self.bFinalise = tk.Button(self,
+                                   text="Finalize",
+                                   height=2,
+                                   width=4,
+                                   underline=0,
+                                   command=self.on_finalise)
+        self.bFinalise.grid(column=2, row=1, sticky='ew')
         self.bQuit = tk.Button(self,
                                text="Quit",
                                height=2,
@@ -441,6 +490,8 @@ class carrierEntry(tk.Frame):
                                command=self.on_quit)
         self.bQuit.grid(column=3, row=1, sticky='ew')
 
+        # Disable finalise button on startup
+        self.bFinalise.config(state='disabled')
 
         ttk.Separator(self, orient='horizontal').grid(column=0, row=2, columnspan=4, sticky='ew')
 
@@ -518,6 +569,7 @@ class carrierEntry(tk.Frame):
         # Define bindings for keyboard shortcuts: buttons
         self.root.bind_all('<Control-Key-n>', self.on_create)
         self.root.bind_all('<Control-Key-o>', self.on_open)
+        self.root.bind_all('<Control-Key-f>', self.on_finalise)
         self.root.bind_all('<Control-Key-q>', self.on_quit)
         self.root.bind_all('<Control-Key-s>', self.on_submit)
 
@@ -565,7 +617,6 @@ class carrierEntry(tk.Frame):
         self.log_queue = queue.Queue(-1)
         self.queue_handler = QueueHandler(self.log_queue)
         config.readyToStart = False
-        config.finishedBatch = False
         self.catidOld = ""
         self.titleOld = ""
         self.volumeNoOld = ""
@@ -573,6 +624,7 @@ class carrierEntry(tk.Frame):
         # Update state of buttons / widgets
         self.bNew.config(state='normal')
         self.bOpen.config(state='normal')
+        self.bFinalise.config(state='disabled')
         self.bQuit.config(state='normal')
         self.submit_button.config(state='disabled')
         if config.enablePPNLookup:
@@ -812,43 +864,20 @@ def main():
         t2.start()
 
     while True:
-        try:
-            if config.enableSocketAPI:
-                myCarrierEntry.handleSocketRequests(q)
-            root.update_idletasks()
-            root.update()
-            time.sleep(0.1)
-            if config.finishedMedium:
-                myCarrierEntry.t1.join()
-                # Prompt operator to remove medium
-                msg = ("Please remove the medium, then press 'OK'")
-                tkMessageBox.showinfo("Remove medium", msg)
-                myCarrierEntry.reset_carrier()
-                config.processingMedium = False
-                config.finishedMedium = False
-        except KeyboardInterrupt:
-            if config.finishedBatch:
-                handlers = myCarrierEntry.logger.handlers[:]
-                for handler in handlers:
-                    handler.close()
-                    myCarrierEntry.logger.removeHandler(handler)
-                # Notify user
-                msg = 'Finished processing this batch'
-                tkMessageBox.showinfo("Finished", msg)
-                # Reset the GUI
-                myCarrierEntry.reset_gui()
-                root.protocol('WM_DELETE_WINDOW', myCarrierEntry.on_quit)
-            elif config.quitFlag:
-                # User pressed exit
-                if config.enableSocketAPI:
-                    t2.join()
-                handlers = myCarrierEntry.logger.handlers[:]
-                for handler in handlers:
-                    handler.close()
-                    myCarrierEntry.logger.removeHandler(handler)
-                msg = 'User pressed Quit, click OK to close ipmlab'
-                tkMessageBox.showinfo("Quit", msg)
-                os._exit(0)
+        if config.enableSocketAPI:
+            myCarrierEntry.handleSocketRequests(q)
+        root.update_idletasks()
+        root.update()
+        time.sleep(0.1)
+        if config.finishedMedium:
+            myCarrierEntry.t1.join()
+            # Prompt operator to remove medium
+            msg = ("Please remove the medium, then press 'OK'")
+            tkMessageBox.showinfo("Remove medium", msg)
+            myCarrierEntry.reset_carrier()
+            config.processingMedium = False
+            config.finishedMedium = False
+
 
 if __name__ == "__main__":
     main()
