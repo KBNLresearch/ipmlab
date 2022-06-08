@@ -50,4 +50,8 @@ print("Media type: " + str(mediaType))
 ## TODO: what doe this value mean, and can it be mapped to:
 ## https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ne-winioctl-media_type
 # 
-# (Interestingly, 1.44 MB 3.5" floppy is 3rd item in list, so seems to match index 2.)
+# YES, Pywin32 enumerations here:
+#
+# https://github.com/SublimeText/Pywin32/blob/753322f9ac4b943c2c04ddd88605e68bc742dbb4/lib/x32/win32/lib/winioctlcon.py#L642
+#
+# This seems to match the '2' value for a 1.44 MB 3.5" floppy
