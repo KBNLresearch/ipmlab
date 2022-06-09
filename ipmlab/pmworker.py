@@ -97,6 +97,21 @@ def checksumDirectory(directory):
 
     return wroteChecksums
 
+def fixDfXMLFileNames(directory):
+    """
+    Replace whitespace characters in Isobuster dfxml file names
+    with underscores
+    """
+
+    # All DFXML files in directory
+    dfxmlFiles = glob.glob(directory + "/isobuster-report*.xml")
+
+    for file in dfxmlFiles:
+        nameOld = os.path.basename(file)
+        nameNew = nameOld.replace(" ", "_")
+        fileNew = os.path.join(directory, nameNew)
+        os.rename(file, fileNew)
+
 
 def getDriveGeometry(drive):
     """
@@ -252,7 +267,10 @@ def processMedium(carrierData):
     logging.info(''.join(['isobuster-status: ', str(resultIsoBuster['status'])]))
     logging.info(''.join(['isobuster-log: ', statusIsoBuster]))
     logging.info(''.join(['volumeIdentifier: ', str(resultIsoBuster['volumeIdentifier'])]))
-    
+
+    # Replace any white space characters in Isobuster dfxml files with underscores
+    fixDfXMLFileNames(dirMedium)
+
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
         logging.info('*** Writing metadata from KB-MDO to file ***')
