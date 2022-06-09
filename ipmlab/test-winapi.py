@@ -143,7 +143,7 @@ def getMediaType(driveGeometry):
 
 def main():
     """
-    Get media type for lidt of logical Windows drive. First we
+    Get media type for list of logical Windows drive. First we
     get the drive geometry, then we use that to get
     the actual media type
     """
