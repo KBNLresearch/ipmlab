@@ -4,8 +4,7 @@
 
 import sys
 import os
-import shutil
-import time
+
 import glob
 import csv
 import hashlib
@@ -14,7 +13,6 @@ import platform
 if platform.system() == "Windows":
     import pythoncom
     import wmi
-import _thread as thread
 from . import config
 from . import isobuster
 from . import mdo
