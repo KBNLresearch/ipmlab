@@ -127,6 +127,7 @@ class carrierEntry(tk.Frame):
                                     'volumeNo',
                                     'title',
                                     'volumeID',
+                                    'mediaType',
                                     'success'])
 
         # Open batch manifest in append mode
