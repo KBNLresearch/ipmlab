@@ -28,7 +28,6 @@ def extractData(writeDirectory):
     args.append("/c")
     args.append("/m")
     args.append("/nosplash")
-    args.append("/s:1")
     args.append("".join(["/l:", logFile]))
     args.append("".join(["/tree:all:", reportFile, '?', reportFormatString]))
 
