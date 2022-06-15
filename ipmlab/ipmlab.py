@@ -389,7 +389,7 @@ class carrierEntry(tk.Frame):
                     self.catid_entry.config(state='disabled')
                     self.usepreviousPPN_button.config(state='disabled')
                 else:
-                    self.title_entry(state='disabled')
+                    self.title_entry.config(state='disabled')
                     self.usepreviousTitle_button.config(state='disabled')
 
                 self.volumeNo_entry.config(state='disabled')
