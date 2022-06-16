@@ -589,7 +589,7 @@ class carrierEntry(tk.Frame):
             self.catid_entry.delete(0, tk.END)
             self.catid_entry.focus_set()
         else:
-            self.title_entry(state='normal')
+            self.title_entry.config(state='normal')
             self.usepreviousTitle_button.config(state='normal')
             self.title_entry.delete(0, tk.END)
             self.title_entry.focus_set()
