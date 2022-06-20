@@ -155,7 +155,7 @@ Defines the format of the output report that is generated  by IsoBuster. The for
 Location of isoBuster (installation instructions for Isobuster can be found [here](./setupIsobuster.md)). Example:
 
 ```xml
-<isoBusterExe>C:\Program Files (x86)\Smart Projects\IsoBuster\IsoBuster.exe</isoBusterExe>
+<isoBusterExe>C:\Program Files\Smart Projects\IsoBuster\IsoBuster.exe</isoBusterExe>
 ```
 
 If all went well, Ipmlab will now be ready to use!

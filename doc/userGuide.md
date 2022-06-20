@@ -1,10 +1,12 @@
-# Iromlab User Guide
+# Ipmlab User Guide
 
-This User Guide assumes that Iromlab and its dependencies have been installed and configure. If this is not the case, consult the [Setup Guide](./setupGuide.md) first.
+This User Guide assumes that Ipmlab and its dependencies have been installed and configure. If this is not the case, consult the [Setup Guide](./setupGuide.md) first.
+
+<!-- TODO update/add screenshots once UI is finalized -->
 
 ## Getting started
 
-Before launching Iromlab, switch on the Nimbie disc robot and wait about 30 seconds for it to initialise (if you don't do this Iromlab will not recognise the Nimbie's optical drive, and exit with an error message). Then double-click on Iromlab's Desktop icon. If all goes well the following window appears:
+Launchi Ipmlab by double-clicking on the Ipmlab Desktop icon. If all goes well the following window appears:
 
 ![](./img/iromStartup.png)
 
@@ -12,15 +14,15 @@ Upon startup, you have three options:
 
 * Create a *New* batch (see below)
 * *Open* an existing batch
-* *Exit* Iromlab
+* *Quit* Ipmlab
 
 ## Create a batch
 
-Let's create a new batch. Click on the top-left *New* button. Iromlab will respond with:
+Let's create a new batch. Click on the top-left *New* button. Ipmlab will respond with:
 
 ![](./img/iromCreatedBatch.png)
 
-Now press *OK*. The Iromlab window now changes to: 
+Now press *OK*. The Ipmlab window now changes to: 
 
 ![](./img/iromBatchCreated.png)
 
@@ -28,7 +30,7 @@ The console widget at the bottom shows the full path to the newly created batch 
 
 ### Naming of batches
 
-The batch name is automatically generated. It contains of a prefix (defined by the *prefixBatch* variable in Iromlab's configuration file), followed by a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). This ensures that batch names are always unique if Iromlab is run on different machines in parallel.
+The batch name is automatically generated. It contains of a prefix (defined by the *prefixBatch* variable in Ipmlab's configuration file), followed by a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). This ensures that batch names are always unique if Ipmlab is run on different machines in parallel.
 
 ## Process a disc
 
@@ -43,7 +45,7 @@ We start by entering the required fields:
 * *PPN* is the PPN that is associated with the carrier (here: *155658050*).
 * Leave *Volume number* at the default value of *1* (the assignment of volume numbers and how they are related to carrier type is explained further below).
 
-Now press the *Submit* button. Iromlab now tries to look up up the entered *PPN* in the catalogue. If a matching record is found it will display the corresponding title, and ask for confirmation:
+Now press the *Submit* button. Ipmlab now tries to look up up the entered *PPN* in the catalogue. If a matching record is found it will display the corresponding title, and ask for confirmation:
 
 ![](./img/iromConfirmTitle.png)
 
@@ -51,7 +53,7 @@ If the displayed title doesn't match your disc (because you accidentally entered
 
 ![](./img/loadDisc.png)
 
-Now load the first disc in the Nimbie loader by placing it on top of the three white loader wheels. After that, press *OK*. The details (*PPN*, title) of the carrier are added as an entry to the widget in the centr of the *Iromlab* window:  
+Now load the first disc in the Nimbie loader by placing it on top of the three white loader wheels. After that, press *OK*. The details (*PPN*, title) of the carrier are added as an entry to the widget in the centr of the *Ipmlab* window:  
 
 ![](./img/irompostsubmit.png)
 
@@ -69,33 +71,33 @@ After some seconds the Nimbie starts loading the disc. The processing of each di
 
 In order to process additional discs, simply repeat the steps from the previous section for each disc. For multi-volume PPNs you can use the *Use previous* button. After pressing it, you will see the most recently submitted *PPN* in the *PPN* entry widget, and the *Volume number* widget increases the previously entered value by 1.
 
-You can add new discs while the Nimbie is busy processing a disc; in fact you can keep adding discs until the disc loader is full (which is at 30 discs by default, and 100 if the extension rods are used). For each disc, Iromlab creates a *job file* that contains the fields that were entered by the operator (PPN, volume number, carrier type). The job file is then placed in a ["first in first out"](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)) (FIFO)  queue. The job files are physically written to the *jobs* directory inside the batch.
+You can add new discs while the Nimbie is busy processing a disc; in fact you can keep adding discs until the disc loader is full (which is at 30 discs by default, and 100 if the extension rods are used). For each disc, Ipmlab creates a *job file* that contains the fields that were entered by the operator (PPN, volume number, carrier type). The job file is then placed in a ["first in first out"](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)) (FIFO)  queue. The job files are physically written to the *jobs* directory inside the batch.
 
-**Important:** you should *never* modify any of the files inside the *jobs* folder in *any* way. This includes opening them in a text editor and re-saving them. This is because Iromlab uses the timestamps of the job files (their creation times) to establish the processing order. Modifying a job file will change its timestamp, and mess up the processing order as a result.
+**Important:** you should *never* modify any of the files inside the *jobs* folder in *any* way. This includes opening them in a text editor and re-saving them. This is because Ipmlab uses the timestamps of the job files (their creation times) to establish the processing order. Modifying a job file will change its timestamp, and mess up the processing order as a result.
 
 ## Finalize a batch
 
-When you're done entering new discs, press the *Finalize* button at the top of the Iromlab window. This will trigger a confirmation dialog:
+When you're done entering new discs, press the *Finalize* button at the top of the Ipmlab window. This will trigger a confirmation dialog:
 
 ![](./img/finalize.png)
 
-Then press *Yes*. Iromlab now adds a special "End Of Batch" job to the queue. The *Submit* button will now be deactivated, you you won't be able to add new  discs from this point onward: 
+Then press *Yes*. Ipmlab now adds a special "End Of Batch" job to the queue. The *Submit* button will now be deactivated, you you won't be able to add new  discs from this point onward: 
 
 ![](./img/postFinalize.png)
 
-Meanwhile, Iromlab will continue processing the remaining discs / jobs that are in the queue. After the last disc is finished, you will see:
+Meanwhile, Ipmlab will continue processing the remaining discs / jobs that are in the queue. After the last disc is finished, you will see:
 
 ![](./img/finished.png)
 
-After pressing *OK*, Iromlab will reset to its initial state. You can now create a new batch, open an existing one, or exit *Iromlab*.
+After pressing *OK*, Ipmlab will reset to its initial state. You can now create a new batch, open an existing one, or exit *Ipmlab*.
 
-## Exiting Iromlab
+## Exiting Ipmlab
 
-If you press the *Exit* while a batch is being processed, Iromlab will finish the processing of the current disc. It will then close. The batch can be finished later by opening it (see below).
+If you press the *Exit* while a batch is being processed, Ipmlab will finish the processing of the current disc. It will then close. The batch can be finished later by opening it (see below).
 
 ## Opening an existing batch
 
-After pressing the *Open* button upon startup you will see a file dialog that shows all batch folders in Iromlab's root directory (*rootDir*):
+After pressing the *Open* button upon startup you will see a file dialog that shows all batch folders in Ipmlab's root directory (*rootDir*):
 
 ![](./img/iromlabOpenBatch.png)
 
@@ -103,7 +105,7 @@ This allows you to continue a batch that was interrupted with the *Exit* command
 
 ## startOnFinalize option
 
-By default, Iromlab starts processing discs shortly after the first disc has been submitted. This means that the actual imaging and ripping takes place in parallel to entering the carriers and their associated identifiers or titles. It is possible to change this behaviour by setting the value of the *startOnFinalize* option in Iromlab's configuration file to *True* (the default is *False*):
+By default, Ipmlab starts processing discs shortly after the first disc has been submitted. This means that the actual imaging and ripping takes place in parallel to entering the carriers and their associated identifiers or titles. It is possible to change this behaviour by setting the value of the *startOnFinalize* option in Ipmlab's configuration file to *True* (the default is *False*):
 
     <startOnFinalize>False</startOnFinalize>
 
@@ -111,11 +113,11 @@ If *startOnFinalize* is activated like this, processing is delayed until the use
 
 ## enableSocketAPI option
 
-The *enableSocketAPI* option allows one to send *PPN* or *Title* values to the corresponding Iromlab entry widgets from an external application through a [socket connection](https://en.wikipedia.org/wiki/Network_socket). It can be activated by setting the value of *enableSocketAPI* in the configuration file to *True*:
+The *enableSocketAPI* option allows one to send *PPN* or *Title* values to the corresponding Ipmlab entry widgets from an external application through a [socket connection](https://en.wikipedia.org/wiki/Network_socket). It can be activated by setting the value of *enableSocketAPI* in the configuration file to *True*:
 
     <enableSocketAPI>False</enableSocketAPI>
 
-When this option is activated, Iromlab launches a server that listens on a user-defined host address (default: localhost) and port number (default: 65432) combination for incoming requests. This is particularly useful if the *PPN* identifiers or titles are entered from some external database application. In order to communicate with Iromlab, this application needs to be able to send socket requests. This [Iromlab socket client demo](https://github.com/KBNLresearch/iromlab-socketclient) shows how to do this in Python.
+When this option is activated, Ipmlab launches a server that listens on a user-defined host address (default: localhost) and port number (default: 65432) combination for incoming requests. This is particularly useful if the *PPN* identifiers or titles are entered from some external database application. In order to communicate with Ipmlab, this application needs to be able to send socket requests. This [Ipmlab socket client demo](https://github.com/KBNLresearch/iromlab-socketclient) shows how to do this in Python.
 
 
 ## All discs of a PPN must be in same batch
@@ -124,21 +126,21 @@ All discs that belong to one *PPN* must *always* be in the same batch. This is b
 
 ## How to avoid synchronisation errors
 
-It is absolutely vital that Iromlab's job queue and the "physical" queue (i.e. the stack of discs in the Nimbie loader) are perfectly synchronised at all times. For example, if an operator mistakenly submits a disc entry to the job queue without loading an actual disc, the result will be an offset between the batch-level metadata (the batch manifest) and the actual disc images/rips. To minimise the risk of such errors, make sure to:
+It is absolutely vital that Ipmlab's job queue and the "physical" queue (i.e. the stack of discs in the Nimbie loader) are perfectly synchronised at all times. For example, if an operator mistakenly submits a disc entry to the job queue without loading an actual disc, the result will be an offset between the batch-level metadata (the batch manifest) and the actual disc images/rips. To minimise the risk of such errors, make sure to:
 
 1. Perform all steps that are needed to process a disc in a fixed order (i.e. the order suggested above).
-2. Most importantly, *only* load the disc once Iromlab displays the *Load disc* dialog.
+2. Most importantly, *only* load the disc once Ipmlab displays the *Load disc* dialog.
 3. Pay special attention to only load one disc at a time (look out for discs that are 'stuck' together)
 
 It's probably impossible to eliminate synchronisation errors altogether. Since batches with synchronisation errors have to be re-processed from scratch, it is a good idea to limit the size of a batch somewhat. For example, in case of a synchronisation error in a batch with hundreds of discs that took a whole day to create, a whole day's work will have to be re-done. For a smaller batch that only took two hours, much less time will be lost.  
 
 ## Processing discs that are not part of the KB collection
 
-For discs that are not part of the KB collection, it is recommended to set the *enablePPNLookup* flag in Iromlab's configuration file to *False*:
+For discs that are not part of the KB collection, it is recommended to set the *enablePPNLookup* flag in Ipmlab's configuration file to *False*:
 
     <enablePPNLookup>False</enablePPNLookup>
 
-With this setting, the *PPN* widget in the Iromlab interface is replaced by a *Title* entry widget. You can use it to manually enter a title (or other description) for each disc:
+With this setting, the *PPN* widget in the Ipmlab interface is replaced by a *Title* entry widget. You can use it to manually enter a title (or other description) for each disc:
 
 ![](./img/iromTitlewidget.png)
 
@@ -175,11 +177,11 @@ Each batch contains a log file *batch.log*. It contains detailed information abo
 
 ## The version file
 
-Each batch contains a file *version.txt*, which holds the Iromlab version number (introduced in *Iromlab* 1.0.0; batches from earlier *Iromlab* versions don't have a version file).
+Each batch contains a file *version.txt*, which holds the Ipmlab version number (introduced in *Ipmlab* 1.0.0; batches from earlier *Ipmlab* versions don't have a version file).
 
 ## Created files for each disc
 
-For each disc, Iromlab creates a folder in the batch folder. The name of each folder is (again) a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). Each of these folders contain the following files:
+For each disc, Ipmlab creates a folder in the batch folder. The name of each folder is (again) a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). Each of these folders contain the following files:
 
 * *cd-info.log* - output of the cd-info tool. Contains general information about the disc, including its sector layout.
 * *xxx.iso* - ISO image (only if disc contains a data session).
@@ -191,7 +193,7 @@ For each disc, Iromlab creates a folder in the batch folder. The name of each fo
 
 ## How to use the Volume number field
 
-The correct use of the *Volume number* field in the Iromlab interface needs some explaining. First of, it is important to understand that one *PPN* (catalogue entry) can contain multiple discs. Moreover, there can be multiple carrier types inside one *PPN*. Here's an example:
+The correct use of the *Volume number* field in the Ipmlab interface needs some explaining. First of, it is important to understand that one *PPN* (catalogue entry) can contain multiple discs. Moreover, there can be multiple carrier types inside one *PPN*. Here's an example:
 
 ![](./img/cataloguePPN.png)
 
@@ -213,7 +215,7 @@ The *Volume number* values apply to discs *within each PPN*. So, in the above ex
 
 ## Troubleshooting
 
-### Iromlab shows "*X* is not a valid optical drive" error on startup
+### Ipmlab shows "*X* is not a valid optical drive" error on startup
 
 Example:
 
@@ -222,9 +224,9 @@ Example:
 Possible causes:
 
 * Disc robot is not switched on.
-* Iromlab was launched too quickly after switching on the disc robot (typically it takes about 30 seconds for the drive to be recognised). **Solution:** wait a few seconds and then lauch Iromlab again.
-* *cdDriveLetter* in configuration file is not configured properly (see [setup and configuration guide](./setupIromlab.md)).
-* If you connected a removable storage device (e.g. a USB-connected hard disk) before switching on the disc robot, that device may be mapped to *cdDriveLetter*, and the disc robot will be mapped to another value. **Solution:** disconnect the storage device, and log out of your Windows session. Then log in again, switch on the disc robot and then launch Iromlab. 
+* Ipmlab was launched too quickly after switching on the disc robot (typically it takes about 30 seconds for the drive to be recognised). **Solution:** wait a few seconds and then lauch Ipmlab again.
+* *cdDriveLetter* in configuration file is not configured properly (see [setup and configuration guide](./setupIpmlab.md)).
+* If you connected a removable storage device (e.g. a USB-connected hard disk) before switching on the disc robot, that device may be mapped to *cdDriveLetter*, and the disc robot will be mapped to another value. **Solution:** disconnect the storage device, and log out of your Windows session. Then log in again, switch on the disc robot and then launch Ipmlab. 
 
 
 <!-- You can inspect the batch folder with Windows Explorer:
@@ -234,7 +236,7 @@ Possible causes:
 The folder contains the following items:
 
 - file *manifest.csv* - a comma-delimited text file that will contain basic metadata about each carrier 
-- file *batch.log* - a log file with detailed information on all sub-processes that are run as part of Iromlab
+- file *batch.log* - a log file with detailed information on all sub-processes that are run as part of Ipmlab
 - folder *jobs* -->
 
 
