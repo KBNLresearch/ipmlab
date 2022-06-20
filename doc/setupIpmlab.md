@@ -26,6 +26,8 @@ The above steps will install Ipmlab and all required libraries.
 
 ## Configuration
 
+<!-- TODO: add screenshots for this section (3x) -->
+
 Before Ipmlab is ready for use you need to configure it. As a first step, locate the *ipmlab-configure.exe* application. In case of a global install you can find it directly under the *Scripts* directory of the *Python* installation folder:
 
 ![](./img/ipmlab-configure-location.png)
