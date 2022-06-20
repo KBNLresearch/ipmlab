@@ -64,13 +64,11 @@ If you open this location on your machine with Window Explorer you will find tha
 
 ![](./img/userDir.png)
 
-Open the folder, and you will see this:
-
-![](./img/userDir2.png)
+You will find the configuration file *config.xml* inside this folder.
 
 ## Editing the configuration file
 
-Now open the configuration file *config.xml* in a text editor (e.g. Notepad), or alternatively use a dedicated XML editor. Carefully go through all the variables (which are defined as XML elements), and modify them if necessary. Here is an explanation of all variables.
+Now open the configuration file *config.xml* in a text editor (e.g. Notepad), or, alternatively, use a dedicated XML editor. Carefully go through all the variables (which are defined as XML elements), and modify them if necessary. Here is an explanation of all variables.
 
 ### driveLetter
 
