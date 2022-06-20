@@ -21,12 +21,6 @@ as ipmlab.py/ ipmlab.exe!
 <!-- prefix that is used to create batch names -->
 <prefixBatch>kb</prefixBatch>
 
-<!-- maximum number of seconds that ipmlab will wait while trying to load a new disc 
-this will prevent ipmlab from entering an infinite loop if e.g. a disc cannot be loaded
-properly because its is badly damaged
--->
-<secondsToTimeout>20</secondsToTimeout>
-
 <!-- host address that is used if socket API is enabled. Use 127.0.0.1 for localhost
 -->
 <socketHost>127.0.0.1</socketHost>
@@ -54,8 +48,7 @@ Important! Must be wrapped inside a CDATA section: https://en.wikipedia.org/wiki
 <!-- Below items point to the locations of all executables that are wrapped by ipmlab
 -->
 
-<!-- location of isoBuster -->
-<isoBusterExe>C:\Program Files (x86)\Smart Projects\IsoBuster\IsoBuster.exe</isoBusterExe>
-
+<!-- location of isoBuster (note: 64-bit Isobuster 5.0 and more recent) -->
+<isoBusterExe>C:\Program Files\Smart Projects\IsoBuster\IsoBuster.exe</isoBusterExe>
 
 </config>
