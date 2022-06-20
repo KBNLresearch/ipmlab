@@ -44,4 +44,5 @@ After these changes Isobuster will work correctly when called from Ipmlab.
 
 | | |
 |:--|:--|
-|[Back to Setup Guide](./setupGuide.md)|[>> Next: dBpoweramp setup and configuration](./setupDbpoweramp.md)|
+|[Back to Setup Guide](./setupGuide.md)|[>> Next: Ipmlab setup and configuration](./setupIpmlab.md)|
+
