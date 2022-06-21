@@ -362,12 +362,15 @@ class carrierEntry(tk.Frame):
 
             msg = "Found title:\n\n'" + title + "'.\n\n Is this correct?"
             if tkMessageBox.askyesno("Confirm", msg):
+                msg = ("Please load medium ('" + title + "', volume " + str(volumeNo) +
+                       ") and press 'OK'")
+                tkMessageBox.showinfo("Load medium", msg)
                 while not mediumLoaded:
                     try:
                         _ = os.listdir(config.driveLetter + ":\\")
                         mediumLoaded = True
                     except(PermissionError, OSError):
-                        msg = ("no medium found, please load medium and press 'OK'")
+                        msg = ("No medium found, please load medium and press 'OK'")
                         tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
