@@ -234,8 +234,8 @@ class carrierEntry(tk.Frame):
 
     def on_finalise(self, event=None):
         """Finalise batch after user pressed finalise button"""
-        msg = ("This will finalise the current batch.\n After finalising no further"
-               "media can be \nadded. Are you really sure you want to do this?")
+        msg = ("This will finalise the current batch.\n After finalising no further "
+               "media can be added. Are you sure you want to do this?")
         if tkMessageBox.askyesno("Confirm", msg):
             self.bFinalise.config(state='disabled')
             self.submit_button.config(state='disabled')
