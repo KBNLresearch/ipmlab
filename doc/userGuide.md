@@ -87,7 +87,7 @@ This allows you to continue a batch that was interrupted with the *Quit* command
 The *enableSocketAPI* option allows one to send *PPN* or *Title* values to the corresponding Ipmlab entry widgets from an external application through a [socket connection](https://en.wikipedia.org/wiki/Network_socket). It can be activated by setting the value of *enableSocketAPI* in the configuration file to *True*:
 
 ```xml
-<enableSocketAPI>False</enableSocketAPI>
+<enableSocketAPI>True</enableSocketAPI>
 ```
 
 When this option is activated, Ipmlab launches a server that listens on a user-defined host address (default: localhost) and port number (default: 65432) combination for incoming requests. This is particularly useful if the *PPN* identifiers or titles are entered from some external database application. In order to communicate with Ipmlab, this application needs to be able to send socket requests. This [Iromlab socket client demo](https://github.com/KBNLresearch/iromlab-socketclient) shows how to do this in Python.
