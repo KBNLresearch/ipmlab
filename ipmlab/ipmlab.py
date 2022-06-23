@@ -126,7 +126,6 @@ class carrierEntry(tk.Frame):
                                     'PPN',
                                     'volumeNo',
                                     'title',
-                                    'volumeID',
                                     'mediaType',
                                     'deviceType',
                                     'success'])

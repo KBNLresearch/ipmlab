@@ -2,41 +2,16 @@
 """This module contains the code that does the actual imaging
 """
 
-import sys
 import os
-import struct
 import win32api
-import win32file
-import winioctlcon
 import glob
 import csv
 import hashlib
 import logging
-import platform
-if platform.system() == "Windows":
-    import pythoncom
-    import wmi
 from . import config
 from . import isobuster
 from . import mdo
 from . import mediuminfo
-
-
-def mediumLoaded(driveName):
-    """Returns True if medium is loaded (also if blank/unredable), False if not"""
-
-    # Use CoInitialize to avoid errors like this:
-    # http://stackoverflow.com/questions/14428707/python-function-is-unable-to-run-in-new-thread
-    pythoncom.CoInitialize()
-    c = wmi.WMI()
-    foundDriveName = False
-    loaded = False
-    for cdrom in c.Win32_CDROMDrive():
-        if cdrom.Drive == driveName:
-            foundDriveName = True
-            loaded = cdrom.MediaLoaded
-
-    return(foundDriveName, loaded)
 
 
 def generate_file_md5(fileIn):
@@ -99,21 +74,6 @@ def checksumDirectory(directory):
 
     return wroteChecksums
 
-def fixDfXMLFileNames(directory):
-    """
-    Replace whitespace characters in Isobuster dfxml file names
-    with underscores
-    """
-
-    # All DFXML files in directory
-    dfxmlFiles = glob.glob(directory + "/isobuster-report*.xml")
-
-    for file in dfxmlFiles:
-        nameOld = os.path.basename(file)
-        nameNew = nameOld.replace(" ", "_")
-        fileNew = os.path.join(directory, nameNew)
-        os.rename(file, fileNew)
-
 
 def processMedium(carrierData):
     """Process one medium/carrier"""
@@ -142,7 +102,7 @@ def processMedium(carrierData):
     deviceType = mediuminfo.getDeviceInfo(drive, driveHandle)[0]
 
     logging.info('*** Extracting data ***')
-    resultIsoBuster = isobuster.extractData(dirMedium)
+    resultIsoBuster = isobuster.extractData(dirMedium, jobID)
     statusIsoBuster = resultIsoBuster["log"].strip()
 
     if statusIsoBuster != "0":
@@ -152,10 +112,6 @@ def processMedium(carrierData):
     logging.info(''.join(['isobuster command: ', resultIsoBuster['cmdStr']]))
     logging.info(''.join(['isobuster-status: ', str(resultIsoBuster['status'])]))
     logging.info(''.join(['isobuster-log: ', statusIsoBuster]))
-    logging.info(''.join(['volumeIdentifier: ', str(resultIsoBuster['volumeIdentifier'])]))
-
-    # Replace any white space characters in Isobuster dfxml files with underscores
-    fixDfXMLFileNames(dirMedium)
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
@@ -177,18 +133,11 @@ def processMedium(carrierData):
 
     # Create comma-delimited batch manifest entry for this carrier
 
-    # VolumeIdentifier only defined for ISOs, not for pure audio CDs and CD Interactive!
-    try:
-        volumeID = resultIsoBuster['volumeIdentifier'].strip()
-    except Exception:
-        volumeID = ''
-
     # Put all items for batch manifest entry in a list
     rowBatchManifest = ([jobID,
                          carrierData['PPN'],
                          carrierData['volumeNo'],
                          carrierData['title'],
-                         volumeID,
                          mediaType,
                          deviceType,
                          str(success)])

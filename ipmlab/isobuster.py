@@ -8,11 +8,12 @@ from . import config
 from . import shared
 
 
-def extractData(writeDirectory):
+def extractData(writeDirectory, imageFileBaseName):
     """Extract data to disk image"""
 
-    # Temporary name for image file; base name
-    imageFileTemp = os.path.join(writeDirectory, "disc.img")
+    # Image file name
+    imageFile = os.path.join(writeDirectory, imageFileBaseName + '.img')
+    # Log file
     logFile = os.path.join(writeDirectory, "isobuster.log")
     #reportFile = os.path.join(writeDirectory, "isobuster-report-<%FN>.xml")
     reportFile = os.path.join(writeDirectory, "isobuster-report.xml")    
@@ -22,7 +23,7 @@ def extractData(writeDirectory):
 
     args = [config.isoBusterExe]
     args.append("".join(["/d:", config.driveLetter, ":"]))
-    args.append("".join(["/ei:", imageFileTemp]))
+    args.append("".join(["/ei:", imageFile]))
     args.append("/et:u")
     args.append("/ep:oea")
     args.append("/ep:npc")
@@ -54,18 +55,6 @@ def extractData(writeDirectory):
         fLog.write(log)
     fLog.close()
 
-    # TODO, remove volumeLabel later
-    volumeLabel = ''
-
-    if volumeLabel != '':
-        # Rename image file using volumeLabel as a base name
-        # Any spaces in volumeLabel are replaced with dashes
-        try:
-            imageFile = os.path.join(writeDirectory, volumeLabel.replace(' ', '-') + '.img')
-            os.rename(imageFileTemp, imageFile)
-        except:
-            pass
-
     # All results to dictionary
     dictOut = {}
     dictOut["cmdStr"] = cmdStr
@@ -73,6 +62,5 @@ def extractData(writeDirectory):
     dictOut["stdout"] = out
     dictOut["stderr"] = err
     dictOut["log"] = log
-    dictOut["volumeIdentifier"] = volumeLabel
 
     return dictOut
