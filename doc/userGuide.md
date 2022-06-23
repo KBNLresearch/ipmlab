@@ -129,19 +129,18 @@ jobID,PPN,volumeNo,title,volumeID,mediaType,deviceType,success
 2. *PPN* - identifier of the physical item in the KB Collection to which this carrier belongs. For the KB case this is the PPN identifier in the KB catalogue. If *enablePPNLookup* is set to *False*, it will be an empty (zero-length) string.
 3. *volumeNo* - for intellectual entities that span multiple carriers, this defines the volume number (1 for single-volume items).
 4. *title* - text string with the title of the carrier (or the publication it is part of). If *enablePPNLookup* is *True* the title field is extracted from the KB catalogue record. If *enablePPNLookup* is *False* the manually entered *Title* value is used.
-5. *volumeID* - text string, extracted from ???, empty if unknown.
-6. *mediaType* - if available, device media type as established using the Windows API. Uses [enumeration described here](https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ne-winioctl-media_type).
-7. *deviceType* - if available, device type as established using the Windows API. Uses [enumeration described here](https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ns-winioctl-get_media_types).
-8. *success* - True/False flag that indicates status of *ipmlab*'s imaging process. 
+5. *mediaType* - if available, device media type as established using the Windows API. Uses [enumeration described here](https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ne-winioctl-media_type).
+6. *deviceType* - if available, device type as established using the Windows API. Uses [enumeration described here](https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ns-winioctl-get_media_types).
+7. *success* - True/False flag that indicates status of *ipmlab*'s imaging process. 
 
 The first line of the file contains column headers.
 
 Example:
 
 ```csv
-jobID,PPN,volumeNo,title,volumeID,mediaType,deviceType,success
-ce5eca7e-f179-11ec-853c-0800272c26ff,144082667,1,INP spellingschijf,,F3_1Pt44_512,,True
-d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,,F3_1Pt44_512,,True
+jobID,PPN,volumeNo,title,mediaType,deviceType,success
+ce5eca7e-f179-11ec-853c-0800272c26ff,144082667,1,INP spellingschijf,F3_1Pt44_512,,True
+d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,F3_1Pt44_512,,True
 ```
 
 ## The log file
@@ -156,7 +155,7 @@ Each batch contains a file *version.txt*, which holds the Ipmlab version number.
 
 For each carrier, Ipmlab creates a folder in the batch folder. The name of each folder is (again) a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). Each of these folders contain the following files:
 
-* *xxx.img - image file.
+* *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.img* - image file (file name follows Job ID).
 * *isobuster.log* - log file with Isobuster log error code; see *Log Error* section in the [Isobuster documentation](https://www.isobuster.com/help/use_of_command_line_parameters) (only if disc contains a data session).
 * *isobuster-report.xml* - report file in [Digital Forensics XML](https://en.wikipedia.org/wiki/Digital_Forensics_XML) format; includes listing of all files inside the disc image (only if file system is supported by IsoBuster).
 * *checksums.sha512* - checksum file with SHA-512 hashes of all the above files in this directory.
