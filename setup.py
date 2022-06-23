@@ -26,8 +26,6 @@ def find_version(*file_paths):
 INSTALL_REQUIRES = [
     'requests',
     'setuptools',
-    'wmi',
-    'lxml',
     'pypiwin32'
 ]
 PYTHON_REQUIRES = '>=3.2'
@@ -39,9 +37,8 @@ setup(name='ipmlab',
       install_requires=INSTALL_REQUIRES,
       python_requires=PYTHON_REQUIRES,
       platforms=['Windows'],
-      description='Image and Rip Optical Media Like A Boss',
-      long_description='Loader software for automated imaging of optical media with Nimbie \
-        disc robot ',
+      description='Image Portable Media Like A Boss',
+      long_description='Workflow software for automated imaging of portable storage media',
       author='Johan van der Knijff',
       author_email='johan.vanderknijff@kb.nl',
       maintainer='Johan van der Knijff',
