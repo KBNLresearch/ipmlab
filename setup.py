@@ -27,7 +27,6 @@ INSTALL_REQUIRES = [
     'requests',
     'setuptools',
     'wmi',
-    'isolyzer>=1.3.1',
     'lxml',
     'pypiwin32'
 ]

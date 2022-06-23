@@ -14,16 +14,13 @@ import os
 import csv
 import imp
 import time
-import glob
 import xml.etree.ElementTree as ETree
 import threading
 import uuid
 import logging
-import json
 import platform
 import queue
-if platform.system() == "Windows":
-    import win32api
+import win32api
 import tkinter as tk
 from tkinter import filedialog as tkFileDialog
 from tkinter import scrolledtext as ScrolledText

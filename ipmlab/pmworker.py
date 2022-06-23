@@ -3,7 +3,6 @@
 """
 
 import os
-import win32api
 import glob
 import csv
 import hashlib
