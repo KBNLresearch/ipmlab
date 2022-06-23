@@ -9,7 +9,7 @@ Before you start using Ipmlab, make sure that Windows cannot write to the remova
 For example, Windows 10 automatically [writes a "System Volume Information" folder](https://superuser.com/questions/1199823/how-to-prevent-creation-of-system-volume-information-folder-in-windows-10-for) to any writable storage media
 upon insertion (including floppy disks and USB thumb drives). To prevent this from happening, *never* connect these media directly to the computer, but always use a [forensic write blocker](https://en.wikipedia.org/wiki/Forensic_disk_controller) (e.g. [this one](https://security.opentext.com/tableau/hardware/details/t8u) for USB-connected devices).
 
-In addition, for 3.5" floppy disks, ensure the sliding write-protect tab (upper-right corner) is in the open (= protected) position.
+In addition, for 3.5" floppy disks, ensure the sliding write-protect tab (upper-right corner) is in the open (= protected) position before placing them in the reader.
 
 ---
 
