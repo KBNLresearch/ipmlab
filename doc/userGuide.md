@@ -2,6 +2,17 @@
 
 This User Guide assumes that Ipmlab and its dependencies have been installed and configure. If this is not the case, consult the [Setup Guide](./setupGuide.md) first.
 
+---
+**NOTE ON WRITE-BLOCKING**
+
+Before you start using Ipmlab, make sure that Windows cannot write to the removable media you want to image! 
+For example, Windows 10 automatically [writes a "System Volume Information" folder](https://superuser.com/questions/1199823/how-to-prevent-creation-of-system-volume-information-folder-in-windows-10-for) to any writable storage media
+upon insertion (including floppy disks and USB thumb drives). To prevent this from happening, *never* connect these media directly to the computer, but always use a [forensic write blocker](https://en.wikipedia.org/wiki/Forensic_disk_controller) (e.g. [this one](https://security.opentext.com/tableau/hardware/details/t8u) for USB-connected devices).
+
+In addition, for 3.5" floppy disks, ensure the sliding write-protect tab (upper-right corner) is in the open (= protected) position.
+
+---
+
 ## Getting started
 
 Launchi Ipmlab by double-clicking on the Ipmlab Desktop icon. If all goes well the following window appears:
