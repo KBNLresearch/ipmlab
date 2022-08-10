@@ -55,12 +55,20 @@ class carrierEntry(tk.Frame):
         self.volumeNoOld = ""
         self.carrierNumber = 0
         self.t1 = None
+        self.t2 = None
         self.build_gui()
 
     def on_quit(self, event=None):
         """Wait until the medium that is currently being pocessed has
         finished, and quit (batch can be resumed by opening it in the File dialog)
         """
+
+        ## TEST
+        print("config.batchIsOpen", config.batchIsOpen)
+        print("config.readyToStart", config.readyToStart)
+        print("config.processingMedium", config.processingMedium)
+        print("config.enableSocketAPI", config.enableSocketAPI)
+        ## TEST
         config.quitFlag = True
         self.bQuit.config(state='disabled')
         if config.batchIsOpen:
@@ -81,12 +89,28 @@ class carrierEntry(tk.Frame):
                 time.sleep(2)
             # Wait 1 more second to avoid race condition
             time.sleep(2)
+
+            ## TEST
+            ## GUI Window freezes at this point
+            print("About to join socket API process")
+            ## TEST
             if config.enableSocketAPI:
                 self.t2.join()
+
+            ## TEST
+            print("About to remove handlers")
+            ## TEST
+
             handlers = self.logger.handlers[:]
+
             for handler in handlers:
                 handler.close()
                 self.logger.removeHandler(handler)
+
+            ## TEST
+            print("Removed handlers")
+            ## TEST
+
             msg = 'User pressed Quit, click OK to close ipmlab'
             tkMessageBox.showinfo("Quit", msg)
             os._exit(0)
@@ -860,9 +884,9 @@ def main():
     if config.enableSocketAPI:
         q = queue.Queue()
         myServer = server()
-        t2 = threading.Thread(target=server.start,
+        myCarrierEntry.t2 = threading.Thread(target=server.start,
                               args=[myServer, config.socketHost, config.socketPort, q])
-        t2.start()
+        myCarrierEntry.t2.start()
 
     while True:
         if config.enableSocketAPI:
