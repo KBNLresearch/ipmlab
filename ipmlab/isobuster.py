@@ -25,7 +25,7 @@ def extractData(writeDirectory, imageFileBaseName):
     args.append("".join(["/d:", config.driveLetter, ":"]))
     args.append("".join(["/ei:", imageFile]))
     args.append("/et:u")
-    args.append("/ep:oea")
+    args.append("/ep:oez")
     args.append("/ep:npc")
     args.append("/c")
     args.append("/m")
