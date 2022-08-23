@@ -799,8 +799,7 @@ def getConfiguration():
     config.rootDir = findElementText(configElt, './config/rootDir')
     config.tempDir = findElementText(configElt, './config/tempDir')
     config.prefixBatch = findElementText(configElt, './config/prefixBatch')
-    config.reportFormatString = findElementText(configElt, './config/reportFormatString')
-    config.isoBusterExe = findElementText(configElt, './config/isoBusterExe')
+    config.aaruBin = findElementText(configElt, './config/aaruBin')
  
     # For below configuration variables, use default value if value cannot be
     # read from config file (this ensures v1 will work with old config files)
@@ -830,13 +829,13 @@ def getConfiguration():
     # Normalise all file paths
     config.rootDir = os.path.normpath(config.rootDir)
     config.tempDir = os.path.normpath(config.tempDir)
-    config.isoBusterExe = os.path.normpath(config.isoBusterExe)
+    config.aaruBin = os.path.normpath(config.aaruBin)
 
     #"""Disable for Linux testing TODO re-enable in production version!!
     # Check if all files and directories exist, and exit if not
     checkDirExists(config.rootDir)
     checkDirExists(config.tempDir)
-    checkFileExists(config.isoBusterExe)
+    checkFileExists(config.aaruBin)
 
     # Check that driveLetter points to an existing drive
     # Adapted from https://stackoverflow.com/a/827397/1209004

@@ -10,13 +10,8 @@ from . import config
 def extractData(writeDirectory, imageFileBaseName):
     """Extract data to disk image"""
 
-    # TODO read from config
-    config.aaruBin =  os.path.normpath("W:/aaru-5.3.1_windows_x64/aaru.exe")
-
     # Image file name
     imageFile = os.path.join(writeDirectory, imageFileBaseName + '.img')
-
-    # W:\aaru-5.3.1_windows_x64\aaru m dump E: W:\test-aaru\bullsh.img
 
     args = [config.aaruBin]
     args.append("m")

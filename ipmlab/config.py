@@ -4,8 +4,6 @@
 version = ""
 driveLetter = ""
 cdDeviceName = ""
-reportFormatString = ""
-isoBusterExe = ""
 aaruBin = ""
 tempDir = ""
 rootDir = ""
