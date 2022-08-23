@@ -13,17 +13,20 @@ def launchSubProcess(args):
         # Execute command line; stdout + stderr redirected to objects
         # 'output' and 'errors'.
         # Setting shell=True avoids console window poppong up with pythonw
-        p = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+        p = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE, shell=False)
         output, errors = p.communicate()
 
-        # Decode to UTF8
-        outputAsString = output.decode('utf-8')
-        errorsAsString = errors.decode('utf-8')
+        # Decode to Latin-1
+        outputAsString = output.decode('latin-1')
+        errorsAsString = errors.decode('latin-1')
 
         exitStatus = p.returncode
 
     except Exception:
         # I don't even want to to start thinking how one might end up here ...
+        ## TEST
+        raise
+        ## TEST
 
         exitStatus = -99
         outputAsString = ""

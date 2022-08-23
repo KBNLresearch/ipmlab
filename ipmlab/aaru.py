@@ -12,7 +12,7 @@ def extractData(writeDirectory, imageFileBaseName):
     """Extract data to disk image"""
 
     # TODO read from config
-    config.aaruBin =  "W:\aaru-5.3.1_windows_x64\aaru.exe"
+    config.aaruBin =  os.path.normpath("W:/aaru-5.3.1_windows_x64/aaru.exe")
 
     # Image file name
     imageFile = os.path.join(writeDirectory, imageFileBaseName + '.img')
@@ -29,6 +29,10 @@ def extractData(writeDirectory, imageFileBaseName):
     cmdStr = " ".join(args)
 
     status, out, err = shared.launchSubProcess(args)
+
+    ## TEST
+    print(out)
+    print(err)
 
     # All results to dictionary
     dictOut = {}
