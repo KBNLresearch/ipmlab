@@ -8,7 +8,7 @@ import csv
 import hashlib
 import logging
 from . import config
-from . import isobuster
+from . import aaru
 from . import mdo
 from . import mediuminfo
 
@@ -101,16 +101,15 @@ def processMedium(carrierData):
     deviceType = mediuminfo.getDeviceInfo(drive, driveHandle)[0]
 
     logging.info('*** Extracting data ***')
-    resultIsoBuster = isobuster.extractData(dirMedium, jobID)
-    statusIsoBuster = resultIsoBuster["log"].strip()
+    resultAaru = aaru.extractData(dirMedium, jobID)
+    statusAaru = resultAaru["status"]
 
-    if statusIsoBuster != "0":
+    if statusAaru != "0":
         success = False
-        logging.error("Isobuster exited with error(s)")
+        logging.error("Aaru exited with error(s)")
 
-    logging.info(''.join(['isobuster command: ', resultIsoBuster['cmdStr']]))
-    logging.info(''.join(['isobuster-status: ', str(resultIsoBuster['status'])]))
-    logging.info(''.join(['isobuster-log: ', statusIsoBuster]))
+    logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
+    logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
