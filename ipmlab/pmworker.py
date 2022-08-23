@@ -104,7 +104,7 @@ def processMedium(carrierData):
     resultAaru = aaru.extractData(dirMedium, jobID)
     statusAaru = resultAaru["status"]
 
-    if statusAaru != "0":
+    if statusAaru != 0:
         success = False
         logging.error("Aaru exited with error(s)")
 
