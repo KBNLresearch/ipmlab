@@ -13,7 +13,7 @@ def launchSubProcess(args):
         # Execute command line; stdout + stderr redirected to objects
         # 'output' and 'errors'.
         # Setting shell=True avoids console window poppong up with pythonw
-        p = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE, shell=False)
+        p = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
         output, errors = p.communicate()
 
         # Decode to Latin-1
