@@ -4,9 +4,8 @@
 import os
 import io
 import time
+import subprocess as sub
 from . import config
-from . import shared
-
 
 def extractData(writeDirectory, imageFileBaseName):
     """Extract data to disk image"""
@@ -28,17 +27,12 @@ def extractData(writeDirectory, imageFileBaseName):
     # Command line as string (used for logging purposes only)
     cmdStr = " ".join(args)
 
-    status, out, err = shared.launchSubProcess(args)
-
-    ## TEST
-    print(out)
-    print(err)
+    # Run Aaru as subprocess
+    p = sub.run(args, shell=True)
 
     # All results to dictionary
     dictOut = {}
     dictOut["cmdStr"] = cmdStr
-    dictOut["status"] = status
-    dictOut["stdout"] = out
-    dictOut["stderr"] = err
+    dictOut["status"] = p.returncode
   
     return dictOut
