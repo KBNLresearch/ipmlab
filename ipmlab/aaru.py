@@ -28,10 +28,13 @@ def extractData(writeDirectory, imageFileBaseName):
 
     if platform.system() == "Linux":
         # Unmount input device
-        sub.run(['umount', config.inDevice], shell=True)
+        sub.run(['umount', config.inDevice], shell=False)
 
     # Run Aaru as subprocess
-    p = sub.run(args, shell=True)
+    if platform.system() == "Windows":
+        p = sub.run(args, shell=True)
+    elif platform.system() == "Linux":
+         p = sub.run(args, shell=False)
 
     # All results to dictionary
     dictOut = {}
