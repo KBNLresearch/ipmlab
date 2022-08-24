@@ -7,6 +7,7 @@ import glob
 import csv
 import hashlib
 import logging
+import platform
 from . import config
 from . import aaru
 from . import mdo
@@ -94,11 +95,16 @@ def processMedium(carrierData):
     if not os.path.exists(dirMedium):
         os.makedirs(dirMedium)
 
-    logging.info('*** Establishing media type and device type ***')
-    drive = config.inDevice
-    driveHandle = mediuminfo.createFileHandle(drive)
-    mediaType = mediuminfo.getMediaType(drive, driveHandle)
-    deviceType = mediuminfo.getDeviceInfo(drive, driveHandle)[0]
+    if platform.system() == "Windows":
+        logging.info('*** Establishing media type and device type ***')
+        drive = config.inDevice
+        driveHandle = mediuminfo.createFileHandle(drive)
+        mediaType = mediuminfo.getMediaType(drive, driveHandle)
+        deviceType = mediuminfo.getDeviceInfo(drive, driveHandle)[0]
+    elif platform.system() == "Linux":
+        # TODO: determine media types for Linux (or get rid of them altogether, as Aaru seems more useful for this)
+        mediaType = None
+        deviceType = None
 
     logging.info('*** Extracting data ***')
     resultAaru = aaru.extractData(dirMedium, jobID)
