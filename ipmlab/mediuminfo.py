@@ -2,10 +2,11 @@
 
 import sys
 import struct
-import argparse
-import win32api
-import win32file
-import winioctlcon
+import platform
+if platform.system() == "Windows":
+    import win32api
+    import win32file
+    import winioctlcon
 
 """
 Functions that retrieve media and device info on a logical

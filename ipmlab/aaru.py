@@ -26,6 +26,10 @@ def extractData(writeDirectory, imageFileBaseName):
     # Command line as string (used for logging purposes only)
     cmdStr = " ".join(args)
 
+    if platform.system() == "Linux":
+        # Unmount input device
+        sub.run(['umount', config.inDevice], shell=True)
+
     # Run Aaru as subprocess
     p = sub.run(args, shell=True)
 
