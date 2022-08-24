@@ -797,7 +797,6 @@ def getConfiguration():
 
     config.driveLetter = findElementText(configElt, './config/driveLetter')
     config.rootDir = findElementText(configElt, './config/rootDir')
-    config.tempDir = findElementText(configElt, './config/tempDir')
     config.prefixBatch = findElementText(configElt, './config/prefixBatch')
     config.aaruBin = findElementText(configElt, './config/aaruBin')
  
@@ -828,13 +827,11 @@ def getConfiguration():
 
     # Normalise all file paths
     config.rootDir = os.path.normpath(config.rootDir)
-    config.tempDir = os.path.normpath(config.tempDir)
     config.aaruBin = os.path.normpath(config.aaruBin)
 
     #"""Disable for Linux testing TODO re-enable in production version!!
     # Check if all files and directories exist, and exit if not
     checkDirExists(config.rootDir)
-    checkDirExists(config.tempDir)
     checkFileExists(config.aaruBin)
 
     # Check that driveLetter points to an existing drive

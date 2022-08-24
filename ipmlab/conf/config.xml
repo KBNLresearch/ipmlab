@@ -15,9 +15,6 @@ as ipmlab.py/ ipmlab.exe!
 <!-- root directory - this is the default search path for creating / opening batches -->
 <rootDir>W:\iromlab-test</rootDir>
 
-<!-- directory for storing temporary files -->
-<tempDir>C:\Temp</tempDir>
-
 <!-- prefix that is used to create batch names -->
 <prefixBatch>kb</prefixBatch>
 
