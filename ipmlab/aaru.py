@@ -4,6 +4,7 @@
 import os
 import io
 import time
+import platform
 import subprocess as sub
 from . import config
 
@@ -16,7 +17,10 @@ def extractData(writeDirectory, imageFileBaseName):
     args = [config.aaruBin]
     args.append("m")
     args.append("dump")
-    args.append("".join([config.inDevice, ":"]))
+    if platform.system() == "Windows":
+        args.append("".join([config.inDevice, ":"]))
+    elif platform.system() == "Linux":
+        args.append(config.inDevice)
     args.append(imageFile)
 
     # Command line as string (used for logging purposes only)
