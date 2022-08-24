@@ -365,15 +365,18 @@ class carrierEntry(tk.Frame):
                 msg = ("Please load medium ('" + title + "', volume " + str(volumeNo) +
                        ") and press 'OK'")
                 tkMessageBox.showinfo("Load medium", msg)
-                while not mediumLoaded:
-                    if platform.system() == "Windows":
+
+                if platform.system() == "Windows":
+                    while not mediumLoaded:
                         try:
                             _ = os.listdir(config.inDevice + ":\\")
                             mediumLoaded = True
                         except(PermissionError, OSError):
                             msg = ("No medium found, please load medium and press 'OK'")
                             tkMessageBox.showinfo("Load medium", msg)
-                    elif platform.system() == "Linux":
+
+                elif platform.system() == "Linux":
+                    while not mediumLoaded:
                         try:
                             fd= os.open(config.inDevice , os.O_RDONLY)
                             os.close(fd)
