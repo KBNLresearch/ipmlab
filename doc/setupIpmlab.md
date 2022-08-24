@@ -158,6 +158,16 @@ Location of Aaru binary (installation instructions for Aaru can be found [here](
 <aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
 ```
 
+## Add user to disk group (Linux only)
+
+In order to have access to block devices as a non-root user, you must add your user name to the disk group. You can do this with the command below (replace $USER with the name of the user who will be using diskimgr):
+
+```
+sudo adduser $USER disk
+```
+
+The user is now added to the 'disk' system group. Now log out, and then log in again for the changes to take effect.
+
 If all went well, Ipmlab will now be ready to use!
 
 | |
