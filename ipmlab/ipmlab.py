@@ -11,6 +11,7 @@ Research department,  KB / National Library of the Netherlands
 from ctypes import WinError
 import sys
 import os
+import pathlib
 import csv
 import imp
 import time
@@ -365,12 +366,21 @@ class carrierEntry(tk.Frame):
                        ") and press 'OK'")
                 tkMessageBox.showinfo("Load medium", msg)
                 while not mediumLoaded:
-                    try:
-                        _ = os.listdir(config.inDevice + ":\\")
-                        mediumLoaded = True
-                    except(PermissionError, OSError):
-                        msg = ("No medium found, please load medium and press 'OK'")
-                        tkMessageBox.showinfo("Load medium", msg)
+                    if platform.system() == "Windows":
+                        try:
+                            _ = os.listdir(config.inDevice + ":\\")
+                            mediumLoaded = True
+                        except(PermissionError, OSError):
+                            msg = ("No medium found, please load medium and press 'OK'")
+                            tkMessageBox.showinfo("Load medium", msg)
+                    elif platform.system() == "Linux":
+                        try:
+                            fd= os.open(config.inDevice , os.O_RDONLY)
+                            os.close(fd)
+                            mediumLoaded = True
+                        except(PermissionError, OSError):
+                            msg = ("No medium found, please load medium and press 'OK'")
+                            tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
                 jobID = str(uuid.uuid1())
@@ -844,9 +854,14 @@ def getConfiguration():
         sepS = sepB.decode('UTF-8')
         drives = drives.split(sepS)[:-1]
         if config.inDevice not in drives:
-            msg = '"' + config.inDevice + '" is not a valid drive!'
+            msg = '"' + config.inDevice + '" is not a valid input device!'
             errorExit(msg)
     elif platform.system() == "Linux":
+        # Check if selected block device exists
+        p = pathlib.Path(config.inDevice)
+        if not p.is_block_device():
+            msg = '"' + config.inDevice + '" is not a valid input device!'
+            errorExit(msg)
 
 
 def main():
