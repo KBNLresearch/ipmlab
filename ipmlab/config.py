@@ -2,7 +2,7 @@
 """Shared configuration constants"""
 
 version = ""
-driveLetter = ""
+inDevice = ""
 cdDeviceName = ""
 aaruBin = ""
 rootDir = ""

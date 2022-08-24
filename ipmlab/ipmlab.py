@@ -20,7 +20,8 @@ import uuid
 import logging
 import platform
 import queue
-import win32api
+if platform.system() == "Windows":
+    import win32api
 import tkinter as tk
 from tkinter import filedialog as tkFileDialog
 from tkinter import scrolledtext as ScrolledText
@@ -365,7 +366,7 @@ class carrierEntry(tk.Frame):
                 tkMessageBox.showinfo("Load medium", msg)
                 while not mediumLoaded:
                     try:
-                        _ = os.listdir(config.driveLetter + ":\\")
+                        _ = os.listdir(config.inDevice + ":\\")
                         mediumLoaded = True
                     except(PermissionError, OSError):
                         msg = ("No medium found, please load medium and press 'OK'")
@@ -746,22 +747,26 @@ def getConfiguration():
     config.py and check that all file paths / executables exist.
     This assumes an non-frozen script (no Py2Exe!)
     """
-    # Following if/else block for testing only
-    # TODO remove in production version (and use Windows-specific behaviour) 
+
     if platform.system() == "Windows":
         # Locate Windows profile directory
         userDir = os.environ['USERPROFILE']
-        
         # Locate package directory
         packageDir = os.path.dirname(os.path.abspath(__file__))
         # Config directory
         configDirUser = os.path.join(userDir, 'ipmlab')
         configFileUser = os.path.join(configDirUser, 'config.xml')
-    else:
-        # Only for development/testing on Linux
+    elif platform.system() == "Linux":
         packageDir = os.path.dirname(os.path.abspath(__file__))
-        configDirUser = os.path.join(packageDir, "conf")
-        configFileUser = os.path.join(configDirUser, 'config.xml')
+        homeDir = os.path.normpath(os.path.expanduser("~"))
+        if packageDir.startswith(homeDir):
+            configFileUser = os.path.join(homeDir, '.config/ipmlab/config.xml')
+        else:
+            configFileUser = os.path.normpath('/etc/ipmlab/config.xml')
+    else:
+        # Unsupported OS
+        msg = 'unsupported operating system'
+        errorExit(msg)
 
     # Check if user config file exists and exit if not
     if not os.path.isfile(configFileUser):
@@ -791,7 +796,7 @@ def getConfiguration():
     configElt = ETree.Element("bogus")
     configElt.append(root)
 
-    config.driveLetter = findElementText(configElt, './config/driveLetter')
+    config.inDevice = findElementText(configElt, './config/inDevice')
     config.rootDir = findElementText(configElt, './config/rootDir')
     config.prefixBatch = findElementText(configElt, './config/prefixBatch')
     config.aaruBin = findElementText(configElt, './config/aaruBin')
@@ -825,22 +830,23 @@ def getConfiguration():
     config.rootDir = os.path.normpath(config.rootDir)
     config.aaruBin = os.path.normpath(config.aaruBin)
 
-    #"""Disable for Linux testing TODO re-enable in production version!!
     # Check if all files and directories exist, and exit if not
     checkDirExists(config.rootDir)
     checkFileExists(config.aaruBin)
 
-    # Check that driveLetter points to an existing drive
-    # Adapted from https://stackoverflow.com/a/827397/1209004
-    drives = win32api.GetLogicalDriveStrings()
-    # Var drives is one string with weird 3-byte separator
-    sepB = b'\x3a\x5c\x00'
-    # Separator string
-    sepS = sepB.decode('UTF-8')
-    drives = drives.split(sepS)[:-1]
-    if config.driveLetter not in drives:
-        msg = '"' + config.driveLetter + '" is not a valid drive!'
-        errorExit(msg)
+    # Check that inDevice points to an existing drive
+    if platform.system() == "Windows":
+        # Adapted from https://stackoverflow.com/a/827397/1209004
+        drives = win32api.GetLogicalDriveStrings()
+        # Var drives is one string with weird 3-byte separator
+        sepB = b'\x3a\x5c\x00'
+        # Separator string
+        sepS = sepB.decode('UTF-8')
+        drives = drives.split(sepS)[:-1]
+        if config.inDevice not in drives:
+            msg = '"' + config.inDevice + '" is not a valid drive!'
+            errorExit(msg)
+    elif platform.system() == "Linux":
 
 
 def main():
@@ -855,7 +861,10 @@ def main():
         q = queue.Queue()
         myServer = server()
         myCarrierEntry.t2 = threading.Thread(target=server.start,
-                              args=[myServer, config.socketHost, config.socketPort, q])
+                                             args=[myServer,
+                                             config.socketHost,
+                                             config.socketPort,
+                                             q])
         myCarrierEntry.t2.start()
 
     while True:

@@ -16,7 +16,7 @@ def extractData(writeDirectory, imageFileBaseName):
     args = [config.aaruBin]
     args.append("m")
     args.append("dump")
-    args.append("".join([config.driveLetter, ":"]))
+    args.append("".join([config.inDevice, ":"]))
     args.append(imageFile)
 
     # Command line as string (used for logging purposes only)

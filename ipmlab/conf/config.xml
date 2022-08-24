@@ -9,8 +9,8 @@ as ipmlab.py/ ipmlab.exe!
    spaces! (the Python os.path libs don't seem to like this!)
 -->
 
-<!-- Drive letter -->
-<driveLetter>A</driveLetter>
+<!-- Input device (Windows: drive letter) -->
+<inDevice>A</inDevice>
 
 <!-- root directory - this is the default search path for creating / opening batches -->
 <rootDir>W:\iromlab-test</rootDir>

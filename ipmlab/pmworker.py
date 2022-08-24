@@ -95,7 +95,7 @@ def processMedium(carrierData):
         os.makedirs(dirMedium)
 
     logging.info('*** Establishing media type and device type ***')
-    drive = config.driveLetter
+    drive = config.inDevice
     driveHandle = mediuminfo.createFileHandle(drive)
     mediaType = mediuminfo.getMediaType(drive, driveHandle)
     deviceType = mediuminfo.getDeviceInfo(drive, driveHandle)[0]

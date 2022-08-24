@@ -72,15 +72,27 @@ You will find the configuration file *config.xml* inside this folder.
 
 Now open the configuration file *config.xml* in a text editor (e.g. Notepad), or, alternatively, use a dedicated XML editor. Carefully go through all the variables (which are defined as XML elements), and modify them if necessary. Here is an explanation of all variables.
 
-### driveLetter
+### inDevice
 
-This is the logical drive letter that corresponds to the device you want to use for imaging. E.g. for a floppy drive its is typically *A*, in which case the centry in the configuration file looks like this:
+This defines the path to the device you want to use for imaging. Under Windows, this is a logical drive letter.  E.g. for a floppy drive this is typically *A*. If the floppy drive is connected to a write blocker it will show up under a different drive letter (e.g. *E*). In the latter case the centry in the configuration file looks like this:
 
 ```xml
-<cdDriveLetter>A</cdDriveLetter>
+<inDevice>E</inDevice>
 ```
 
 (Note: do *not* add a colon to the drive letter).
+
+In Linux you must specify *inDevice* using a device path such as:
+
+```xml
+<inDevice>/dev/sdd</inDevice>
+```
+
+If you're not sure about the device path, use the following command to get info about all available hardware devices:
+
+```bash
+sudo lshw
+```
 
 ### rootDir
 
@@ -88,14 +100,6 @@ This defines the root directory where Ipmlab will write its data. Ipmlab output 
 
 ```xml
 <rootDir>E:\floppyImages</rootDir>
-```
-
-### tempDir
-
-This is the directory that is used for writing temporary files. It must be an existing directory; in most cases you can use the default value (*C:\Temp*). Example:
-
-```xml
-<tempDir>C:\Temp</tempDir>
 ```
 
 ### prefixBatch
@@ -146,16 +150,12 @@ This is a flag that -if set to *True*- enables Ipmlab to pick up Title and PPN i
 <enableSocketAPI>False</enableSocketAPI>
 ```
 
-### reportFormatString
+### aaruBin
 
-Defines the format of the output report that is generated  by IsoBuster. The format is described in the [IsoBuster documentation](https://www.isobuster.com/tips/build_custom_lists_and_reports_via_gui_or_cmd). By default reports are generated in [Digital Forensics XML (DFXML)](http://www.forensicswiki.org/wiki/Category:Digital_Forensics_XML) format. Note that the IsoBuster format string must be wrapped inside a [CDATA section](https://en.wikipedia.org/wiki/CDATA).
-
-### isoBusterExe
-
-Location of isoBuster (installation instructions for Isobuster can be found [here](./setupIsobuster.md)). Example:
+Location of Aaru binary (installation instructions for Aaru can be found [here](./setupAaru.md)). Example:
 
 ```xml
-<isoBusterExe>C:\Program Files\Smart Projects\IsoBuster\IsoBuster.exe</isoBusterExe>
+<aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
 ```
 
 If all went well, Ipmlab will now be ready to use!
