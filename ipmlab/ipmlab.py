@@ -757,15 +757,11 @@ def getConfiguration():
         # Config directory
         configDirUser = os.path.join(userDir, 'ipmlab')
         configFileUser = os.path.join(configDirUser, 'config.xml')
-        # Tools directory
-        toolsDirUser = os.path.join(packageDir, 'tools')
     else:
         # Only for development/testing on Linux
         packageDir = os.path.dirname(os.path.abspath(__file__))
         configDirUser = os.path.join(packageDir, "conf")
         configFileUser = os.path.join(configDirUser, 'config.xml')
-        # Tools directory
-        toolsDirUser = os.path.join(packageDir, 'tools')
 
     # Check if user config file exists and exit if not
     if not os.path.isfile(configFileUser):
