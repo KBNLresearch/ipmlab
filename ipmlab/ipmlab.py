@@ -8,7 +8,6 @@ Research department,  KB / National Library of the Netherlands
 
 """
 
-from ctypes import WinError
 import sys
 import os
 import pathlib
