@@ -26,7 +26,7 @@ def find_version(*file_paths):
 INSTALL_REQUIRES = [
     'requests',
     'setuptools',
-    'pypiwin32'
+    'pypiwin32; platform_system=="Windows"'
 ]
 PYTHON_REQUIRES = '>=3.2'
 
