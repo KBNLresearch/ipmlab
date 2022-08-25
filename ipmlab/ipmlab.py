@@ -10,7 +10,6 @@ Research department,  KB / National Library of the Netherlands
 
 import sys
 import os
-import pathlib
 import csv
 import imp
 import time
@@ -845,25 +844,6 @@ def getConfiguration():
     # Check if all files and directories exist, and exit if not
     checkDirExists(config.rootDir)
     checkFileExists(config.aaruBin)
-
-    # Check that inDevice points to an existing drive
-    if platform.system() == "Windows":
-        # Adapted from https://stackoverflow.com/a/827397/1209004
-        drives = win32api.GetLogicalDriveStrings()
-        # Var drives is one string with weird 3-byte separator
-        sepB = b'\x3a\x5c\x00'
-        # Separator string
-        sepS = sepB.decode('UTF-8')
-        drives = drives.split(sepS)[:-1]
-        if config.inDevice not in drives:
-            msg = '"' + config.inDevice + '" is not a valid input device!'
-            errorExit(msg)
-    elif platform.system() == "Linux":
-        # Check if selected block device exists
-        p = pathlib.Path(config.inDevice)
-        if not p.is_block_device():
-            msg = '"' + config.inDevice + '" is not a valid input device!'
-            errorExit(msg)
 
 
 def main():
