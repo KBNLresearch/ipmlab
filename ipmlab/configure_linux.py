@@ -65,7 +65,6 @@ def writeDesktopFiles(applicationsDir):
         errorExit(msg)
 
 
-
 def post_install():
     """Install config file + pre-packaged tools to user dir +
     Create a Desktop shortcut to the installed software
@@ -204,7 +203,7 @@ def post_install():
             errorExit(msg)
 
     writeDesktopFiles(applicationsDir)
-    logging.info('omimgr configuration completed successfully!')
+    logging.info('Ipmlab configuration completed successfully!')
 
 
 class TextHandler(logging.Handler):
