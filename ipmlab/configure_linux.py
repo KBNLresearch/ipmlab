@@ -81,7 +81,14 @@ def post_install():
     # Package name
     packageName = 'ipmlab'
 
-    packageDir = os.path.dirname(os.path.abspath(__file__))
+    # Scripts directory (location of launcher script)
+    scriptsDir = os.path.split(sys.argv[0])[0]
+
+    logging.info("Scripts directory: " + scriptsDir)
+
+    # Package directory (parent of scriptsDir)
+    packageDir = os.path.abspath(os.path.join(scriptsDir, os.pardir))
+
     logging.info("Package directory: " + packageDir)
 
     # Current home directory
@@ -180,7 +187,7 @@ def post_install():
         # sometimes results in lowercase output (observed with Python 3.7 on Windows 10) 
         if packageDir.lower() in sitePackageDirGlobal.lower():
             sitePackageDir = sitePackageDirGlobal
-        elif sitePackageDirUser.lower() in packageDir.lower():
+        elif packageDir.lower() in sitePackageDirUser.lower():
             sitePackageDir = sitePackageDirUser
         else:
             msg = 'could not establish package dir to use'
