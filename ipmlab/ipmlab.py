@@ -31,7 +31,7 @@ from .kbapi import sru
 from .socketserver import server
 from . import pmworker
 
-__version__ = '0.1.0rc2'
+__version__ = '0.1.0rc3'
 config.version = __version__
 
 class carrierEntry(tk.Frame):
