@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 """
 Script for automated imaging of poertable media such as
 floppy discs and usb thumbdrives

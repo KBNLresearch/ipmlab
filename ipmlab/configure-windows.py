@@ -1,24 +1,20 @@
-#! /usr/bin/env python
-"""Post-install / configuration script for Ipmlab"""
+#! /usr/bin/env python3
+"""Post-install / configuration for Ipmlab on Windows"""
 
 import os
 import sys
 import imp
 import site
-import sysconfig
 from shutil import copyfile
 import threading
 import logging
-import pythoncom
-from win32com.client import Dispatch
-try:
-    import tkinter as tk  # Python 3.x
-    import tkinter.scrolledtext as ScrolledText
-    import tkinter.messagebox as tkMessageBox
-except ImportError:
-    import Tkinter as tk  # Python 2.x
-    import ScrolledText
-    import tkMessageBox
+import platform
+if platform.system() == "Windows":
+    import pythoncom
+    from win32com.client import Dispatch
+import tkinter as tk
+import tkinter.scrolledtext as ScrolledText
+import tkinter.messagebox as tkMessageBox
 
 
 def errorExit(error):
@@ -41,20 +37,8 @@ def get_reg(name, path):
         return None
 
 
-def main_is_frozen():
-    return (hasattr(sys, "frozen") or # new py2exe
-            hasattr(sys, "importers") # old py2exe
-    or imp.is_frozen("__main__")) # tools/freeze
-
-
-def get_main_dir():
-    if main_is_frozen():
-        return os.path.dirname(sys.executable)
-    return os.path.dirname(sys.argv[0])
-
-
 def post_install():
-    """Install config file + pre-packaged tools to user dir +
+    """Install config file to user dir +
     Create a Desktop shortcut to the installed software
     """
     # This is needed to avoid 'CoInitialize has not been called'
@@ -65,7 +49,6 @@ def post_install():
     packageName = 'ipmlab'
 
     # Scripts directory (location of launcher script)
-    #scriptsDir = get_main_dir()
     scriptsDir = os.path.split(sys.argv[0])[0]
 
     logging.info("Scripts directory: " + scriptsDir)
@@ -137,7 +120,7 @@ def post_install():
 
         # Construct path to config file
         configFilePackage = os.path.join(sitePackageDir, packageName,
-                                         'conf', 'config.xml')
+                                         'conf', 'config-win.xml')
 
         if os.path.isfile(configFilePackage):
             try:

@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<!-- ipmlab configuration file. This file MUST be in the same directory 
-as ipmlab.py/ ipmlab.exe! 
+<!-- ipmlab configuration file
 -->
 
 <config>
@@ -10,10 +9,10 @@ as ipmlab.py/ ipmlab.exe!
 -->
 
 <!-- Input device (Windows: drive letter) -->
-<inDevice>A</inDevice>
+<inDevice>/dev/sdd</inDevice>
 
 <!-- root directory - this is the default search path for creating / opening batches -->
-<rootDir>W:\iromlab-test</rootDir>
+<rootDir>/home/johan/test/ipmlab-test</rootDir>
 
 <!-- prefix that is used to create batch names -->
 <prefixBatch>kb</prefixBatch>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- ipmlab configuration file
+-->
+
+<config>
+
+<!-- Note on file paths: do NOT wrap any of the file paths below in quotes, even if they contain
+   spaces! (the Python os.path libs don't seem to like this!)
+-->
+
+<!-- Input device (Windows: drive letter) -->
+<inDevice>A</inDevice>
+
+<!-- root directory - this is the default search path for creating / opening batches -->
+<rootDir>W:\ipmlab-test</rootDir>
+
+<!-- prefix that is used to create batch names -->
+<prefixBatch>kb</prefixBatch>
+
+<!-- host address that is used if socket API is enabled. Use 127.0.0.1 for localhost
+-->
+<socketHost>127.0.0.1</socketHost>
+
+<!-- port that is used if socket API is enabled.
+-->
+<socketPort>65432</socketPort>
+
+<!-- flag that -if False- disables PPN lookup. If False, PPN is set to empty string and
+operator must enter descriptive Title field in UI
+-->
+<enablePPNLookup>True</enablePPNLookup>
+
+<!-- flag that -if True- enables ipmlab to pick up Title and PPN info from a client
+application through a socket interface 
+-->
+<enableSocketAPI>True</enableSocketAPI>
+
+<!-- location of Aaru binary-->
+<aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
+
+</config>
