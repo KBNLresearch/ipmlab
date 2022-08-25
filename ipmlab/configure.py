@@ -4,9 +4,9 @@
 
 import platform
 if platform.system() == "Windows":
-    from configure_windows import main
+    from .configure_windows import main
 elif platform.system() == "Linux":
-    from configure_linux import main
+    from .configure_linux import main
 
 if __name__ == '__main__':
     main()
