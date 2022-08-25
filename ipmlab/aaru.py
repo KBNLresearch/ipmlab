@@ -31,12 +31,7 @@ def extractData(writeDirectory, imageFileBaseName):
         sub.run(['umount', config.inDevice], shell=False)
 
     # Run Aaru as subprocess
-    # TODO check if Windows separate Windows variant is really needed
-    # (shell=True fails on Linux!)
-    if platform.system() == "Windows":
-        p = sub.run(args, shell=True)
-    elif platform.system() == "Linux":
-         p = sub.run(args, shell=False)
+    p = sub.run(args, shell=False)
 
     # All results to dictionary
     dictOut = {}
