@@ -158,6 +158,8 @@ def post_install():
         # Locate global site-packages dir (this returns multiple entries)
         sitePackageDirsGlobal = site.getsitepackages()
 
+        sitePackageDirGlobal = ""
+
         # Assumptions: site package dir is called 'site-packages' and is
         # unique (?)
         for directory in sitePackageDirsGlobal:
@@ -178,7 +180,7 @@ def post_install():
         # sometimes results in lowercase output (observed with Python 3.7 on Windows 10) 
         if packageDir.lower() in sitePackageDirGlobal.lower():
             sitePackageDir = sitePackageDirGlobal
-        elif packageDir.lower() in sitePackageDirUser.lower():
+        elif sitePackageDirUser.lower() in packageDir.lower():
             sitePackageDir = sitePackageDirUser
         else:
             msg = 'could not establish package dir to use'
@@ -203,7 +205,10 @@ def post_install():
             errorExit(msg)
 
     writeDesktopFiles(applicationsDir)
-    logging.info('Ipmlab configuration completed successfully!')
+
+    msg = 'Ipmlab configuration completed successfully, click OK to exit!'
+    tkMessageBox.showinfo("Info", msg)
+    os._exit(0)
 
 
 class TextHandler(logging.Handler):
