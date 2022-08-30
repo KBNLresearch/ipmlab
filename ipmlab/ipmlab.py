@@ -463,10 +463,10 @@ class carrierEntry(tk.Frame):
 
     def build_gui(self):
         """Build the GUI"""
-        
+
         # Read configuration file
-        getConfiguration()
-        
+        configFileDefinedFlag, configFileExistsFlag, configFileOpenFlag, configFileParsedFlag = getConfiguration()
+
         self.root.title('ipmlab v.' + config.version)
         self.root.option_add('*tearOff', 'FALSE')
         self.grid(column=0, row=0, sticky='ew')
@@ -593,6 +593,30 @@ class carrierEntry(tk.Frame):
         for child in self.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
+        # Display message and exit if config file is either undefined, doesn't exist, cannot
+        # be opened or cannot be parsed
+        
+        if not configFileDefinedFlag:
+            msg = "configuration file is undefined"
+            errorExit(msg)
+        if not configFileExistsFlag:
+            msg = "configuration file doesn't exist"
+            errorExit(msg)
+        if not configFileOpenFlag:
+            msg = "configuration file cannot be opened"
+            errorExit(msg)
+        if not configFileParsedFlag:
+            msg = "unable to parse configuration file"
+            errorExit(msg)
+
+        # Check if all files and directories exist, and exit if not
+        if not os.path.isfile(config.aaruBin):
+            msg = "Aaru binary " + config.aaruBin + " does not exist"
+            errorExit(msg)
+        if not os.path.isdir(config.rootDir):
+            msg = "root directory " + config.rootDir + " does not exist"
+            errorExit(msg)            
+
     def reset_carrier(self):
         """Reset the carrier entry fields"""
         # Reset and ere-enable entry fields, and set focus on PPN / Title field
@@ -709,20 +733,6 @@ def representsInt(s):
         return False
 
 
-def checkFileExists(fileIn):
-    """Check if file exists and exit if not"""
-    if not os.path.isfile(fileIn):
-        msg = "file " + fileIn + " does not exist!"
-        tkMessageBox.showerror("Error", msg)
-        sys.exit()
-
-def checkDirExists(dirIn):
-    """Check if directory exists and exit if not"""
-    if not os.path.isdir(dirIn):
-        msg = "directory " + dirIn + " does not exist!"
-        tkMessageBox.showerror("Error", msg)
-        sys.exit()
-
 def errorExit(error):
     """Show error message in messagebox and then exit after userv presses OK"""
     tkMessageBox.showerror("Error", error)
@@ -743,7 +753,7 @@ def get_main_dir():
     return os.path.dirname(sys.argv[0])
 
 
-def findElementText(elt, elementPath):
+def findElementTextOld(elt, elementPath):
     """Returns element text if it exists, errorExit if it doesn't exist"""
     elementText = elt.findtext(elementPath)
     if elementText is None:
@@ -752,12 +762,24 @@ def findElementText(elt, elementPath):
     else:
         return elementText
 
+def findElementText(elt, elementPath):
+    """Returns element text if it exists, errorExit if it doesn't exist"""
+    elementText = elt.findtext(elementPath)
+    if elementText is None:
+        elementText = ""
+    return elementText
 
 def getConfiguration():
     """ Read configuration file, make all config variables available via
     config.py and check that all file paths / executables exist.
     This assumes an non-frozen script (no Py2Exe!)
     """
+
+    configFileDefinedFlag = False
+    configFileExistsFlag = False
+    configFileOpenFlag = False
+    configFileParsedFlag = False
+
 
     if platform.system() == "Windows":
         # Locate Windows profile directory
@@ -767,6 +789,7 @@ def getConfiguration():
         # Config directory
         configDirUser = os.path.join(userDir, 'ipmlab')
         configFileUser = os.path.join(configDirUser, 'config.xml')
+        configFileDefinedFlag = True
     elif platform.system() == "Linux":
         packageDir = os.path.dirname(os.path.abspath(__file__))
         homeDir = os.path.normpath(os.path.expanduser("~"))
@@ -774,76 +797,73 @@ def getConfiguration():
             configFileUser = os.path.join(homeDir, '.config/ipmlab/config.xml')
         else:
             configFileUser = os.path.normpath('/etc/ipmlab/config.xml')
-    else:
-        # Unsupported OS
-        msg = 'unsupported operating system'
-        errorExit(msg)
+        configFileDefinedFlag = True
 
     # Check if user config file exists and exit if not
-    if not os.path.isfile(configFileUser):
-        print(configFileUser)
-        msg = 'configuration file not found'
-        errorExit(msg)
+    if os.path.isfile(configFileUser):
+        configFileExistsFlag = True
 
     # Read contents to bytes object
-    try:
-        fConfig = open(configFileUser, "rb")
-        configBytes = fConfig.read()
-        fConfig.close()
-    except IOError:
-        msg = 'could not open configuration file'
-        errorExit(msg)
+    if configFileExistsFlag:
+        try:
+            fConfig = open(configFileUser, "rb")
+            configBytes = fConfig.read()
+            fConfig.close()
+            configFileOpenFlag = True
+        except IOError:
+            pass
 
     # Parse XML tree
-    try:
-        root = ETree.fromstring(configBytes)
-    except Exception:
-        msg = 'error parsing ' + configFileUser
-        errorExit(msg)
+    if configFileOpenFlag:
+        try:
+            root = ETree.fromstring(configBytes)
+            configFileParsedFlag = True
+        except Exception:
+            pass
 
-    # Create empty element object & add config contents to it
-    # A bit silly but allows use of findElementText in etpatch
+    if configFileParsedFlag:
 
-    configElt = ETree.Element("bogus")
-    configElt.append(root)
+        # Create empty element object & add config contents to it
+        # A bit silly but allows use of findElementText in etpatch
 
-    config.inDevice = findElementText(configElt, './config/inDevice')
-    config.rootDir = findElementText(configElt, './config/rootDir')
-    config.prefixBatch = findElementText(configElt, './config/prefixBatch')
-    config.aaruBin = findElementText(configElt, './config/aaruBin')
- 
-    # For below configuration variables, use default value if value cannot be
-    # read from config file (this ensures v1 will work with old config files)
-    try:
-        config.socketHost = findElementText(configElt, './config/socketHost')
-    except:
-        pass
-    try:
-        config.socketPort = findElementText(configElt, './config/socketPort')
-    except:
-        pass
-    try:
-        if findElementText(configElt, './config/enablePPNLookup') == "True":
-            config.enablePPNLookup = True
-        else:
-            config.enablePPNLookup = False
-    except:
-        pass
-    try:
-        if findElementText(configElt, './config/enableSocketAPI') == "True":
-            config.enableSocketAPI = True
-        else:
-            config.enableSocketAPI = False
-    except:
-        pass
+        configElt = ETree.Element("bogus")
+        configElt.append(root)
 
-    # Normalise all file paths
-    config.rootDir = os.path.normpath(config.rootDir)
-    config.aaruBin = os.path.normpath(config.aaruBin)
+        config.inDevice = findElementText(configElt, './config/inDevice')
+        config.rootDir = findElementText(configElt, './config/rootDir')
+        config.prefixBatch = findElementText(configElt, './config/prefixBatch')
+        config.aaruBin = findElementText(configElt, './config/aaruBin')
+    
+        # For below configuration variables, use default value if value cannot be
+        # read from config file (this ensures v1 will work with old config files)
+        try:
+            config.socketHost = findElementText(configElt, './config/socketHost')
+        except:
+            pass
+        try:
+            config.socketPort = findElementText(configElt, './config/socketPort')
+        except:
+            pass
+        try:
+            if findElementText(configElt, './config/enablePPNLookup') == "True":
+                config.enablePPNLookup = True
+            else:
+                config.enablePPNLookup = False
+        except:
+            pass
+        try:
+            if findElementText(configElt, './config/enableSocketAPI') == "True":
+                config.enableSocketAPI = True
+            else:
+                config.enableSocketAPI = False
+        except:
+            pass
 
-    # Check if all files and directories exist, and exit if not
-    checkDirExists(config.rootDir)
-    checkFileExists(config.aaruBin)
+        # Normalise all file paths
+        config.rootDir = os.path.normpath(config.rootDir)
+        config.aaruBin = os.path.normpath(config.aaruBin)
+
+    return configFileDefinedFlag, configFileExistsFlag, configFileOpenFlag, configFileParsedFlag
 
 
 def main():

@@ -3,7 +3,6 @@
 
 version = ""
 inDevice = ""
-cdDeviceName = ""
 aaruBin = ""
 rootDir = ""
 batchFolder = ""
