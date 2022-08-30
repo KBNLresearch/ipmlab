@@ -2,8 +2,6 @@
 """Wrapper module for Aaru"""
 
 import os
-import io
-import time
 import platform
 import subprocess as sub
 from . import config

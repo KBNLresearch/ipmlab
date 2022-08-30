@@ -7,7 +7,6 @@ import glob
 import csv
 import hashlib
 import logging
-import platform
 from . import config
 from . import aaru
 from . import mdo
