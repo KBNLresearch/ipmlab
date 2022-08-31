@@ -13,8 +13,11 @@ def extractData(writeDirectory, imageFileBaseName):
     imageFile = os.path.join(writeDirectory, imageFileBaseName + '.img')
 
     args = [config.aaruBin]
-    args.append("m")
+    args.append("media")
     args.append("dump")
+    args.append("--encoding")
+    args.append("utf-8")
+    args.append("--metadata")
     if platform.system() == "Windows":
         args.append("".join([config.inDevice, ":"]))
     elif platform.system() == "Linux":
