@@ -36,6 +36,6 @@ application through a socket interface
 <enableSocketAPI>True</enableSocketAPI>
 
 <!-- location of Aaru binary-->
-<aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
+<aaruBin>/usr/local/bin/aaru</aaruBin>
 
 </config>
