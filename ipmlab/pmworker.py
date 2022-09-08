@@ -96,10 +96,15 @@ def processMedium(carrierData):
     logging.info('*** Extracting data ***')
     resultAaru = aaru.extractData(dirMedium, jobID)
     statusAaru = resultAaru["status"]
+    readErrors = resultAaru["readErrors"]
 
     if statusAaru != 0:
         success = False
-        logging.error("Aaru exited with error(s)")
+        logging.error("Aaru exited with abnormal exit status")
+
+    if readErrors:
+        success = False
+        logging.error("Aaru dumping resulted in read error(s)")
 
     logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
     logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
@@ -129,7 +134,8 @@ def processMedium(carrierData):
                          carrierData['PPN'],
                          carrierData['volumeNo'],
                          carrierData['title'],
-                         str(success)])
+                         str(success),
+                         str(readErrors)])
 
     # Open batch manifest in append mode
     bm = open(config.batchManifest, "a", encoding="utf-8")

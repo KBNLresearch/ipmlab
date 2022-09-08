@@ -2,7 +2,9 @@
 """Wrapper module for Aaru"""
 
 import os
+import io
 import platform
+import time
 import subprocess as sub
 from . import config
 
@@ -11,6 +13,9 @@ def extractData(writeDirectory, imageFileBaseName):
 
     # Image file name
     imageFile = os.path.join(writeDirectory, imageFileBaseName + '.img')
+
+    # Error log file name
+    errorLogFile = os.path.join(writeDirectory, imageFileBaseName + '.error.log')
 
     args = [config.aaruBin]
     args.append("media")
@@ -34,9 +39,31 @@ def extractData(writeDirectory, imageFileBaseName):
     # Run Aaru as subprocess
     p = sub.run(args, shell=False)
 
+    errorLogExists = False
+    while not errorLogExists:
+        time.sleep(2)
+        errorLogExists = os.path.isfile(errorLogFile)
+
+    # Read error log
+    with io.open(errorLogFile, "r", encoding="utf-8") as eLog:
+        eLogList = eLog.read()
+    eLog.close()
+
+    eLogDelim = "######################################################"
+
+    try:
+        if eLogList[1].strip() == eLogDelim and eLogList[2].strip() == eLogDelim:
+            readErrors = False
+        else:
+            readErrors = True
+    except:
+        readErrors = True
+
+
     # All results to dictionary
     dictOut = {}
     dictOut["cmdStr"] = cmdStr
     dictOut["status"] = p.returncode
+    dictOut["readErrors"] = readErrors
   
     return dictOut
