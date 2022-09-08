@@ -46,7 +46,7 @@ def extractData(writeDirectory, imageFileBaseName):
 
     # Read error log
     with io.open(errorLogFile, "r", encoding="utf-8") as eLog:
-        eLogList = eLog.read()
+        eLogList = eLog.read().splitlines()
     eLog.close()
 
     eLogDelim = "######################################################"
@@ -58,7 +58,6 @@ def extractData(writeDirectory, imageFileBaseName):
             readErrors = True
     except:
         readErrors = True
-
 
     # All results to dictionary
     dictOut = {}

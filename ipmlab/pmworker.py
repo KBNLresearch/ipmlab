@@ -98,6 +98,9 @@ def processMedium(carrierData):
     statusAaru = resultAaru["status"]
     readErrors = resultAaru["readErrors"]
 
+    logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
+    logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
+
     if statusAaru != 0:
         success = False
         logging.error("Aaru exited with abnormal exit status")
@@ -105,9 +108,6 @@ def processMedium(carrierData):
     if readErrors:
         success = False
         logging.error("Aaru dumping resulted in read error(s)")
-
-    logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
-    logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
