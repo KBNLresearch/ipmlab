@@ -170,4 +170,4 @@ Example:
 
 Possible causes:
 
-* *driveLetter* in configuration file is not configured properly (see [setup and configuration guide](./setupIpmlab.md)).
+* *inDevice* in configuration file is not configured properly (see [setup and configuration guide](./setupGuide.md)).
