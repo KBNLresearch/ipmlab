@@ -7,11 +7,22 @@ Before trying to set up Ipmlab, check if the following requirements are met:
 
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
-1. Install the [Aaru Data Preservation Suite](https://www.aaru.app/) software and configure it.
-2. Install Ipmlab
+1. Add user to "disk" group (Linux only)
+2. Install the [Aaru Data Preservation Suite](https://www.aaru.app/) software and configure it.
+3. Install Ipmlab
 4. Configure Ipmlab
 
 Each step is described in detail below.
+
+## Add user to disk group (Linux only)
+
+For Linux, in order to have access to block devices as a non-root user, you must add your user name to the disk group. You can do this with the command below:
+
+```
+sudo adduser $USER disk
+```
+
+The user is now added to the 'disk' system group. Now log out, and then log in again for the changes to take effect.
 
 ## Aaru installation and configuration
 
@@ -92,8 +103,6 @@ The above steps will install Ipmlab and all required libraries.
 
 ## Configuration
 
-<!-- TODO: add screenshots for this section (3x) -->
-
 Before Ipmlab is ready for use you need to configure it. 
 
 ### Windows
@@ -112,32 +121,35 @@ Click on the *OK* button on the messagebox to close the configuration applicatio
 
 ![](./img/ipmlab-configure-2.png)
 
-The automatically generated configuration file needs some further manual editing, which is explained in the sections below.
-
 #### If the configuration tool fails
 
 If running the configuration tool doesn't have any effect (i.e. nothing happens, and no window appears, the most likely cause is a bug in the Python pywin32 module that is used by Ipmlab. A workaround can be found [here](https://github.com/KBNLresearch/iromlab/issues/100#issuecomment-594656069). (I ran into this issue myself while trying to do a user install of Iromlab under Windows 10.)
 
 ### Linux
 
-In Linux, simply type:
+in Linux, you can run the configuration tool from the terminal. For a global install just enter:
 
 ```
 ipmlab-configure
 ```
 
-If you did a user install, you may need to type the full path, e.g. something like:
+For a user install you may need to enter the full path:
 
 ```
-/home/johan/.local/bin/ipmlab-configure
+~/.local/bin/ipmlab-configure
 ```
 
-## Finding the configuration file
+Afterwards, click on the *OK* button on the messagebox to close the configuration application.
 
+## Editing the configuration file
 
-### Windows
+The automatically generated configuration file needs some further manual editing, which is explained in the sections below.
 
-Locate the Windows User Profile directory[^2]. Open a Command Prompt window and type:
+### Configuration file location
+
+#### Windows
+
+In Windows the configuration file is located in the User Profile directory[^2]. To find it, open a Command Prompt window and type:
 
 ```
 set USERPROFILE
@@ -149,25 +161,34 @@ The output will be something like this:
 USERPROFILE=C:\Users\jkn010
 ```
 
-If you open this location on your machine with Window Explorer you will find that it contains a folder named *ipmlab*:   
+If you open this location on your machine with Window Explorer, you will find that it contains a folder named *ipmlab*:   
 
 ![](./img/userDir.png)
 
 You will find the configuration file *config.xml* inside this folder.
 
 
-### Linux
+#### Linux
 
+If you did a global install, the configuration file in located at:
 
+```
+/etc/ipmlab/config.xml
+```
 
+For a user install, you can find it here:
 
-## Editing the configuration file
+```
+~/.config/ipmlab/config.xml
+```
+
+### Configuration variables
 
 Now open the configuration file *config.xml* in a text editor (e.g. Notepad), or, alternatively, use a dedicated XML editor. Carefully go through all the variables (which are defined as XML elements), and modify them if necessary. Here is an explanation of all variables.
 
-### inDevice
+#### inDevice
 
-This defines the path to the device you want to use for imaging. Under Windows, this is a logical drive letter.  E.g. for a floppy drive this is typically *A*. If the floppy drive is connected to a write blocker it will show up under a different drive letter (e.g. *E*). In the latter case the centry in the configuration file looks like this:
+This defines the path to the device you want to use for imaging. Under Windows, this is a logical drive letter.  E.g. for a floppy drive this is typically *A*. If the floppy drive is connected to a write blocker it will show up under a different drive letter (e.g. *E*). In the latter case the entry in the configuration file looks like this:
 
 ```xml
 <inDevice>E</inDevice>
@@ -187,15 +208,17 @@ If you're not sure about the device path, use the following command to get info 
 sudo lshw
 ```
 
-### rootDir
+#### rootDir
 
-This defines the root directory where Ipmlab will write its data. Ipmlab output is organised into *batches*, and each batch is written to *rootDir*. Make sure to pick an existing directory with plenty of space. Example:
+This defines the root directory where Ipmlab will write its data. Ipmlab output is organised into *batches*, and each batch is written to *rootDir*. Make sure to pick an existing directory with plenty of space. 
+
+Example:
 
 ```xml
 <rootDir>E:\floppyImages</rootDir>
 ```
 
-### prefixBatch
+#### prefixBatch
 
 This is a text prefix that is added to the automatically-generated batch names:
 
@@ -203,7 +226,7 @@ This is a text prefix that is added to the automatically-generated batch names:
 <prefixBatch>kb</prefixBatch>
 ```
 
-### socketHost
+#### socketHost
 
 Defines the host address that is used if the socket API is enabled (see below). Use 127.0.0.1 for localhost:
 
@@ -211,7 +234,7 @@ Defines the host address that is used if the socket API is enabled (see below). 
 <socketHost>127.0.0.1</socketHost>
 ```
 
-### socketPort
+#### socketPort
 
 Defines the port that is used if the socket API is enabled (see below):
 
@@ -219,7 +242,7 @@ Defines the port that is used if the socket API is enabled (see below):
 <socketPort>65432</socketPor
 ```
 
-### enablePPNLookup
+#### enablePPNLookup
 
 Flag that controls whether PPN lookup is enabled. If set to *True*, the Ipmlab interface contains a widget for entering a *PPN* identifier. After submitting, Ipmlab then performs a lookup on the PPN in the KB catalogue, and automatically extracts the title of the corresponding entry (which is then added to the batch manifest). If set to *False*, the Ipmlab interface contains a widget in which an operator can manually enter a *Title* string; the entered value is written to the batch manifest. In this case no PPN lookup is performed, and the PPN-value in the batch manifest will be a zero-length string.
 
@@ -235,7 +258,7 @@ and:
 <enablePPNLookup>False</enablePPNLookup>
 ```
 
-### enableSocketAPI
+#### enableSocketAPI
 
 This is a flag that -if set to *True*- enables Ipmlab to pick up Title and PPN info from a client application through a socket interface (disabled by default):
 
@@ -243,7 +266,7 @@ This is a flag that -if set to *True*- enables Ipmlab to pick up Title and PPN i
 <enableSocketAPI>False</enableSocketAPI>
 ```
 
-### aaruBin
+#### aaruBin
 
 Location of Aaru binary (installation instructions for Aaru can be found [here](./setupAaru.md)). Example:
 
@@ -251,21 +274,8 @@ Location of Aaru binary (installation instructions for Aaru can be found [here](
 <aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
 ```
 
-## Add user to disk group (Linux only)
-
-In order to have access to block devices as a non-root user, you must add your user name to the disk group. You can do this with the command below (replace $USER with the name of the user who will be using diskimgr):
-
-```
-sudo adduser $USER disk
-```
-
-The user is now added to the 'disk' system group. Now log out, and then log in again for the changes to take effect.
-
 If all went well, Ipmlab will now be ready to use!
 
-| |
-|:--|
-|[Back to Setup Guide](./setupGuide.md)|
 
 [^1]: This will *not* overwrite any pre-existing configuration files.
 
