@@ -64,10 +64,9 @@ Now load the first floppy into the floppy reader. After that, press *OK*. The de
 
 Subsequently Ipmlab starts processing the floppy. This involves the following steps:
 
-1. Establish, if possible, the media type and device type using the Windows API (as described [here](https://www.bitsgalore.org/2022/06/14/identification-of-physical-storage-media-with-python-and-the-windows-api)).
-2. Extract the contents of the medium to an image file using IsoBuster, and have IsoBuster generate a file listing in [Dfxml](https://en.wikipedia.org/wiki/Digital_Forensics_XML) format. Beware that Isobuster will launch in a separate window (the window minimizes briefly after IsoBuster starts, and it automatically disappears after it is finished).
-3. Compute SHA-512 checksums for all generated files.
-4. Add an entry for the carrier in the *batch manifest* (explained further below).
+1. Extract the contents of the medium to an image file using Aaru (Aaru also creates a metadata sidecar files and some other files).
+2. Compute SHA-512 checksums for all generated files.
+3. Add an entry for the carrier in the *batch manifest* (explained further below).
 
 ## Process more carriers
 
@@ -103,9 +102,9 @@ The *enableSocketAPI* option allows one to send *PPN* or *Title* values to the c
 
 When this option is activated, Ipmlab launches a server that listens on a user-defined host address (default: localhost) and port number (default: 65432) combination for incoming requests. This is particularly useful if the *PPN* identifiers or titles are entered from some external database application. In order to communicate with Ipmlab, this application needs to be able to send socket requests. This [Iromlab socket client demo](https://github.com/KBNLresearch/iromlab-socketclient) shows how to do this in Python.
 
-## All discs of a PPN must be in same batch
+## All carriers of a PPN must be in same batch
 
-All carriers that belong to one *PPN* must *always* be in the same batch. This is because the batches must be processed into ingest-ready Submission Information Packages (SIPs) further down the processing chain, and all carriers that are part of a *PPN* are grouped into one SIP. This doesn't work if a *PPN* is spread across multiple batches.  
+Carriers that belong to one particular *PPN* must *always* be in the same batch. This is because the batches are processed into ingest-ready Submission Information Packages (SIPs) further down the processing chain, and all carriers that are part of a *PPN* are grouped into one SIP. This doesn't work if a *PPN* is spread across multiple batches.  
 
 ## Processing carriers that are not part of the KB collection
 
@@ -123,24 +122,24 @@ With this setting, the *PPN* widget in the Ipmlab interface is replaced by a *Ti
 
 The batch manifest is a comma-delimited text file named *manifest.csv* which is located at the root of a batch. It contains all information that is needed to process the batch into ingest-ready Submission Information Packages further down the processing chain. For each processed carrier, it contains the following fields:
 
-jobID,PPN,volumeNo,title,volumeID,mediaType,deviceType,success
+jobID,PPN,volumeNo,title,success,readErrors
 
 1. *jobID* - internal carrier-level identifier. The image file(s) of this carrier are stored in an eponymous directory within the batch.
 2. *PPN* - identifier of the physical item in the KB Collection to which this carrier belongs. For the KB case this is the PPN identifier in the KB catalogue. If *enablePPNLookup* is set to *False*, it will be an empty (zero-length) string.
 3. *volumeNo* - for intellectual entities that span multiple carriers, this defines the volume number (1 for single-volume items).
 4. *title* - text string with the title of the carrier (or the publication it is part of). If *enablePPNLookup* is *True* the title field is extracted from the KB catalogue record. If *enablePPNLookup* is *False* the manually entered *Title* value is used.
-5. *mediaType* - if available, device media type as established using the Windows API. Uses [enumeration described here](https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ne-winioctl-media_type).
-6. *deviceType* - if available, device type as established using the Windows API. Uses [enumeration described here](https://docs.microsoft.com/en-us/windows/win32/api/winioctl/ns-winioctl-get_media_types).
-7. *success* - True/False flag that indicates status of *ipmlab*'s imaging process. 
+windows/win32/api/winioctl/ns-winioctl-get_media_types).
+5. *success* - True/False flag that indicates whether the imaging was completed successfully. A *False* value indicates problems.
+6. *readErrors* - a True/False flag that indicates whether Aaru encountered read errors.
 
 The first line of the file contains column headers.
 
 Example:
 
 ```csv
-jobID,PPN,volumeNo,title,mediaType,deviceType,success
-ce5eca7e-f179-11ec-853c-0800272c26ff,144082667,1,INP spellingschijf,F3_1Pt44_512,,True
-d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,F3_1Pt44_512,,True
+jobID,PPN,volumeNo,title,success,readErrors
+ce5eca7e-f179-11ec-853c-0800272c26ff,144082667,1,INP spellingschijf,True,False
+d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,True,False
 ```
 
 ## The log file
@@ -151,23 +150,16 @@ Each batch contains a log file *batch.log*. It contains detailed information abo
 
 Each batch contains a file *version.txt*, which holds the Ipmlab version number.
 
-## Created files for each disc
+## Created files for each carrier
 
-For each carrier, Ipmlab creates a folder in the batch folder. The name of each folder is (again) a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). Each of these folders contain the following files:
+For each carrier, Ipmlab creates a folder in the batch folder. The name of each folder is (again) a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). Each of these folders contain the following files (with a base name that corresponds to the UUID):
 
-* *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.img* - image file (file name follows Job ID).
-* *isobuster.log* - log file with Isobuster log error code; see *Log Error* section in the [Isobuster documentation](https://www.isobuster.com/help/use_of_command_line_parameters) (only if disc contains a data session).
-* *isobuster-report.xml* - report file in [Digital Forensics XML](https://en.wikipedia.org/wiki/Digital_Forensics_XML) format; includes listing of all files inside the disc image (only if file system is supported by IsoBuster).
-* *checksums.sha512* - checksum file with SHA-512 hashes of all the above files in this directory.
-
-## Troubleshooting
-
-### Ipmlab shows "*X* is not a valid optical drive" error on startup
-
-Example:
-
-![](./img/errorNotValidDrive.png)
-
-Possible causes:
-
-* *inDevice* in configuration file is not configured properly (see [setup and configuration guide](./setupGuide.md)).
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.img* - image file (file name follows UUID).
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.cicm.xml* - Aaru metadata file. Contains various checksums, and filesystem and file-level metadata. 
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.resume.xml* - Aaru resume mapfile (analogous to ddrescue map file).
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.log* - Aaru dump log.
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.error.log* - Aaru error log.
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.ibg* - Undocument Aaru file (this looks like some [ImageBurn-specific format](https://forum.imgburn.com/topic/15561-issues-reating-audio-cd/?do=findComment&comment=121649)).
+- Various files ending with a *.bin* file extension - These are written by Aaru (but they are all undocumented, don't know if we should keep them?).
+- *meta-kbmdo.xml* - bibliographic metadata from KB catalogue (only if *enablePPNLookup* is enabled).
+- *checksums.sha512* - checksum file with SHA-512 hashes of all the above files in this directory.
