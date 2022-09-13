@@ -268,13 +268,17 @@ This is a flag that -if set to *True*- enables Ipmlab to pick up Title and PPN i
 
 #### aaruBin
 
-Location of Aaru binary (installation instructions for Aaru can be found [here](./setupAaru.md)). Example:
+Location of Aaru binary (installation instructions for Aaru can be found [here](./setupAaru.md)). Example (Windows):
 
 ```xml
 <aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
 ```
 
-If all went well, Ipmlab will now be ready to use!
+Or for Linux:
+
+```xml
+<aaruBin>/usr/local/bin/aaru</aaruBin>
+```
 
 
 [^1]: This will *not* overwrite any pre-existing configuration files.
