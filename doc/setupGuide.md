@@ -3,7 +3,7 @@
 Before trying to set up Ipmlab, check if the following requirements are met:
 
 * The installation platform is either Microsoft Windows (tested with Windows 10), or Linux-based (e.g. Unbuntu or Linux Mint). 
-* Python 3.8 (or more recent) is installed on the target platform. Older 3.x versions may (but are not guaranteed to) work.
+* Python 3.8 (or more recent) is installed on the target platform. Older 3.x versions *may* (but are not guaranteed to) work.
 
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
@@ -15,18 +15,24 @@ Each step is described in detail below.
 
 ## Aaru installation and configuration
 
-### Windows
-
 Download the latest stable release from:
 
 <https://github.com/aaru-dps/Aaru/releases/latest>
 
 For 64-bit Windows you'll most likely need the *aaru-x.y.z_windows_x64.zip* package. To install, simply unpack the contents of the ZIP file to any location you like.
 
-Then, run the main Aaru application (aaru.exe) without any arguments from the Windows command prompt terminal. For example:
+For 64-bit Ubuntu/linux Mint you'll most likely want to use the *aaru_x.y.z_amd64.deb* file. Install it with your favourite package manager (or just double-click on it). 
+
+Then, run the main Aaru application without any arguments from the Windows command prompt or the Linux terminal. For example (Windows):
 
 ```
 W:\aaru-5.3.1_windows_x64\aaru.exe
+```
+
+Or on Linux:
+
+```
+aaru
 ```
 
 This results in some screen output like this:
@@ -44,68 +50,41 @@ Added 354 known devices
 Saving changes...
 ```
 
-After this, Aaru prompts you for some input on how to handle encrypted and copy-protected media, and
+This will create the Aaru main database. After this, Aaru prompts you for some input on how to handle encrypted and copy-protected media, and
 the sharing of device reports and usage stats. Answer these questions according to your own preferences.
 
-### Linux
-
-Download the latest stable release from:
-
-<https://github.com/aaru-dps/Aaru/releases/latest>
-
-For 64-bit Ubuntu/linux Mint you'll most likely want to use the *aaru_x.y.z_amd64.deb* file. Install it with your favourite package manager (or just double-click on it). After installation, run the main Aaru application from the terminal:
-
-```bash
-aaru
-```
-
-This will create the Aaru main database. Aaru also prompts you for some input on how to handle encrypted and copy-protected media, and
-the sharing of device reports and usage stats. Answer these questions according to your own preferences.
-
-
-## Ipmlab installation, Windows
+## Ipmlab installation
 
 The recommended way to install Ipmlab is to use *pip*. Installing with *pip* will also automatically install any Python packages that are used by Ipmlab. On Windows systems the *pip* executable is located in the *Scripts* directory which is located under Python's top-level installation folder (e.g. *C:\Python38\Scripts*). To install Ipmlab, follow the steps in either the *Global install* or *User install* subsections below.
 
 ### Global install
 
-1. Launch a Command Prompt window. Depending on your system settings you may need to do this with Administrator privilege (right-click on the *Command Prompt* icon and the choose *Run as Administrator*).
-2. Type:
+1. Launch a Command Prompt window or Linux terminal. Depending on your system settings, in Windows you may need Administrator privilege (right-click on the *Command Prompt* icon and the choose *Run as Administrator*).
 
-      `%path-to-pip%\pip install ipmlab`
+2. For Windows, type:
 
-    Here, replace %path-to-pip% with the actual file bpath on your system. For example:
+   `%path-to-pip%\pip install ipmlab`
 
-     `C:\Python38\Scripts\pip install ipmlab`
+   Here, replace %path-to-pip% with the actual file bpath on your system. For example:
+
+   `C:\Python38\Scripts\pip install ipmlab`
+
+   For Linux, just use this:
+
+   `pip install ipmlab`
 
 ### User install
 
-1. Launch a Command Prompt window (no admin rights required)
-2. Type:
+1. Launch a Command Prompt window window or Linux terminal (no admin rights required).
+2. For Windows, type:
 
-      `%path-to-pip%\pip install --user ipmlab`
+   `%path-to-pip%\pip install --user ipmlab`
+
+   For Linux, just use this:
+
+   `pip install --user ipmlab`
 
 The above steps will install Ipmlab and all required libraries.
-
-
-## Ipmlab installation, Linux
-
-
-### Global install
-
-From a terminal window, type:
-
-```
-pip install ipmlab
-```
-
-### User install
-
-From a terminal window, type:
-
-```
-pip install --user ipmlab
-```
 
 ## Configuration
 
