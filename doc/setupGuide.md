@@ -59,6 +59,8 @@ The recommended way to install Ipmlab is to use *pip*. Installing with *pip* wil
 
 ### Global install
 
+Follow the steps below for a global installation (this allows all users on the machine to use Ipmlab):
+
 1. Launch a Command Prompt window or Linux terminal. Depending on your system settings, in Windows you may need Administrator privilege (right-click on the *Command Prompt* icon and the choose *Run as Administrator*).
 
 2. For Windows, type:
@@ -74,6 +76,8 @@ The recommended way to install Ipmlab is to use *pip*. Installing with *pip* wil
    `pip install ipmlab`
 
 ### User install
+
+For a single-user installation, follow these steps:
 
 1. Launch a Command Prompt window window or Linux terminal (no admin rights required).
 2. For Windows, type:
