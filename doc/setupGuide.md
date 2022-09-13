@@ -107,19 +107,29 @@ Before Ipmlab is ready for use you need to configure it.
 
 ### Windows
 
-As a first step, locate the *ipmlab-configure.exe* application. In case of a global install you can find it directly under the *Scripts* directory of the *Python* installation folder:
+As a first step, locate the *ipmlab-configure.exe* application. In case of a global install you can find it directly under the *Scripts* directory of the *Python* installation folder. Depending on how Python and Ipmlab were installed, this could be any of the following locations: 
 
-![](./img/ipmlab-configure-location.png)
+```
+C:\Python38\Scripts
+```
 
-If you did a user install, it will be somewhere in your Windows user profile (see below). The exact location depends on your local Windows configuration. As an example, in my case it is located in the folder *C:\Users\jkn010\AppData\Roaming\Python\Python38\Scripts*.
+Or:
+
+```
+C:\Users\username\AppData\Local\Programs\Python\Python38\Scripts
+```
+
+Or:
+
+```
+C:\Users\username\AppData\Roaming\Python\Python38\Scripts
+```
 
 Run the configuration application by double-clicking on it. The application will create a configuration directory in your Windows user directory, copy a default configuration file to it, and create a shortcut to the main Ipmlab application on the Windows Desktop [^1]. If all goes well the following window appears:
 
 ![](./img/ipmlab-configure-1.png)
 
-Click on the *OK* button on the messagebox to close the configuration application:
-
-![](./img/ipmlab-configure-2.png)
+Click on the *OK* button on the messagebox to close the configuration application.
 
 #### If the configuration tool fails
 
