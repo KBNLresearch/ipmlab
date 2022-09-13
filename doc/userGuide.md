@@ -159,7 +159,7 @@ For each carrier, Ipmlab creates a folder in the batch folder. The name of each 
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.resume.xml* - Aaru resume mapfile (analogous to ddrescue map file).
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.log* - Aaru dump log.
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.error.log* - Aaru error log.
-- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.ibg* - Undocument Aaru file (this looks like some [ImageBurn-specific format](https://forum.imgburn.com/topic/15561-issues-reating-audio-cd/?do=findComment&comment=121649)).
-- Various files ending with a *.bin* file extension - These are written by Aaru (but they are all undocumented, don't know if we should keep them?).
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.ibg* - undocument Aaru file (this looks like some [ImageBurn-specific format](https://forum.imgburn.com/topic/15561-issues-reating-audio-cd/?do=findComment&comment=121649)).
+- Various files ending with a *.bin* file extension - these are written by Aaru (but they are all undocumented, don't know if we should keep them?).
 - *meta-kbmdo.xml* - bibliographic metadata from KB catalogue (only if *enablePPNLookup* is enabled).
 - *checksums.sha512* - checksum file with SHA-512 hashes of all the above files in this directory.
