@@ -8,9 +8,10 @@ Before trying to set up Ipmlab, check if the following requirements are met:
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
 1. Add user to "disk" group (Linux only)
-2. Install the [Aaru Data Preservation Suite](https://www.aaru.app/) software and configure it.
-3. Install Ipmlab
-4. Configure Ipmlab
+2. Install Tkinter if it is not installed already (Linux only)
+3. Install the [Aaru Data Preservation Suite](https://www.aaru.app/) software and configure it.
+4. Install Ipmlab
+5. Configure Ipmlab
 
 Each step is described in detail below.
 
@@ -23,6 +24,14 @@ sudo adduser $USER disk
 ```
 
 The user is now added to the 'disk' system group. Now log out, and then log in again for the changes to take effect.
+
+## Install Tkinter (Linux only)
+
+On Linux, you may need to install Tkinter, if it is not installed already. You can install it using the OS's package manager (there is no PyInstaller package for Tkinter). If you're using *apt* this should work:
+
+```
+sudo apt-get install python3-tk
+```
 
 ## Aaru installation and configuration
 
