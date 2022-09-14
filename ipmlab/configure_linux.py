@@ -124,6 +124,12 @@ def post_install():
     logging.info("Desktop directory: " + desktopDir)
     """
 
+    # Create applicationsDir and configRootDir if they don't exist already
+    if not os.path.isdir(configRootDir):
+        os.mkdir(configRootDir)
+    if not os.path.isdir(applicationsDir):
+        os.mkdir(applicationsDir)
+
     # For a global installation this script must be run as root
     if globalInstall and sudoUser is None:
         msg = 'this script must be run as root for a global installation'
