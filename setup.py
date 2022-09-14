@@ -25,7 +25,8 @@ def find_version(*file_paths):
 
 INSTALL_REQUIRES = [
     'requests',
-    'setuptools'
+    'setuptools',
+    'lxml'
 ]
 PYTHON_REQUIRES = '>=3.2'
 
