@@ -2,11 +2,11 @@
 
 ## What it does
 
-Ipmlab (Image Portable Media Like A Boss ) provides a simple and straightforward way to save the content of offline portable media from the KB collection. It supports a variety of carrier types, such as 3.5" floppy disks, USB thumb drives and hard drives.
+Ipmlab (Image Portable Media Like A Boss ) provides a simple and straightforward way to save the content of offline portable media from the KB collection. It supports a variety of carrier types, such as DOS/Windows formatted 3.5" floppy disks, USB thumb drives and hard drives.
 
-Internally Ipmlab wraps around [IsoBuster](https://www.isobuster.com/) for extracting the content these media.
+Internally Ipmlab wraps around [Aaru Data Preservation Suite](https://www.aaru.app/) for extracting the content these media.
 
-The disc images are saved in a simple batch structure. Each batch contains a batch manifest, which is a comma-delimited text file with basic information about each carriers, such as:
+The media images are saved in a simple batch structure. Each batch contains a batch manifest, which is a comma-delimited text file with basic information about each carriers, such as:
 
 - An identifier that links to a record in the KB catalogue.
 - A volume number (because carriers may span multiple volumes).
@@ -14,28 +14,26 @@ The disc images are saved in a simple batch structure. Each batch contains a bat
 
 ## Using Ipmlab outside the KB
 
-By default, Ipmlab expects each carrier to be associated with a record in the KB catalogue by means of an identifier (PPN). This identifier is then used to fetch title information from the KB catalogue using a HTTP request. This effectively constrains the use of Ipmlab to materials in the KB collection. To overcome this constraint, you can disable the PPN lookup by setting the value of *enablePPNLookup* in the configuration file to *False*. More details can be found in the [setup and configuration documentation](./doc/setupIpmlab.md#enableppnlookup). If *enablePPNLookup* is disabled, the *PPN* data entry widget in Ipmlab's data entry GUI is replaced with a *Title* widget, which can be used for entering a free text description of each carrier. See also the section about [Processing media that are not part of the KB collection](./doc/userGuide.md#processing-media-that-are-not-part-of-the-kb-collection) in the User Guide.
+By default, Ipmlab expects each carrier to be associated with a record in the KB catalogue by means of an identifier (PPN). This identifier is then used to fetch title information from the KB catalogue using a HTTP request. This effectively constrains the use of Ipmlab to materials in the KB collection. To overcome this constraint, you can disable the PPN lookup by setting the value of *enablePPNLookup* in the configuration file to *False*. More details can be found in the [setup and configuration documentation](./doc/setupGuide.md#enableppnlookup). If *enablePPNLookup* is disabled, the *PPN* data entry widget in Ipmlab's data entry GUI is replaced with a *Title* widget, which can be used for entering a free text description of each carrier. See also the section about [Processing media that are not part of the KB collection](./doc/userGuide.md#processing-media-that-are-not-part-of-the-kb-collection) in the User Guide.
 
 Moreover, it would be fairly straightforward to replace the PPN lookup by some alternative identifier that is linked to another catalogue/database (especially if it can be queried using HTTP-requests).
 
 ## Platform
 
-MS Windows only. It may be possible to adapt the software to other platforms.
+MS Windows + Linux (e.g. Ubuntu, Linux Mint, etc.). It may be possible to adapt the software to other platforms as well.
 
 ## Wrapped software
 
-Ipmlab wraps around [IsoBuster](https://www.isobuster.com/) (note: version 4.1 or more recent).
-
-IsoBuster requires a license, and must be installed separately.
+Ipmlab wraps around the open source, cross-platform [Aaru Data Preservation Suite](https://www.aaru.app/) (note: tested with version 5.3.1). Aaru must be installed separately.
 
 ## Documentation
 
-* [Setup Guide](./doc/setupGuide.md) - covers installation, setup and configuration of Iromlab and the wrapped software
-* [User Guide](./doc/userGuide.md) - explains how to use Iromlab.
+* [Setup Guide](./doc/setupGuide.md) - covers installation, setup and configuration of Ipmlab and Aaru.
+* [User Guide](./doc/userGuide.md) - explains how to use Ipmlab.
 
 ## Contributors
 
-Written by Johan van der Knijff, except *sru.py* which was adapted from the [KB Python API](https://github.com/KBNLresearch/KB-python-API) which is written by WillemJan Faber, and the socket server code which  was adapted from an example in [Python Socket Communication](https://medium.com/python-pandemonium/python-socket-communication-e10b39225a4c) by Rodgers Ouma Mc'Alila.
+Written by Johan van der Knijff, except *sru.py* which was adapted from the [KB Python API](https://github.com/KBNLresearch/KB-python-API) which is written by Willem Jan Faber, and the socket server code which  was adapted from an example in [Python Socket Communication](https://medium.com/python-pandemonium/python-socket-communication-e10b39225a4c) by Rodgers Ouma Mc'Alila.
 
 ## License
 
