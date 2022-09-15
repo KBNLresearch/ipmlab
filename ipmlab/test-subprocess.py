@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import time
+import io
 import threading
 import platform
 import logging
@@ -65,14 +66,6 @@ class myGUI(tk.Frame):
         logger = logging.getLogger()        
         logger.addHandler(text_handler)
 
-def worker():
-    # Skeleton worker function, runs in separate thread (see below)   
-    while True:
-        # Report time / date at 2-second intervals
-        time.sleep(2)
-        timeStr = time.asctime()
-        msg = 'Current time: ' + timeStr
-        logging.info(msg)
 
 def dump():
     # Aaru binary
@@ -84,6 +77,7 @@ def dump():
     # Image file name
     imageFile = 'test-aaru.img'
 
+    # List with Aaru commmand line arguments
     args = [aaruBin]
     args.append("media")
     args.append("dump")
@@ -100,8 +94,46 @@ def dump():
         # Unmount input device
         sub.run(['umount', inDevice], shell=False)
 
+    """ Original code
     # Run Aaru as subprocess
-    p = sub.run(args, shell=False)
+    p = sub.Popen(args, shell=False)
+
+    # RESULT: Works OK from console, but when double-clicked Aaru fails
+    """
+
+    """Test 1: stdout + stderr to file:
+    with open('ipmlab.outerr', "w") as outfile:
+        sub.run(args, stderr=sub.STDOUT, stdout=outfile)
+
+    # RESULT: Works OK from console, but when double-clicked throws:
+    #  "Unhandled exception: System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation."
+    """
+
+    """Test 2: stdout + stderr to GUI:
+    p = sub.Popen(args, stderr=sub.STDOUT, stdout=sub.PIPE, shell=False)
+    for line in io.TextIOWrapper(p.stdout, encoding="utf-8"):
+        logging.info(line)
+
+    # RESULT: Works OK from console, but when double-clicked throws:
+    #  "Unhandled exception: System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation."
+    """
+
+    """Test 3: as above, but shell=True
+    p = sub.Popen(args, stderr=sub.STDOUT, stdout=sub.PIPE, shell=True)
+    for line in io.TextIOWrapper(p.stdout, encoding="utf-8"):
+        logging.info(line)
+
+    # RESULT: from console results in "required command was not provided" (arguments not passed to Aaru), nothing happens,
+    # same on double-click.
+    """
+
+    """ TEST 4: as original code, but stdout, stderr redirected to null device"""
+    # Run Aaru as subprocess
+    p = sub.Popen(args, stderr=sub.DEVNULL, stdout=sub.DEVNULL, shell=False)
+
+    # RESULT: Works OK from console, but when double-clicked Aaru fails
+
+
 
 def main():
     
