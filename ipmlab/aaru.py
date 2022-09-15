@@ -17,6 +17,9 @@ def extractData(writeDirectory, imageFileBaseName):
     # Error log file name
     errorLogFile = os.path.join(writeDirectory, imageFileBaseName + '.error.log')
 
+    # This flag defines how subprocesses are executed 
+    shellFlag = False
+
     args = [config.aaruBin]
     args.append("media")
     args.append("dump")
@@ -35,9 +38,11 @@ def extractData(writeDirectory, imageFileBaseName):
     if platform.system() == "Linux":
         # Unmount input device
         sub.run(['umount', config.inDevice], shell=False)
+    elif platform.system() == "Windows":
+        shellFlag = True
 
     # Run Aaru as subprocess
-    p = sub.run(args, shell=False)
+    p = sub.run(args, shell=shellFlag)
 
     errorLogExists = False
     while not errorLogExists:
