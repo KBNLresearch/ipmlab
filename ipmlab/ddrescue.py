@@ -49,7 +49,7 @@ def extractData(writeDirectory, imageFileBaseName):
     args.append('-r' + str(config.retries))
     args.append('-v')
     if platform.system() == "Windows":
-        args.append("".join([config.inDevice, ":"]))
+        args.append("".join([config.inDevice, ":\"]))
     elif platform.system() == "Linux":
         args.append(config.inDevice)
     args.append(imageFile)
