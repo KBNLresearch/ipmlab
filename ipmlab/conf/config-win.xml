@@ -8,8 +8,8 @@
    spaces! (the Python os.path libs don't seem to like this!)
 -->
 
-<!-- Input device (Windows: drive letter) -->
-<inDevice>A</inDevice>
+<!-- Input device -->
+<inDevice>/dev/sdb1</inDevice>
 
 <!-- root directory - this is the default search path for creating / opening batches -->
 <rootDir>W:\ipmlab-test</rootDir>

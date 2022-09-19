@@ -16,6 +16,24 @@ In the *new* column, select the most recent (1.25-1) version of *ddrescue*. (The
 
 Click through remaining install steps.
 
+## Finding the device
 
+In Cygwin terminal:
 
+```
+ls /dev/
+```
 
+Lists all devices.
+
+On test VM this works when floppy drive is connected via write blocker:
+
+```
+C:\cygwin64\bin\ddrescue -b 512 -r4 -v /dev/sdb1 test.img test.map
+```
+
+And without write blocker:
+
+```
+C:\cygwin64\bin\ddrescue -b 512 -r4 -v /dev/fd1 test.img test.map
+```
