@@ -13,6 +13,7 @@ import os
 import csv
 import imp
 import time
+from unittest import TestCase
 import xml.etree.ElementTree as ETree
 import threading
 import uuid
@@ -368,6 +369,8 @@ class carrierEntry(tk.Frame):
                         mediumLoaded = True
                     except(PermissionError, OSError):
                         msg = ("No medium found, please load medium and press 'OK'")
+                        ## TEST
+                        raise
                         tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
