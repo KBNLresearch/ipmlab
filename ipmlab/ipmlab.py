@@ -361,24 +361,14 @@ class carrierEntry(tk.Frame):
                        ") and press 'OK'")
                 tkMessageBox.showinfo("Load medium", msg)
 
-                if platform.system() == "Windows":
-                    while not mediumLoaded:
-                        try:
-                            _ = os.listdir(config.inDevice + ":\\")
-                            mediumLoaded = True
-                        except(PermissionError, OSError):
-                            msg = ("No medium found, please load medium and press 'OK'")
-                            tkMessageBox.showinfo("Load medium", msg)
-
-                elif platform.system() == "Linux":
-                    while not mediumLoaded:
-                        try:
-                            fd= os.open(config.inDevice , os.O_RDONLY)
-                            os.close(fd)
-                            mediumLoaded = True
-                        except(PermissionError, OSError):
-                            msg = ("No medium found, please load medium and press 'OK'")
-                            tkMessageBox.showinfo("Load medium", msg)
+                while not mediumLoaded:
+                    try:
+                        fd= os.open(config.inDevice , os.O_RDONLY)
+                        os.close(fd)
+                        mediumLoaded = True
+                    except(PermissionError, OSError):
+                        msg = ("No medium found, please load medium and press 'OK'")
+                        tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
                 jobID = str(uuid.uuid1())
