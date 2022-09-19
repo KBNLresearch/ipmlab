@@ -17,6 +17,12 @@
 <!-- prefix that is used to create batch names -->
 <prefixBatch>kb</prefixBatch>
 
+<!-- Block size -->
+<blockSize>512</blockSize>
+
+<!-- Maximum number of read retries -->
+<retries>4</retries>
+
 <!-- host address that is used if socket API is enabled. Use 127.0.0.1 for localhost
 -->
 <socketHost>127.0.0.1</socketHost>
@@ -35,7 +41,7 @@ application through a socket interface
 -->
 <enableSocketAPI>True</enableSocketAPI>
 
-<!-- location of Aaru binary-->
-<aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
+<!-- location of Ddrescue binary-->
+<ddrescueBin>C:\cygwin64\bin\ddrescue.exe</ddrescueBin>
 
 </config>

@@ -607,8 +607,8 @@ class carrierEntry(tk.Frame):
             errorExit(msg)
 
         # Check if all files and directories exist, and exit if not
-        if not os.path.isfile(config.aaruBin):
-            msg = "Aaru binary " + config.aaruBin + " does not exist"
+        if not os.path.isfile(config.ddrescueBin):
+            msg = "Ddrescue binary " + config.ddrescueBin + " does not exist"
             errorExit(msg)
         if not os.path.isdir(config.rootDir):
             msg = "root directory " + config.rootDir + " does not exist"
@@ -829,36 +829,23 @@ def getConfiguration():
         config.inDevice = findElementText(configElt, './config/inDevice')
         config.rootDir = findElementText(configElt, './config/rootDir')
         config.prefixBatch = findElementText(configElt, './config/prefixBatch')
-        config.aaruBin = findElementText(configElt, './config/aaruBin')
-    
-        # For below configuration variables, use default value if value cannot be
-        # read from config file (this ensures v1 will work with old config files)
-        try:
-            config.socketHost = findElementText(configElt, './config/socketHost')
-        except:
-            pass
-        try:
-            config.socketPort = findElementText(configElt, './config/socketPort')
-        except:
-            pass
-        try:
-            if findElementText(configElt, './config/enablePPNLookup') == "True":
-                config.enablePPNLookup = True
-            else:
-                config.enablePPNLookup = False
-        except:
-            pass
-        try:
-            if findElementText(configElt, './config/enableSocketAPI') == "True":
-                config.enableSocketAPI = True
-            else:
-                config.enableSocketAPI = False
-        except:
-            pass
-
+        config.ddrescueBin = findElementText(configElt, './config/ddrescueBin')
+        config.retries = findElementText(configElt, './config/retries')
+        config.blockSize = findElementText(configElt, './config/blockSize')
+        config.socketHost = findElementText(configElt, './config/socketHost')
+        config.socketPort = findElementText(configElt, './config/socketPort')
+        if findElementText(configElt, './config/enablePPNLookup') == "True":
+            config.enablePPNLookup = True
+        else:
+            config.enablePPNLookup = False
+        if findElementText(configElt, './config/enableSocketAPI') == "True":
+            config.enableSocketAPI = True
+        else:
+            config.enableSocketAPI = False
+ 
         # Normalise all file paths
         config.rootDir = os.path.normpath(config.rootDir)
-        config.aaruBin = os.path.normpath(config.aaruBin)
+        config.ddrescueBin = os.path.normpath(config.ddrescueBin)
 
     return configFileDefinedFlag, configFileExistsFlag, configFileOpenFlag, configFileParsedFlag
 

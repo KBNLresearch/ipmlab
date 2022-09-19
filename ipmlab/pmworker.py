@@ -8,7 +8,7 @@ import csv
 import hashlib
 import logging
 from . import config
-from . import aaru
+from . import ddrescue
 from . import mdo
 
 
@@ -94,20 +94,20 @@ def processMedium(carrierData):
         os.makedirs(dirMedium)
 
     logging.info('*** Extracting data ***')
-    resultAaru = aaru.extractData(dirMedium, jobID)
-    statusAaru = resultAaru["status"]
-    readErrors = resultAaru["readErrors"]
+    resultDdrescue = ddrescue.extractData(dirMedium, jobID)
+    statusDdrescue = resultDdrescue["status"]
+    readErrors = resultDdrescue["readErrors"]
 
-    logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
-    logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
+    logging.info(''.join(['ddescue command: ', resultDdrescue['cmdStr']]))
+    logging.info(''.join(['ddrescue-status: ', str(resultDdrescue['status'])]))
 
-    if statusAaru != 0:
+    if statusDdrescue != 0:
         success = False
-        logging.error("Aaru exited with abnormal exit status")
+        logging.error("Ddrescue exited with abnormal exit status")
 
     if readErrors:
         success = False
-        logging.error("Aaru dumping resulted in read error(s)")
+        logging.error("Ddrescue dumping resulted in read error(s)")
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file

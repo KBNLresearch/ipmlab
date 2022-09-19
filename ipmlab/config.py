@@ -3,7 +3,9 @@
 
 version = ""
 inDevice = ""
-aaruBin = ""
+ddrescueBin = ""
+retries = ""
+blockSize = ""
 rootDir = ""
 batchFolder = ""
 batchManifest = ""
