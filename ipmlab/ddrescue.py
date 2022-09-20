@@ -32,7 +32,7 @@ def getPosixDevice(driveName):
             devName = items[3]
             winMount = items[4].strip(":/\\")
             if winMount == driveName:
-                devPosix = devName
+                devPosix = "/dev/" + devName
         pLine += 1
     
     return devPosix
@@ -62,7 +62,7 @@ def extractData(writeDirectory, imageFileBaseName):
     mapFile = os.path.join(writeDirectory, imageFileBaseName + '.map')
 
     # Error log file name
-    errorLogFile = os.path.join(writeDirectory, imageFileBaseName + '.error.log')
+    #errorLogFile = os.path.join(writeDirectory, imageFileBaseName + '.error.log')
 
     # This flag defines how subprocesses are executed 
     shellFlag = False
@@ -70,8 +70,11 @@ def extractData(writeDirectory, imageFileBaseName):
     # Number of read errors
     readErrors = 0
 
-    # Arguments
+    ## TEST
+    print("Debug 1")
+    ## TEST
 
+    # Arguments
     args = [config.ddrescueBin]
     args.append('-b')
     args.append(str(config.blockSize))
@@ -94,6 +97,10 @@ def extractData(writeDirectory, imageFileBaseName):
         sub.run(['umount', config.inDevice], shell=False)
     elif platform.system() == "Windows":
         shellFlag = True
+
+    ## TEST
+    print("Debug 2")
+    ## TEST
 
     # Run ddrescue as subprocess
     try:
@@ -145,6 +152,11 @@ def extractData(writeDirectory, imageFileBaseName):
             logging.info(tidy_line)
 
         p.wait()
+
+        ## TEST
+        print("Debug 3")
+        ## TEST
+
         exitStatus = p.returncode
 
     except Exception:
@@ -152,10 +164,12 @@ def extractData(writeDirectory, imageFileBaseName):
         # I don't even want to to start thinking how one might end up here ...
         exitStatus = -99
 
+    """
     errorLogExists = False
     while not errorLogExists:
         time.sleep(2)
         errorLogExists = os.path.isfile(errorLogFile)
+    """
 
     # All results to dictionary
     dictOut = {}
