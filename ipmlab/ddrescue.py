@@ -79,8 +79,8 @@ def extractData(writeDirectory, imageFileBaseName):
     args.append('-v')
     if platform.system() == "Windows":
         # Derive Cygwin-specific POSIX device that corresponds to logical drive
-        inDevice = getPosixDevice(config.inDevice)
-        args.append(inDevice)
+        inDevCygwin = getPosixDevice(config.inDevice)
+        args.append(inDevCygwin)
     elif platform.system() == "Linux":
         args.append(config.inDevice)
     args.append(imageFile)
