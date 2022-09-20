@@ -9,6 +9,35 @@ import logging
 import subprocess as sub
 from . import config
 
+def getPosixDevice(driveName):
+    """
+    Returns POSIX device name of Windows drive (Cygwin)
+    May return None if drive is empty! 
+    """
+    devPosix = None
+
+    args = [config.catBin]
+    args.append('/proc/partitions')
+
+    p = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+    out, err = p.communicate()
+    outString = out.decode("utf-8")
+    partList = outString.split("\n")
+
+    pLine = 0
+
+    for line in partList:
+        items = line.strip().split()
+        if pLine > 1 and len(items) == 5:
+            devName = items[3]
+            winMount = items[4].strip(":/\\")
+            if winMount == driveName:
+                devPosix = devName
+        pLine += 1
+    
+    return devPosix
+
+
 def getReadErrors(rescueLine):
     """parse ddrescue output line for values of readErrors"""
     lineItems = rescueLine.split(",")
@@ -48,7 +77,12 @@ def extractData(writeDirectory, imageFileBaseName):
     args.append(str(config.blockSize))
     args.append('-r' + str(config.retries))
     args.append('-v')
-    args.append(config.inDevice)
+    if platform.system() == "Windows":
+        # Derive Cygwin-specific POSIX device that corresponds to logical drive
+        inDevice = getPosixDevice(config.inDevice)
+        args.append(inDevice)
+    elif platform.system() == "Linux":
+        args.append(config.inDevice)
     args.append(imageFile)
     args.append(mapFile)
 

@@ -72,7 +72,6 @@ def checksumDirectory(directory):
 
     return wroteChecksums
 
-
 def processMedium(carrierData):
     """Process one medium/carrier"""
 
@@ -98,7 +97,7 @@ def processMedium(carrierData):
     statusDdrescue = resultDdrescue["status"]
     readErrors = resultDdrescue["readErrors"]
 
-    logging.info(''.join(['ddescue command: ', resultDdrescue['cmdStr']]))
+    logging.info(''.join(['ddrescue command: ', resultDdrescue['cmdStr']]))
     logging.info(''.join(['ddrescue-status: ', str(resultDdrescue['status'])]))
 
     if statusDdrescue != 0:

@@ -362,16 +362,25 @@ class carrierEntry(tk.Frame):
                        ") and press 'OK'")
                 tkMessageBox.showinfo("Load medium", msg)
 
-                while not mediumLoaded:
-                    try:
-                        fd= os.open(config.inDevice , os.O_RDONLY)
-                        os.close(fd)
-                        mediumLoaded = True
-                    except(PermissionError, OSError):
-                        msg = ("No medium found, please load medium and press 'OK'")
-                        ## TEST
-                        raise
-                        tkMessageBox.showinfo("Load medium", msg)
+                if platform.system() == "Windows":
+
+                    while not mediumLoaded:
+                        try:
+                            _ = os.listdir(config.inDevice + ":\\")
+                            mediumLoaded = True
+                        except(PermissionError, OSError):
+                            msg = ("No medium found, please load medium and press 'OK'")
+                            tkMessageBox.showinfo("Load medium", msg)
+
+                elif platform.system() == "Linux":
+                    while not mediumLoaded:
+                        try:
+                            fd= os.open(config.inDevice , os.O_RDONLY)
+                            os.close(fd)
+                            mediumLoaded = True
+                        except(PermissionError, OSError):
+                            msg = ("No medium found, please load medium and press 'OK'")
+                            tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
                 jobID = str(uuid.uuid1())
@@ -605,7 +614,11 @@ class carrierEntry(tk.Frame):
             errorExit(msg)
         if not os.path.isdir(config.rootDir):
             msg = "root directory " + config.rootDir + " does not exist"
-            errorExit(msg)            
+            errorExit(msg)
+        if platform.system() == "Windows":
+            if not os.path.isfile(config.catBin):
+                msg = "Cat binary " + config.catBin + " does not exist"
+                errorExit(msg)
 
     def reset_carrier(self):
         """Reset the carrier entry fields"""
@@ -839,6 +852,9 @@ def getConfiguration():
         # Normalise all file paths
         config.rootDir = os.path.normpath(config.rootDir)
         config.ddrescueBin = os.path.normpath(config.ddrescueBin)
+
+        # Cat tool (Needed on Windows/Cygwin only)
+        config.catBin = os.path.join(os.path.dirname(config.ddrescueBin), "cat.exe")
 
     return configFileDefinedFlag, configFileExistsFlag, configFileOpenFlag, configFileParsedFlag
 

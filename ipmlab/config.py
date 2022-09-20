@@ -4,6 +4,7 @@
 version = ""
 inDevice = ""
 ddrescueBin = ""
+catBin = ""
 retries = ""
 blockSize = ""
 rootDir = ""

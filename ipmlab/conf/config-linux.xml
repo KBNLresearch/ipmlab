@@ -8,7 +8,7 @@
    spaces! (the Python os.path libs don't seem to like this!)
 -->
 
-<!-- Input device (Windows: drive letter) -->
+<!-- Input device (Windows: logical drive letter) -->
 <inDevice>/dev/sdd</inDevice>
 
 <!-- root directory - this is the default search path for creating / opening batches -->
