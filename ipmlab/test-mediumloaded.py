@@ -32,5 +32,5 @@ def getPosixDevice(driveName):
     
     return devPosix
 
-devTest = getPosixDevice("E")
+devTest = getPosixDevice("B")
 print(devTest)
