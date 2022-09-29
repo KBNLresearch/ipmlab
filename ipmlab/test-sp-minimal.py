@@ -3,7 +3,8 @@ import io
 import subprocess as sub
 
 # Aaru binary
-aaruBin = "/usr/local/bin/aaru"
+#aaruBin = "/usr/local/bin/aaru"
+aaruBin = "/home/johan/Aaru-alpha/aaru-6.0.0-alpha3_linux_amd64/aaru"
 
 # Input device
 inDevice = "/dev/sdd"
