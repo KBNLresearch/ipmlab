@@ -5,6 +5,7 @@ import os
 import io
 import platform
 import time
+import logging
 import subprocess as sub
 from . import config
 
@@ -17,6 +18,9 @@ def extractData(writeDirectory, imageFileBaseName):
     # Error log file name
     errorLogFile = os.path.join(writeDirectory, imageFileBaseName + '.error.log')
 
+    # This flag defines how subprocesses are executed 
+    shellFlag = False
+
     args = [config.aaruBin]
     args.append("media")
     args.append("dump")
@@ -25,6 +29,7 @@ def extractData(writeDirectory, imageFileBaseName):
     args.append("--metadata")
     if platform.system() == "Windows":
         args.append("".join([config.inDevice, ":"]))
+        shellFlag = True
     elif platform.system() == "Linux":
         args.append(config.inDevice)
     args.append(imageFile)
@@ -34,10 +39,14 @@ def extractData(writeDirectory, imageFileBaseName):
 
     if platform.system() == "Linux":
         # Unmount input device
-        sub.run(['umount', config.inDevice], shell=False)
-
+        logging.info("unmounting input device")
+        p1 = sub.Popen(['umount', config.inDevice], stdout=sub.PIPE, stderr=sub.PIPE, shell=False)
+        out, errors = p1.communicate()
+ 
     # Run Aaru as subprocess
-    p = sub.run(args, shell=False)
+    logging.info("running Aaru")
+    p2 = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE, shell=shellFlag)
+    out, errors = p2.communicate()    
 
     errorLogExists = False
     while not errorLogExists:
@@ -62,7 +71,7 @@ def extractData(writeDirectory, imageFileBaseName):
     # All results to dictionary
     dictOut = {}
     dictOut["cmdStr"] = cmdStr
-    dictOut["status"] = p.returncode
+    dictOut["status"] = p2.returncode
     dictOut["readErrors"] = readErrors
   
     return dictOut
