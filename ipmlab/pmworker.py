@@ -9,6 +9,7 @@ import hashlib
 import logging
 from . import config
 from . import aaru
+from . import ddrescue
 from . import mdo
 
 

@@ -4,6 +4,8 @@
 version = ""
 inDevice = ""
 aaruBin = ""
+ddrescueBin = ""
+imagingApplication = ""
 rootDir = ""
 batchFolder = ""
 batchManifest = ""

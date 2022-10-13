@@ -35,7 +35,14 @@ application through a socket interface
 -->
 <enableSocketAPI>True</enableSocketAPI>
 
+<!-- Imaging application. Allowed values: "aaru", "ddrescue" 
+-->
+<imagingApplication>aaru</imagingApplication>
+
 <!-- location of Aaru binary-->
 <aaruBin>/usr/local/bin/aaru</aaruBin>
+
+<!-- location of Ddrescue binary-->
+<ddrescueBin>/usr/bin/ddrescue</ddrescueBin>
 
 </config>

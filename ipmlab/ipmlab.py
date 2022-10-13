@@ -829,7 +829,9 @@ def getConfiguration():
         config.inDevice = findElementText(configElt, './config/inDevice')
         config.rootDir = findElementText(configElt, './config/rootDir')
         config.prefixBatch = findElementText(configElt, './config/prefixBatch')
+        config.imagingApplication = findElementText(configElt, './config/imagingApplication')
         config.aaruBin = findElementText(configElt, './config/aaruBin')
+        config.ddrescueBin = findElementText(configElt, './config/ddrescueBin')
     
         # For below configuration variables, use default value if value cannot be
         # read from config file (this ensures v1 will work with old config files)
@@ -859,6 +861,7 @@ def getConfiguration():
         # Normalise all file paths
         config.rootDir = os.path.normpath(config.rootDir)
         config.aaruBin = os.path.normpath(config.aaruBin)
+        config.ddrescueBin = os.path.normpath(config.ddrescueBin)
 
     return configFileDefinedFlag, configFileExistsFlag, configFileOpenFlag, configFileParsedFlag
 
