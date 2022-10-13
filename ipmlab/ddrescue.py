@@ -70,10 +70,6 @@ def extractData(writeDirectory, imageFileBaseName):
     # Number of read errors
     readErrors = 0
 
-    ## TEST
-    print("Debug 1")
-    ## TEST
-
     # Arguments
     args = [config.ddrescueBin]
     args.append('-b')
@@ -97,10 +93,6 @@ def extractData(writeDirectory, imageFileBaseName):
         sub.run(['umount', config.inDevice], shell=False)
     elif platform.system() == "Windows":
         shellFlag = True
-
-    ## TEST
-    print("Debug 2")
-    ## TEST
 
     # Run ddrescue as subprocess
     try:
@@ -153,23 +145,12 @@ def extractData(writeDirectory, imageFileBaseName):
 
         p.wait()
 
-        ## TEST
-        print("Debug 3")
-        ## TEST
-
         exitStatus = p.returncode
 
     except Exception:
         raise
         # I don't even want to to start thinking how one might end up here ...
         exitStatus = -99
-
-    """
-    errorLogExists = False
-    while not errorLogExists:
-        time.sleep(2)
-        errorLogExists = os.path.isfile(errorLogFile)
-    """
 
     # All results to dictionary
     dictOut = {}
