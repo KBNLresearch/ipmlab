@@ -607,9 +607,18 @@ class carrierEntry(tk.Frame):
             errorExit(msg)
 
         # Check if all files and directories exist, and exit if not
-        if not os.path.isfile(config.aaruBin):
-            msg = "Aaru binary " + config.aaruBin + " does not exist"
+        if config.imagingApplication == "aaru":
+            if not os.path.isfile(config.aaruBin):
+                msg = "Aaru binary " + config.aaruBin + " does not exist"
+                errorExit(msg)
+        elif config.imagingApplication == "ddrescue":
+                if not os.path.isfile(config.ddrescueBin):
+                    msg = "Ddrescue binary " + config.ddrescueBin + " does not exist"
+                    errorExit(msg)
+        else:
+            msg = config.imagingApplication + " is not a recognized imagingApplication value"
             errorExit(msg)
+
         if not os.path.isdir(config.rootDir):
             msg = "root directory " + config.rootDir + " does not exist"
             errorExit(msg)            
@@ -832,6 +841,8 @@ def getConfiguration():
         config.imagingApplication = findElementText(configElt, './config/imagingApplication')
         config.aaruBin = findElementText(configElt, './config/aaruBin')
         config.ddrescueBin = findElementText(configElt, './config/ddrescueBin')
+        config.blockSize = findElementText(configElt, './config/blockSize')
+        config.retries = findElementText(configElt, './config/retries')
     
         # For below configuration variables, use default value if value cannot be
         # read from config file (this ensures v1 will work with old config files)

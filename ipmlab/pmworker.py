@@ -94,21 +94,40 @@ def processMedium(carrierData):
     if not os.path.exists(dirMedium):
         os.makedirs(dirMedium)
 
-    logging.info('*** Extracting data ***')
-    resultAaru = aaru.extractData(dirMedium, jobID)
-    statusAaru = resultAaru["status"]
-    readErrors = resultAaru["readErrors"]
+    logging.info('*** Extracting data using ' + config.imagingApplication + ' ***')
 
-    logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
-    logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
+    if config.imagingApplication == "aaru":
 
-    if statusAaru != 0:
-        success = False
-        logging.error("Aaru exited with abnormal exit status")
+        resultAaru = aaru.extractData(dirMedium, jobID)
+        statusAaru = resultAaru["status"]
+        readErrors = resultAaru["readErrors"]
 
-    if readErrors:
-        success = False
-        logging.error("Aaru dumping resulted in read error(s)")
+        logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
+        logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
+
+        if statusAaru != 0:
+            success = False
+            logging.error("Aaru exited with abnormal exit status")
+
+        if readErrors:
+            success = False
+            logging.error("Aaru dumping resulted in read error(s)")
+
+    elif config.imagingApplication == "ddrescue":
+        resultDdrescue = ddrescue.extractData(dirMedium, jobID)
+        statusDdrescue = resultDdrescue["status"]
+        readErrors = resultDdrescue["readErrors"]
+
+        logging.info(''.join(['ddrescue command: ', resultDdrescue['cmdStr']]))
+        logging.info(''.join(['ddrescue-status: ', str(resultDdrescue['status'])]))
+
+        if statusDdrescue != 0:
+            success = False
+            logging.error("Ddrescue exited with abnormal exit status")
+
+        if readErrors:
+            success = False
+            logging.error("Ddrescue dumping resulted in read error(s)")
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file

@@ -45,4 +45,10 @@ application through a socket interface
 <!-- location of Ddrescue binary-->
 <ddrescueBin>/usr/bin/ddrescue</ddrescueBin>
 
+<!-- Block size (only used by ddrescue) -->
+<blockSize>512</blockSize>
+
+<!-- Maximum number of read retries (only used by ddrescue) -->
+<retries>4</retries>
+
 </config>
