@@ -123,13 +123,6 @@ def extractData(writeDirectory, imageFileBaseName):
                     if "errors:" in tidy_line:
                         # Parse this line for value of read errors
                         readErrors = getReadErrors(tidy_line)
-                    try:
-                        logging.info(tidy_line)
-                    except:
-                        raise
-                        # Handle unexpected errors. Can happen once in normal operation on
-                        # ddrescue v1.22+
-                        logging.warning("Error parsing ddrescue output!")
 
                 # Reset line.
                 line = ""
