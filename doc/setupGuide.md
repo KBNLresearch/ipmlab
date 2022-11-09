@@ -9,7 +9,7 @@ Getting Ipmlab up running requires a number of installation and configuration st
 
 1. Add user to "disk" group
 1. Install Tkinter if it is not installed already
-1. Install dfxml_python
+1. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
 1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
 1. Install Ipmlab
 1. Configure Ipmlab
