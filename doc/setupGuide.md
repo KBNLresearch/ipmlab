@@ -7,8 +7,8 @@ Before trying to set up Ipmlab, check if the following requirements are met:
 
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
-1. Add user to "disk" group (Linux only)
-1. Install Tkinter if it is not installed already (Linux only)
+1. Add user to "disk" group
+1. Install Tkinter if it is not installed already
 1. Install dfxml_python
 1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
 1. Install Ipmlab
@@ -256,7 +256,7 @@ This sets the application that is used for imaging. Allowed values are "aaru" an
 This points to the location of Aaru binary:
 
 ```xml
-<aaruBin>/home/johan/Aaru-alpha/aaru-6.0.0-alpha3_linux_amd64/aaru</aaruBin>
+<aaruBin>/usr/local/bin/aaru</aaruBin>
 ```
 
 #### ddrescueBin
@@ -282,26 +282,3 @@ This sets the maximum number of times ddrescue will try to read an unreadable se
 ```xml
 <retries>4</retries>
 ```
-
-
-
-
-#### aaruBin
-
-Location of Aaru binary (installation instructions for Aaru can be found [here](./setupAaru.md)). Example (Windows):
-
-```xml
-<aaruBin>W:\aaru-5.3.1_windows_x64\aaru.exe</aaruBin>
-```
-
-Or for Linux:
-
-```xml
-<aaruBin>/usr/local/bin/aaru</aaruBin>
-```
-
-
-[^1]: This will *not* overwrite any pre-existing configuration files.
-
-[^2]: To be more precise: the profile of the user that installed Ipmlab (in case of multiple user profiles)
-
