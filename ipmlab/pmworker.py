@@ -132,13 +132,13 @@ def processMedium(carrierData):
             success = False
             logging.error("Ddrescue dumping resulted in read error(s)")
 
-    # Generate Dfxml metadata and store as file
-    logging.info('*** Generating Dfxml metadata ***')
+    # Generate dfxml metadata and store as file
+    logging.info('*** Generating dfxml metadata ***')
     successDfxml = dfxml.writeDfxml(imageFile, dirMedium)
 
     if not successDfxml:
         success = False
-        logging.error("Writing of Dfxml file resulted in an error")
+        logging.error("Could not extract or write dfxml metadata")
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
@@ -147,7 +147,6 @@ def processMedium(carrierData):
         successMdoWrite = mdo.writeMDORecord(PPN, dirMedium)
         if not successMdoWrite:
             success = False
-            reject = True
             logging.error("Could not write metadata from KB-MDO")
 
     # Generate checksum file

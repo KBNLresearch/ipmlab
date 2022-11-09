@@ -14,9 +14,9 @@ def writeDfxml(imageFile, writeDirectory):
     try:
         with open(imageFile, "rb") as ifs:
             fwOutBuffer = fiwalk.fiwalk_xml_stream(imagefile=ifs)
-            fwOut = fwOutBuffer.read().decode("utf-8")
+            fwOut = fwOutBuffer.read()
     except:
-        logging.error("Error extracting Dfxml metadata")
+        logging.error("Error extracting dfxml metadata")
         success = False
 
     try:
@@ -24,7 +24,7 @@ def writeDfxml(imageFile, writeDirectory):
             fOut.write(fwOut)
         success = True
     except:
-        logging.error("Could not write Dfxml metadata to file")
+        logging.error("CError writing dfxml metadata")
         success = False
 
     return success
