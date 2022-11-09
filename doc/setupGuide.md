@@ -2,20 +2,21 @@
 
 Before trying to set up Ipmlab, check if the following requirements are met:
 
-* The installation platform is either Microsoft Windows (tested with Windows 10), or Linux-based (e.g. Unbuntu or Linux Mint). 
+* The installation platform is Linux-based (e.g. Unbuntu or Linux Mint). 
 * Python 3.8 (or more recent) is installed on the target platform. Older 3.x versions *may* (but are not guaranteed to) work.
 
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
 1. Add user to "disk" group (Linux only)
-2. Install Tkinter if it is not installed already (Linux only)
-3. Install the [Aaru Data Preservation Suite](https://www.aaru.app/) software and configure it.
-4. Install Ipmlab
-5. Configure Ipmlab
+1. Install Tkinter if it is not installed already (Linux only)
+1. Install dfxml_python
+1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
+1. Install Ipmlab
+1. Configure Ipmlab
 
 Each step is described in detail below.
 
-## Add user to disk group (Linux only)
+## Add user to disk group
 
 For Linux, in order to have access to block devices as a non-root user, you must add your user name to the disk group. You can do this with the command below:
 
@@ -25,15 +26,55 @@ sudo adduser $USER disk
 
 The user is now added to the 'disk' system group. Now log out, and then log in again for the changes to take effect.
 
-## Install Tkinter (Linux only)
+## Install Tkinter
 
-On Linux, you may need to install Tkinter, if it is not installed already. You can install it using the OS's package manager (there is no PyInstaller package for Tkinter). If you're using *apt* this should work:
+You may need to install Tkinter, if it is not installed already. You can install it using the OS's package manager (there is no PyInstaller package for Tkinter). If you're using *apt* this should work:
 
 ```
 sudo apt-get install python3-tk
 ```
 
+## Install dfxml_python
+
+Since no packages exist for dfxml_python, you must install this module from the source repository. For this you need Git. First check if git is already installed by typing:
+
+```
+git --version
+```
+
+If this results in a "command not found" message, install Git using the commands below:
+
+1. Update the package index using  `sudo apt-get update`
+1. Install Git using `sudo apt-get install git-all`
+1. Verify the installation using `git --version`
+
+Now we can start installing dfxml_python:
+
+1. Clone the source repository using `git clone https://github.com/dfxml-working-group/dfxml_python.git`
+1. Enter the repository's root directory using `cd dfxml_python`
+1. Install the software using either `pip3 install .` (global installation for all users; this might require sudo privilege), or alternatively `pip3 install --user .` (single-user installation).
+
+If all goes well this should result in something like this:
+
+```
+Successfully built dfxml
+Installing collected packages: dfxml
+Successfully installed dfxml-1.0.2
+```
+
+## Ddrescue installation
+
+Install ddrescue using this command:
+
+```
+sudo apt install gddrescue
+```
+
 ## Aaru installation and configuration
+
+Not supported yet, coming soon.
+
+<!--
 
 Download the latest stable release from:
 
@@ -72,122 +113,47 @@ Saving changes...
 
 This will create the Aaru main database. After this, Aaru prompts you for some input on how to handle encrypted and copy-protected media, and
 the sharing of device reports and usage stats. Answer these questions according to your own preferences.
+-->
 
 ## Ipmlab installation
 
-The recommended way to install Ipmlab is to use *pip*. Installing with *pip* will also automatically install any Python packages that are used by Ipmlab. On Windows systems the *pip* executable is located in the *Scripts* directory which is located under Python's top-level installation folder (e.g. *C:\Python38\Scripts*). To install Ipmlab, follow the steps in either the *Global install* or *User install* subsections below.
+The recommended way to install Ipmlab is to use *pip3*, as this will automatically install any Python packages that are used by Ipmlab (with the exception of dfxml_python, which was explained above).
 
-### Global install
+For a global installation (this allows all users on the machine to use Ipmlab), install using:
 
-Follow the steps below for a global installation (this allows all users on the machine to use Ipmlab):
+```
+pip3 install ipmlab
+```
 
-1. Launch a Command Prompt window or Linux terminal. Depending on your system settings, in Windows you may need Administrator privilege (right-click on the *Command Prompt* icon and the choose *Run as Administrator*).
+For a single-user installation, use this:
 
-2. For Windows, type:
-
-   `%path-to-pip%\pip install ipmlab`
-
-   Here, replace %path-to-pip% with the actual file bpath on your system. For example:
-
-   `C:\Python38\Scripts\pip install ipmlab`
-
-   For Linux, just use this:
-
-   `pip install ipmlab`
-
-### User install
-
-For a single-user installation, follow these steps:
-
-1. Launch a Command Prompt window window or Linux terminal (no admin rights required).
-2. For Windows, type:
-
-   `%path-to-pip%\pip install --user ipmlab`
-
-   For Linux, just use this:
-
-   `pip install --user ipmlab`
-
-The above steps will install Ipmlab and all required libraries.
+```
+pip3 install --user ipmlab`
+```
 
 ## Configuration
 
 Before Ipmlab is ready for use you need to configure it. 
 
-### Windows
-
-As a first step, locate the *ipmlab-configure.exe* application. In case of a global install you can find it directly under the *Scripts* directory of the *Python* installation folder. Depending on how Python and Ipmlab were installed, this could be any of the following locations: 
-
-```
-C:\Python38\Scripts
-```
-
-Or:
-
-```
-C:\Users\username\AppData\Local\Programs\Python\Python38\Scripts
-```
-
-Or:
-
-```
-C:\Users\username\AppData\Roaming\Python\Python38\Scripts
-```
-
-Run the configuration application by double-clicking on it. The application will create a configuration directory in your Windows user directory, copy a default configuration file to it, and create a shortcut to the main Ipmlab application on the Windows Desktop [^1]. If all goes well the following window appears:
-
-![](./img/ipmlab-configure-1.png)
-
-Click on the *OK* button on the messagebox to close the configuration application.
-
-#### If the configuration tool fails
-
-If running the configuration tool doesn't have any effect (i.e. nothing happens, and no window appears, the most likely cause is a bug in the Python pywin32 module that is used by Ipmlab. A workaround can be found [here](https://github.com/KBNLresearch/iromlab/issues/100#issuecomment-594656069). (I ran into this issue myself while trying to do a user install of Iromlab under Windows 10.)
-
-### Linux
-
-in Linux, you can run the configuration tool from the terminal. For a global install just enter:
+If you installed Ipmlab as a global install, just enter:
 
 ```
 ipmlab-configure
 ```
 
-For a user install you may need to enter the full path:
+For a user install, you may need to enter the full path to the configuration script:
 
 ```
 ~/.local/bin/ipmlab-configure
 ```
 
-Afterwards, click on the *OK* button on the messagebox to close the configuration application.
+Afterwards, click on the *OK* button on the message box to close the configuration application.
 
 ## Editing the configuration file
 
 The automatically generated configuration file needs some further manual editing, which is explained in the sections below.
 
 ### Configuration file location
-
-#### Windows
-
-In Windows the configuration file is located in the User Profile directory[^2]. To find it, open a Command Prompt window and type:
-
-```
-set USERPROFILE
-```
-
-The output will be something like this:
-
-```
-USERPROFILE=C:\Users\jkn010
-```
-
-If you open this location on your machine with Window Explorer, you will find that it contains a folder named *ipmlab*:   
-
-![](./img/userDir.png)
-
-You will find the configuration file *config.xml* inside this folder.
-
-
-#### Linux
 
 If you did a global install, the configuration file in located at:
 
@@ -203,19 +169,11 @@ For a user install, you can find it here:
 
 ### Configuration variables
 
-Now open the configuration file *config.xml* in a text editor (e.g. Notepad), or, alternatively, use a dedicated XML editor. Carefully go through all the variables (which are defined as XML elements), and modify them if necessary. Here is an explanation of all variables.
+Now open the configuration file *config.xml* in a text editor, or, alternatively, use a dedicated XML editor. Carefully go through all the variables (which are defined as XML elements), and modify them if necessary. Here is an explanation of all variables.
 
 #### inDevice
 
-This defines the path to the device you want to use for imaging. Under Windows, this is a logical drive letter.  E.g. for a floppy drive this is typically *A*. If the floppy drive is connected to a write blocker it will show up under a different drive letter (e.g. *E*). In the latter case the entry in the configuration file looks like this:
-
-```xml
-<inDevice>E</inDevice>
-```
-
-(Note: do *not* add a colon to the drive letter).
-
-In Linux you must specify *inDevice* using a device path such as:
+This defines the path to the device you want to use for imaging. You need to use a device path such as:
 
 ```xml
 <inDevice>/dev/sdd</inDevice>
@@ -234,7 +192,7 @@ This defines the root directory where Ipmlab will write its data. Ipmlab output 
 Example:
 
 ```xml
-<rootDir>E:\floppyImages</rootDir>
+<rootDir>/home/johan/test/ipmlab-test</rootDir>
 ```
 
 #### prefixBatch
@@ -284,6 +242,49 @@ This is a flag that -if set to *True*- enables Ipmlab to pick up Title and PPN i
 ```xml
 <enableSocketAPI>False</enableSocketAPI>
 ```
+
+#### imagingApplication
+
+This sets the application that is used for imaging. Allowed values are "aaru" and "ddrescue":
+
+```xml
+<imagingApplication>ddrescue</imagingApplication>
+```
+
+#### aaruBin
+
+This points to the location of Aaru binary:
+
+```xml
+<aaruBin>/home/johan/Aaru-alpha/aaru-6.0.0-alpha3_linux_amd64/aaru</aaruBin>
+```
+
+#### ddrescueBin
+
+This points to the location of ddrescue binary:
+
+```xml
+<ddrescueBin>/usr/bin/ddrescue</ddrescueBin>
+```
+
+#### blockSize
+
+This defines the block size used by ddrescue:
+
+```xml
+<blockSize>512</blockSize>
+```
+
+#### retries
+
+This sets the maximum number of times ddrescue will try to read an unreadable sector:
+
+```xml
+<retries>4</retries>
+```
+
+
+
 
 #### aaruBin
 
