@@ -2,7 +2,6 @@
 """Wrapper module for ddrescue"""
 
 import os
-import io
 import platform
 import time
 import logging
@@ -147,6 +146,7 @@ def extractData(writeDirectory, imageFileBaseName):
 
     # All results to dictionary
     dictOut = {}
+    dictOut["imageFile"] = imageFile
     dictOut["cmdStr"] = cmdStr
     dictOut["status"] = exitStatus
     dictOut["readErrors"] = readErrors

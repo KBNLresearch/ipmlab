@@ -11,6 +11,7 @@ from . import config
 from . import aaru
 from . import ddrescue
 from . import mdo
+from . import dfxml
 
 
 def generate_file_md5(fileIn):
@@ -99,6 +100,7 @@ def processMedium(carrierData):
     if config.imagingApplication == "aaru":
 
         resultAaru = aaru.extractData(dirMedium, jobID)
+        imageFile = resultAaru["imageFile"]
         statusAaru = resultAaru["status"]
         readErrors = resultAaru["readErrors"]
 
@@ -115,6 +117,7 @@ def processMedium(carrierData):
 
     elif config.imagingApplication == "ddrescue":
         resultDdrescue = ddrescue.extractData(dirMedium, jobID)
+        imageFile = resultDdrescue["imageFile"]
         statusDdrescue = resultDdrescue["status"]
         readErrors = resultDdrescue["readErrors"]
 
@@ -128,6 +131,14 @@ def processMedium(carrierData):
         if readErrors:
             success = False
             logging.error("Ddrescue dumping resulted in read error(s)")
+
+    # Generate Dfxml metadata and store as file
+    logging.info('*** Generating Dfxml metadata ***')
+    successDfxml = dfxml.writeDfxml(imageFile, dirMedium)
+
+    if not successDfxml:
+        success = False
+        logging.error("Writing of Dfxml file resulted in an error")
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file

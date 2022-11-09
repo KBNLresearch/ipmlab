@@ -70,6 +70,7 @@ def extractData(writeDirectory, imageFileBaseName):
 
     # All results to dictionary
     dictOut = {}
+    dictOut["imageFile"] = imageFile
     dictOut["cmdStr"] = cmdStr
     dictOut["status"] = p2.returncode
     dictOut["readErrors"] = readErrors
