@@ -37,10 +37,10 @@ application through a socket interface
 
 <!-- Imaging application. Allowed values: "aaru", "ddrescue" 
 -->
-<imagingApplication>aaru</imagingApplication>
+<imagingApplication>ddrescue</imagingApplication>
 
 <!-- location of Aaru binary-->
-<aaruBin>/usr/local/bin/aaru</aaruBin>
+<aaruBin>/usr/bin/aaru</aaruBin>
 
 <!-- location of Ddrescue binary-->
 <ddrescueBin>/usr/bin/ddrescue</ddrescueBin>
