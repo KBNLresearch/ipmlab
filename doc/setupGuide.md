@@ -8,7 +8,9 @@ Before trying to set up Ipmlab, check if the following requirements are met:
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
 1. Add user to "disk" group
+1. Disable automatic mounting of removable media
 1. Install Tkinter if it is not installed already
+1. Install pip if it is not installed already
 1. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
 1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
 1. Install Ipmlab
@@ -26,12 +28,69 @@ sudo adduser $USER disk
 
 The user is now added to the 'disk' system group. Now log out, and then log in again for the changes to take effect.
 
+## Disable automatic mounting of removable media
+
+In order to minimise any risks of accidental write actions to e.g. floppy disks that are processed with Ipmlab, it is strongly suggested to disable automatic mounting of removable media. The exact command depends on the Linux desktop you're using. For the [MATE](https://mate-desktop.org/) desktop use this:
+
+```
+gsettings set org.mate.media-handling automount false
+```
+
+For a [GNOME](https://www.gnome.org/) desktop use this command:
+
+```
+gsettings set org.gnome.desktop.media-handling automount false
+```
+
+And for the [Cinnamon](https://projects.linuxmint.com/cinnamon/) desktop:
+
+```
+gsettings set org.cinnamon.desktop.media-handling automount-open false
+```
+
+You can use the below command to verify the automount setting (MATE):
+
+```
+gsettings get org.mate.media-handling automount
+```
+
+Or, for GNOME:
+
+```
+gsettings get org.gnome.desktop.media-handling automount
+```
+
+And finally for Cinnamon:
+
+```
+gsettings get org.cinnamon.desktop.media-handling automount-open 
+```
+
+If all goes well, this will result in:
+
+```
+false
+```
+
+Please be aware that disabling the automount feature does not provide tamper-proof write blocking! It only works at the level of the operating system's default file manager, and it won't keep a user from manually mounting a device. Also, the *gsettings* command only works at the user level. This means that for someone who logs in with a different user name, the default automount setting applies (which means automount will be enabled).
+
+If possible, use a forensic write blocker if more robust write-blocking is needed, but note that these devices [may not always work as expected](https://github.com/KBNLresearch/ipmlab/issues/26) for USB adapter devices (such as USB 3.5" floppy drives).
+
 ## Install Tkinter
 
 You may need to install Tkinter, if it is not installed already. You can install it using the OS's package manager (there is no PyInstaller package for Tkinter). If you're using *apt* this should work:
 
 ```
-sudo apt-get install python3-tk
+sudo apt install python3-tk
+```
+
+## Install pip
+
+You need Pip to install Python packages. Use this command to install it:
+
+```
+sudo apt install python3-pip
+
 ```
 
 ## Install dfxml_python
@@ -45,7 +104,7 @@ git --version
 If this results in a "command not found" message, install Git using the commands below:
 
 1. Update the package index using  `sudo apt-get update`
-1. Install Git using `sudo apt-get install git-all`
+1. Install Git using `sudo apt install git-all`
 1. Verify the installation using `git --version`
 
 Now we can start installing dfxml_python:
@@ -72,7 +131,7 @@ sudo apt install gddrescue
 
 ## Aaru installation and configuration
 
-Not supported yet, coming soon.
+Not supported yet, coming soon!
 
 <!--
 
