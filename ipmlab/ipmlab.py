@@ -563,10 +563,10 @@ class carrierEntry(tk.Frame):
         # Treeview widget displays info on entered carriers
         self.tv = ttk.Treeview(self, height=10,
                                columns=('PPN', 'Title', 'VolumeNo'))
-        self.tv.heading('#0', text='Queue number')
+        self.tv.heading('#0', text='Queue #')
         self.tv.heading('#1', text='PPN')
         self.tv.heading('#2', text='Title')
-        self.tv.heading('#3', text='Volume number')
+        self.tv.heading('#3', text='Volume #')
         self.tv.column('#0', stretch=tk.YES, width=5)
         self.tv.column('#1', stretch=tk.YES, width=10)
         self.tv.column('#2', stretch=tk.YES, width=250)
