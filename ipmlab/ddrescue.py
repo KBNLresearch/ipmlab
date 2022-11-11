@@ -37,8 +37,9 @@ def getPosixDevice(driveName):
     return devPosix
 
 
-def getReadErrors(rescueLine):
-    """parse ddrescue output line for values of readErrors"""
+def getNoReadErrors(rescueLine):
+    """parse ddrescue output line for values of readErrors, return number
+    of read errors"""
     lineItems = rescueLine.split(",")
 
     for item in lineItems:
@@ -46,9 +47,9 @@ def getReadErrors(rescueLine):
         # This should work in either case
         if "errors:" in item:
             reEntry = item.split(":")
-            readErrors = int(reEntry[1].strip())
+            noReadErrors = int(reEntry[1].strip())
 
-    return readErrors
+    return noReadErrors
 
 
 def extractData(writeDirectory, imageFileBaseName):
@@ -67,7 +68,7 @@ def extractData(writeDirectory, imageFileBaseName):
     shellFlag = False
 
     # Number of read errors
-    readErrors = 0
+    noReadErrors = 0
 
     # Arguments
     args = [config.ddrescueBin]
@@ -121,7 +122,7 @@ def extractData(writeDirectory, imageFileBaseName):
 
                     if "errors:" in tidy_line:
                         # Parse this line for value of read errors
-                        readErrors = getReadErrors(tidy_line)
+                        noReadErrors = getNoReadErrors(tidy_line)
 
                 # Reset line.
                 line = ""
@@ -131,7 +132,7 @@ def extractData(writeDirectory, imageFileBaseName):
             tidy_line = line.replace("\n", "").replace("\r", "").replace("\x1b[A", "")
             if "errors:" in tidy_line:
                 # Parse this line for value of read errors
-                readErrors = getReadErrors(tidy_line)
+                noReadErrors = getNoReadErrors(tidy_line)
 
             logging.info(tidy_line)
 
@@ -140,9 +141,11 @@ def extractData(writeDirectory, imageFileBaseName):
         exitStatus = p.returncode
 
     except Exception:
-        raise
         # I don't even want to to start thinking how one might end up here ...
         exitStatus = -99
+
+    # Set readErrors flag
+    readErrors = noReadErrors != 0
 
     # All results to dictionary
     dictOut = {}
