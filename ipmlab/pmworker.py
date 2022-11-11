@@ -9,7 +9,9 @@ import hashlib
 import logging
 from . import config
 from . import aaru
+from . import ddrescue
 from . import mdo
+from . import dfxml
 
 
 def generate_file_md5(fileIn):
@@ -93,21 +95,50 @@ def processMedium(carrierData):
     if not os.path.exists(dirMedium):
         os.makedirs(dirMedium)
 
-    logging.info('*** Extracting data ***')
-    resultAaru = aaru.extractData(dirMedium, jobID)
-    statusAaru = resultAaru["status"]
-    readErrors = resultAaru["readErrors"]
+    logging.info('*** Extracting data using ' + config.imagingApplication + ' ***')
 
-    logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
-    logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
+    if config.imagingApplication == "aaru":
 
-    if statusAaru != 0:
+        resultAaru = aaru.extractData(dirMedium, jobID)
+        imageFile = resultAaru["imageFile"]
+        statusAaru = resultAaru["status"]
+        readErrors = resultAaru["readErrors"]
+
+        logging.info(''.join(['aaru command: ', resultAaru['cmdStr']]))
+        logging.info(''.join(['aaru-status: ', str(resultAaru['status'])]))
+
+        if statusAaru != 0:
+            success = False
+            logging.error("Aaru exited with abnormal exit status")
+
+        if readErrors:
+            success = False
+            logging.error("Aaru dumping resulted in read error(s)")
+
+    elif config.imagingApplication == "ddrescue":
+        resultDdrescue = ddrescue.extractData(dirMedium, jobID)
+        imageFile = resultDdrescue["imageFile"]
+        statusDdrescue = resultDdrescue["status"]
+        readErrors = resultDdrescue["readErrors"]
+
+        logging.info(''.join(['ddrescue command: ', resultDdrescue['cmdStr']]))
+        logging.info(''.join(['ddrescue-status: ', str(resultDdrescue['status'])]))
+
+        if statusDdrescue != 0:
+            success = False
+            logging.error("Ddrescue exited with abnormal exit status")
+
+        if readErrors:
+            success = False
+            logging.error("Ddrescue dumping resulted in read error(s)")
+
+    # Generate dfxml metadata and store as file
+    logging.info('*** Generating dfxml metadata ***')
+    successDfxml = dfxml.writeDfxml(imageFile, dirMedium)
+
+    if not successDfxml:
         success = False
-        logging.error("Aaru exited with abnormal exit status")
-
-    if readErrors:
-        success = False
-        logging.error("Aaru dumping resulted in read error(s)")
+        logging.error("Could not extract or write dfxml metadata")
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file
@@ -116,7 +147,6 @@ def processMedium(carrierData):
         successMdoWrite = mdo.writeMDORecord(PPN, dirMedium)
         if not successMdoWrite:
             success = False
-            reject = True
             logging.error("Could not write metadata from KB-MDO")
 
     # Generate checksum file

@@ -35,7 +35,20 @@ application through a socket interface
 -->
 <enableSocketAPI>True</enableSocketAPI>
 
+<!-- Imaging application. Allowed values: "aaru", "ddrescue" 
+-->
+<imagingApplication>ddrescue</imagingApplication>
+
 <!-- location of Aaru binary-->
-<aaruBin>/usr/local/bin/aaru</aaruBin>
+<aaruBin>/usr/bin/aaru</aaruBin>
+
+<!-- location of Ddrescue binary-->
+<ddrescueBin>/usr/bin/ddrescue</ddrescueBin>
+
+<!-- Block size (only used by ddrescue) -->
+<blockSize>512</blockSize>
+
+<!-- Maximum number of read retries (only used by ddrescue) -->
+<retries>4</retries>
 
 </config>

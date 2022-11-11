@@ -2,17 +2,6 @@
 
 This User Guide assumes that Ipmlab and its dependencies have been installed and configure. If this is not the case, consult the [Setup Guide](./setupGuide.md) first.
 
----
-**Note on write-blocking**
-
-Before you start using Ipmlab, make sure that Windows cannot write to the removable media you want to image! 
-For example, Windows 10 automatically [writes a "System Volume Information" folder](https://superuser.com/questions/1199823/how-to-prevent-creation-of-system-volume-information-folder-in-windows-10-for) to any writable storage media
-upon insertion (including floppy disks and USB thumb drives). To prevent this from happening, *never* connect these media directly to the computer, but always use a [forensic write blocker](https://en.wikipedia.org/wiki/Forensic_disk_controller) (e.g. [this one](https://security.opentext.com/tableau/hardware/details/t8u) for USB-connected devices).
-
-In addition, for 3.5" floppy disks, ensure the sliding write-protect tab (upper-right corner) is in the open (= protected) position before placing them in the reader.
-
----
-
 ## Getting started
 
 Launch Ipmlab by double-clicking on the Ipmlab Desktop icon. If all goes well the following window appears:
@@ -44,8 +33,6 @@ Now let's process a carrier (such as a floppy disk or thumb drive). We'll assume
 <https://webggc.oclc.org/cbs/DB=2.37/PPN?PPN=144082667>
 
 We start by entering the required fields:
-
-![](./img/ipmSpellingschijf.png)
 
 * *PPN* is the PPN that is associated with the carrier (here: *144082667*).
 * Leave *Volume number* at the default value of *1* (the assignment of volume numbers and how they are related to carrier type is explained further below).
@@ -155,11 +142,21 @@ Each batch contains a file *version.txt*, which holds the Ipmlab version number.
 For each carrier, Ipmlab creates a folder in the batch folder. The name of each folder is (again) a [Universally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier), which is based on the hardware address and the current time ("version 1" UUID). Each of these folders contain the following files (with a base name that corresponds to the UUID):
 
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.img* - image file (file name follows UUID).
+- *dfxml.xml* - report file in [Digital Forensics XML format](https://en.wikipedia.org/wiki/Digital_Forensics_XML); includes listing of all files on the carrier.
+- *meta-kbmdo.xml* - bibliographic metadata from KB catalogue (only if *enablePPNLookup* is enabled).
+- *checksums.sha512* - checksum file with SHA-512 hashes of all files in this directory.
+
+If Ddrescue is used as the imaging application, the following additional file is generated:
+
+- *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.map*  - [ddrescue map file](https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html#Mapfile-structure).
+
+When Aaru is used, this results in the following additional files:
+
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.cicm.xml* - Aaru metadata file. Contains various checksums, and filesystem and file-level metadata. 
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.resume.xml* - Aaru resume mapfile (analogous to ddrescue map file).
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.log* - Aaru dump log.
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.error.log* - Aaru error log.
 - *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.ibg* - undocument Aaru file (this looks like some [ImageBurn-specific format](https://forum.imgburn.com/topic/15561-issues-reating-audio-cd/?do=findComment&comment=121649)).
 - Various files ending with a *.bin* file extension - these are written by Aaru (but they are all undocumented, don't know if we should keep them?).
-- *meta-kbmdo.xml* - bibliographic metadata from KB catalogue (only if *enablePPNLookup* is enabled).
-- *checksums.sha512* - checksum file with SHA-512 hashes of all the above files in this directory.
+
+
