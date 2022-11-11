@@ -4,7 +4,7 @@
 
 Ipmlab (Image Portable Media Like A Boss ) provides a simple and straightforward way to save the content of offline portable media from the KB collection. It supports a variety of carrier types, such as DOS/Windows formatted 3.5" floppy disks, USB thumb drives and hard drives.
 
-Internally Ipmlab wraps around [Aaru Data Preservation Suite](https://www.aaru.app/) for extracting the content these media.
+For extracting the content these media, Ipmlab wraps around either [Ddrescue](https://www.gnu.org/software/ddrescue/) or [Aaru](https://www.aaru.app/) (in progress).
 
 The media images are saved in a simple batch structure. Each batch contains a batch manifest, which is a comma-delimited text file with basic information about each carriers, such as:
 
@@ -20,15 +20,20 @@ Moreover, it would be fairly straightforward to replace the PPN lookup by some a
 
 ## Platform
 
-MS Windows + Linux (e.g. Ubuntu, Linux Mint, etc.). It may be possible to adapt the software to other platforms as well.
+Linux only (e.g. Ubuntu, Linux Mint, etc.).
 
 ## Wrapped software
 
-Ipmlab wraps around the open source, cross-platform [Aaru Data Preservation Suite](https://www.aaru.app/) (note: tested with version 5.3.1). Aaru must be installed separately.
+Ipmlab wraps around either:
+
+- [Ddrescue](https://www.gnu.org/software/ddrescue/), or
+- [Aaru Data Preservation Suite](https://www.aaru.app/) (work in progress, see also [here](https://github.com/KBNLresearch/ipmlab/issues/23))
+
+It also has a dependency on [dfxml_python](https://github.com/dfxml-working-group/dfxml_python), which must be installed separately because no PyPi package exists.
 
 ## Documentation
 
-* [Setup Guide](./doc/setupGuide.md) - covers installation, setup and configuration of Ipmlab and Aaru.
+* [Setup Guide](./doc/setupGuide.md) - covers installation, setup and configuration.
 * [User Guide](./doc/userGuide.md) - explains how to use Ipmlab.
 
 ## Contributors
