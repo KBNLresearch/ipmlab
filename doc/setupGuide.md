@@ -104,14 +104,19 @@ git --version
 If this results in a "command not found" message, install Git using the commands below:
 
 1. Update the package index using:
+   
    """
    sudo apt-get update
    """
+
 2. Install Git using:
+   
    """
    sudo apt install git-all
    """
-4. Verify the installation using:
+
+3. Verify the installation using:
+   
     """
     git --version
     """
