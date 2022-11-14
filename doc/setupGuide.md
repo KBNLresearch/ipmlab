@@ -123,9 +123,31 @@ If this results in a "command not found" message, install Git using the commands
 
 Now we can start installing dfxml_python:
 
-1. Clone the source repository using `git clone https://github.com/dfxml-working-group/dfxml_python.git`
-2. Enter the repository's root directory using `cd dfxml_python`
-3. Install the software using either `pip3 install .` (global installation for all users; this might require sudo privilege), or alternatively `pip3 install --user .` (single-user installation).
+1. Clone the source repository using:
+   
+   ```
+   git clone https://github.com/dfxml-working-group/dfxml_python.git
+   ```
+
+2. Enter the repository's root directory using:
+   
+   ```
+   cd dfxml_python
+   ```
+
+3. Install the software using either:
+   
+   ```
+   pip3 install .
+   ```
+
+   (global installation for all users; this might require sudo privilege), or alternatively:
+   
+   ```
+   pip3 install --user .
+   ```
+   
+   (single-user installation).
 
 If all goes well this should result in something like this:
 
