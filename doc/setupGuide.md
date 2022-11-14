@@ -274,11 +274,27 @@ This defines the path to the device you want to use for imaging. You need to use
 <inDevice>/dev/sdd</inDevice>
 ```
 
-If you're not sure about the device path, use the following command to get info about all available hardware devices:
+If you're not sure about the device path to use, do this:
+
+1. Make sure the floppy drive is connected to your machine, with a floppy inserted.
+2. Then issue the following command to get info about all available storage devices:
 
 ```bash
-sudo lshw
+sudo lshw -short -class disk
 ```
+
+Example output:
+
+```
+H/W path       Device     Class          Description
+====================================================
+/0/13/0.0.0    /dev/sda   disk           1TB TOSHIBA DT01ACA1
+/0/14/0.0.0    /dev/sdb   disk           250GB WDC WDS250G2B0A
+/0/15/0.0.0    /dev/sdc   disk           5TB Expansion HDD
+/0/16/0.0.0    /dev/sdd   disk           1474KB USB-FDU
+```
+
+In the list of output devices, look for a device with a small (typically 1474 or 737 KB) storage capacity. In the example above `/dev/sdd` is the floppy drive.
 
 #### rootDir
 
