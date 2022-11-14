@@ -105,21 +105,21 @@ If this results in a "command not found" message, install Git using the commands
 
 1. Update the package index using:
    
-"""
-sudo apt-get update
-"""
+   ```
+   sudo apt-get update
+   ```
 
 2. Install Git using:
    
-   """
+   ``` 
    sudo apt install git-all
-   """
+   ```
 
 3. Verify the installation using:
    
-    """
+    ```
     git --version
-    """
+    ```
 
 Now we can start installing dfxml_python:
 
