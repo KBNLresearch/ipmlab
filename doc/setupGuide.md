@@ -223,7 +223,7 @@ pip3 install ipmlab
 For a single-user installation, use this:
 
 ```
-pip3 install --user ipmlab`
+pip3 install --user ipmlab
 ```
 
 ## Configuration
