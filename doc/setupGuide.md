@@ -22,7 +22,7 @@ Each step is described in detail below.
 
 For Linux, in order to have access to block devices as a non-root user, you must add your user name to the disk group. You can do this with the command below:
 
-```
+```bash
 sudo adduser $USER disk
 ```
 
@@ -32,37 +32,37 @@ The user is now added to the 'disk' system group. Now log out, and then log in a
 
 In order to minimise any risks of accidental write actions to e.g. floppy disks that are processed with Ipmlab, it is strongly suggested to disable automatic mounting of removable media. The exact command depends on the Linux desktop you're using. For the [MATE](https://mate-desktop.org/) desktop use this:
 
-```
+```bash
 gsettings set org.mate.media-handling automount false
 ```
 
 For a [GNOME](https://www.gnome.org/) desktop use this command:
 
-```
+```bash
 gsettings set org.gnome.desktop.media-handling automount false
 ```
 
 And for the [Cinnamon](https://projects.linuxmint.com/cinnamon/) desktop:
 
-```
+```bash
 gsettings set org.cinnamon.desktop.media-handling automount-open false
 ```
 
 You can use the below command to verify the automount setting (MATE):
 
-```
+```bash
 gsettings get org.mate.media-handling automount
 ```
 
 Or, for GNOME:
 
-```
+```bash
 gsettings get org.gnome.desktop.media-handling automount
 ```
 
 And finally for Cinnamon:
 
-```
+```bash
 gsettings get org.cinnamon.desktop.media-handling automount-open 
 ```
 
@@ -80,7 +80,7 @@ If possible, use a forensic write blocker if more robust write-blocking is neede
 
 You may need to install Tkinter, if it is not installed already. You can install it using the OS's package manager (there is no PyInstaller package for Tkinter). If you're using *apt* this should work:
 
-```
+```bash
 sudo apt install python3-tk
 ```
 
@@ -88,7 +88,7 @@ sudo apt install python3-tk
 
 You need Pip to install Python packages. Use this command to install it:
 
-```
+```bash
 sudo apt install python3-pip
 
 ```
@@ -97,7 +97,7 @@ sudo apt install python3-pip
 
 Since no packages exist for dfxml_python, you must install this module from the source repository. For this you need Git. First check if git is already installed by typing:
 
-```
+```bash
 git --version
 ```
 
@@ -105,19 +105,19 @@ If this results in a "command not found" message, install Git using the commands
 
 1. Update the package index using:
    
-   ```
+   ```bash
    sudo apt-get update
    ```
 
 2. Install Git using:
    
-   ``` 
+   ``` bash
    sudo apt install git-all
    ```
 
 3. Verify the installation using:
    
-    ```
+    ```bash
     git --version
     ```
 
@@ -125,25 +125,25 @@ Now we can start installing dfxml_python:
 
 1. Clone the source repository using:
    
-   ```
+   ```bash
    git clone https://github.com/dfxml-working-group/dfxml_python.git
    ```
 
 2. Enter the repository's root directory using:
    
-   ```
+   ```bash
    cd dfxml_python
    ```
 
 3. Install the software using either:
    
-   ```
+   ```bash
    pip3 install .
    ```
 
    (global installation for all users; this might require sudo privilege), or alternatively:
    
-   ```
+   ```bash
    pip3 install --user .
    ```
    
@@ -161,7 +161,7 @@ Successfully installed dfxml-1.0.2
 
 Install ddrescue using this command:
 
-```
+```bash
 sudo apt install gddrescue
 ```
 
@@ -216,13 +216,13 @@ The recommended way to install Ipmlab is to use *pip3*, as this will automatical
 
 For a global installation (this allows all users on the machine to use Ipmlab), install using:
 
-```
+```bash
 pip3 install ipmlab
 ```
 
 For a single-user installation, use this:
 
-```
+```bash
 pip3 install --user ipmlab
 ```
 
@@ -232,13 +232,13 @@ Before Ipmlab is ready for use you need to configure it.
 
 If you installed Ipmlab as a global install, just enter:
 
-```
+```bash
 ipmlab-configure
 ```
 
 For a user install, you may need to enter the full path to the configuration script:
 
-```
+```bash
 ~/.local/bin/ipmlab-configure
 ```
 
