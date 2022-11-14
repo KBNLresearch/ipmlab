@@ -103,15 +103,24 @@ git --version
 
 If this results in a "command not found" message, install Git using the commands below:
 
-1. Update the package index using  `sudo apt-get update`
-1. Install Git using `sudo apt install git-all`
-1. Verify the installation using `git --version`
+1. Update the package index using:
+   """
+   sudo apt-get update
+   """
+2. Install Git using:
+   """
+   sudo apt install git-all
+   """
+4. Verify the installation using:
+    """
+    git --version
+    """
 
 Now we can start installing dfxml_python:
 
 1. Clone the source repository using `git clone https://github.com/dfxml-working-group/dfxml_python.git`
-1. Enter the repository's root directory using `cd dfxml_python`
-1. Install the software using either `pip3 install .` (global installation for all users; this might require sudo privilege), or alternatively `pip3 install --user .` (single-user installation).
+2. Enter the repository's root directory using `cd dfxml_python`
+3. Install the software using either `pip3 install .` (global installation for all users; this might require sudo privilege), or alternatively `pip3 install --user .` (single-user installation).
 
 If all goes well this should result in something like this:
 
