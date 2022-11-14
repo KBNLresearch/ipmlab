@@ -105,9 +105,9 @@ If this results in a "command not found" message, install Git using the commands
 
 1. Update the package index using:
    
-    """
-    sudo apt-get update
-    """
+"""
+sudo apt-get update
+"""
 
 2. Install Git using:
    
