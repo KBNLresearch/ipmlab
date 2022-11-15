@@ -16,7 +16,7 @@ import tkinter.messagebox as tkMessageBox
 def errorExit(error):
     """Show error message in messagebox and then exit after userv presses OK"""
     tkMessageBox.showerror("Error", error)
-    os.exit(0)
+    os._exit(0)
 
 
 def writeDesktopFiles(applicationsDir):
@@ -218,7 +218,7 @@ def post_install():
 
     msg = 'Ipmlab configuration completed successfully, click OK to exit!'
     tkMessageBox.showinfo("Info", msg)
-    os.exit(0)
+    os._exit(0)
 
 
 class TextHandler(logging.Handler):
