@@ -12,11 +12,12 @@ Getting Ipmlab up running requires a number of installation and configuration st
 1. Disable automatic mounting of removable media
 1. Install Tkinter if it is not installed already
 1. Install pip if it is not installed already
-1. Install git if it is not installed already
-2. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
-3. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
-4. Install Ipmlab
-5. Configure Ipmlab
+1. Install Sleuthkit
+3. Install git if it is not installed already
+4. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
+5. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
+6. Install Ipmlab
+7. Configure Ipmlab
 
 Each step is described in detail below.
 
@@ -103,6 +104,14 @@ sudo apt install python3-pip
 
 ```
 
+## Install Sleuthkit
+
+We need Sleuthkit for extracting Dfxml metadata. To install, use:
+
+```bash
+sudo apt install sleuthkit
+```
+
 ## Install Git
 
 We need Git to install dfxml_python (see below). First check if git is already installed by typing:
@@ -164,7 +173,7 @@ Installing collected packages: dfxml
 Successfully installed dfxml-1.0.2
 ```
 
-## Ddrescue installation
+## Install Ddrescue
 
 Install ddrescue using this command:
 
@@ -172,7 +181,7 @@ Install ddrescue using this command:
 sudo apt install gddrescue
 ```
 
-## Aaru installation and configuration
+## Install Aaru
 
 Not supported yet, coming soon!
 
@@ -217,7 +226,7 @@ This will create the Aaru main database. After this, Aaru prompts you for some i
 the sharing of device reports and usage stats. Answer these questions according to your own preferences.
 -->
 
-## Ipmlab installation
+## Install Ipmlab
 
 The recommended way to install Ipmlab is to use *pip3*, as this will automatically install any Python packages that are used by Ipmlab (with the exception of dfxml_python, which was explained above).
 
