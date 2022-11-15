@@ -15,7 +15,7 @@ def errorExit(msg):
     sys.exit(1)
 
 
-def writeDesktopFiles(applicationsDir):
+def writeDesktopFiles(applicationsDir, packageDir):
     """Creates desktop file in /usr/share/applications"""
 
     # Needed to change file permissions
@@ -25,13 +25,11 @@ def writeDesktopFiles(applicationsDir):
     # Full path to config and launcher scripts
     pathName = os.path.abspath(os.path.dirname(sys.argv[0]))
 
-    """
     # Locate icon file in package
-    iconFile = os.path.join(packageDir, 'icons', 'omimgr.png')
+    iconFile = os.path.join(packageDir, 'icons', 'ipmlab.png')
     if not os.path.isfile(iconFile):
         msg = 'cannot find icon file'
         errorExit(msg)
-    """
 
     fApplications = os.path.join(applicationsDir, 'ipmlab.desktop')
 
@@ -43,7 +41,7 @@ def writeDesktopFiles(applicationsDir):
     desktopList.append('Name=ipmlab')
     desktopList.append('Comment=Image Portable Media Like A Boss')
     desktopList.append('Exec=' + os.path.join(pathName, 'ipmlab'))
-    #desktopList.append('Icon=' + iconFile)
+    desktopList.append('Icon=' + iconFile)
     desktopList.append('Terminal=false')
     desktopList.append('Categories=Utility;System;GTK')
 
@@ -211,7 +209,7 @@ def post_install():
             msg = 'no configuration file found in package'
             errorExit(msg)
 
-    writeDesktopFiles(applicationsDir)
+    writeDesktopFiles(applicationsDir, packageDir)
 
     sys.stdout.write('Ipmlab configuration completed successfully!\n')
     sys.exit(0)
