@@ -179,7 +179,8 @@ def post_install():
         try:
             logging.info("Global site package directory: " + sitePackageDirGlobal)
         except:
-            pass
+            msg = "Could not establish global site package directory"
+            errorExit(msg)
 
         # Locate user site-packages dir
         sitePackageDirUser = site.getusersitepackages()
