@@ -7,16 +7,26 @@ Before trying to set up Ipmlab, check if the following requirements are met:
 
 Getting Ipmlab up running requires a number of installation and configuration steps:
 
+1. Update the package index
 1. Add user to "disk" group
 1. Disable automatic mounting of removable media
 1. Install Tkinter if it is not installed already
 1. Install pip if it is not installed already
-1. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
-1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
-1. Install Ipmlab
-1. Configure Ipmlab
+1. Install git if it is not installed already
+2. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
+3. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
+4. Install Ipmlab
+5. Configure Ipmlab
 
 Each step is described in detail below.
+
+## Update package index
+
+As we'll be installing a few Debian packages, it's a good idea to first update the package index, to ensure the most recent versions of all packages are installed: 
+
+```bash
+sudo apt-get update
+```
 
 ## Add user to disk group
 
@@ -93,35 +103,31 @@ sudo apt install python3-pip
 
 ```
 
-## Install dfxml_python
+## Install Git
 
-Since no packages exist for dfxml_python, you must install this module from the source repository. For this you need Git. First check if git is already installed by typing:
+We need Git to install dfxml_python (see below). First check if git is already installed by typing:
 
 ```bash
 git --version
 ```
 
-If this results in a "command not found" message, install Git using the commands below:
+If this results in a "command not found" message, install Git using:
 
-1. Update the package index using:
+``` bash
+sudo apt install git-all
+```
+
+Verify the installation using:
    
-   ```bash
-   sudo apt-get update
-   ```
+```bash
+git --version
+```
 
-2. Install Git using:
-   
-   ``` bash
-   sudo apt install git-all
-   ```
+If this works, we're ready to install dfxml_python.
 
-3. Verify the installation using:
-   
-    ```bash
-    git --version
-    ```
+## Install dfxml_python
 
-Now we can start installing dfxml_python:
+Since no packages exist for dfxml_python, you must install this module from the source repository. This involves the following steps:
 
 1. Clone the source repository using:
    
@@ -136,18 +142,19 @@ Now we can start installing dfxml_python:
    ```
 
 3. Install the software using either:
-   
+
+   ```bash
+   pip3 install --user .
+   ```
+
+   (single-user installation), or alternatively:
+
    ```bash
    pip3 install .
    ```
 
-   (global installation for all users; this might require sudo privilege), or alternatively:
+   (global installation for all users; this might require sudo privilege).
    
-   ```bash
-   pip3 install --user .
-   ```
-   
-   (single-user installation).
 
 If all goes well this should result in something like this:
 
@@ -214,16 +221,16 @@ the sharing of device reports and usage stats. Answer these questions according 
 
 The recommended way to install Ipmlab is to use *pip3*, as this will automatically install any Python packages that are used by Ipmlab (with the exception of dfxml_python, which was explained above).
 
-For a global installation (this allows all users on the machine to use Ipmlab), install using:
-
-```bash
-pip3 install ipmlab
-```
-
-For a single-user installation, use this:
+For a single-user installation, install using:
 
 ```bash
 pip3 install --user ipmlab
+```
+
+For a global installation (this allows all users on the machine to use Ipmlab), use this (this might require sudo privilege):
+
+```bash
+pip3 install ipmlab
 ```
 
 ## Configuration
@@ -250,16 +257,16 @@ The automatically generated configuration file needs some further manual editing
 
 ### Configuration file location
 
-If you did a global install, the configuration file in located at:
-
-```
-/etc/ipmlab/config.xml
-```
-
-For a user install, you can find it here:
+If you did a user install, the configuration file is located at:
 
 ```
 ~/.config/ipmlab/config.xml
+```
+
+For a global install, you can find it here:
+
+```
+/etc/ipmlab/config.xml
 ```
 
 ### Configuration variables
