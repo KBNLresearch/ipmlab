@@ -46,8 +46,7 @@ setup(name='ipmlab',
       url='https://github.com/KBNLresearch/ipmlab',
       download_url=('https://github.com/KBNLresearch/ipmlab/archive/' +
                     find_version('ipmlab', 'ipmlab.py') + '.tar.gz'),
-      package_data={'ipmlab': ['*.*', 'conf/*.*',
-                                'tools/*.*']},
+      package_data={'ipmlab': ['*.*', 'conf/*.*']},
       zip_safe=False,
       entry_points={'gui_scripts': [
           'ipmlab = ipmlab.ipmlab:main',
