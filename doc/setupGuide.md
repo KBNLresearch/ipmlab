@@ -258,7 +258,22 @@ For a user install, you may need to enter the full path to the configuration scr
 ~/.local/bin/ipmlab-configure
 ```
 
-Afterwards, click on the *OK* button on the message box to close the configuration application.
+The output should look something like this:
+
+```
+2022-11-15 16:37:53,460 - INFO - Scripts directory: /home/johan/.local/bin
+2022-11-15 16:37:53,460 - INFO - Package directory: /home/johan/.local
+2022-11-15 16:37:53,460 - INFO - Home directory: /home/johan
+2022-11-15 16:37:53,460 - INFO - Applications directory: /home/johan/.local/share/applications/
+2022-11-15 16:37:53,460 - INFO - Configuration directory: /home/johan/.config/ipmlab
+2022-11-15 16:37:53,461 - INFO - Copying configuration file ...
+2022-11-15 16:37:53,461 - INFO - Global site package directory: 
+2022-11-15 16:37:53,461 - INFO - User site package directory: /home/johan/.local/lib/python3.8/site-packages
+2022-11-15 16:37:53,461 - INFO - Site package directory: /home/johan/.local/lib/python3.8/site-packages
+2022-11-15 16:37:53,461 - INFO - copied configuration file!
+2022-11-15 16:37:53,461 - INFO - creating desktop file /home/johan/.local/share/applications/ipmlab.desktop
+Ipmlab configuration completed successfully!
+```
 
 ## Editing the configuration file
 
