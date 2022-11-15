@@ -78,7 +78,8 @@ def post_install():
     logging.info("Scripts directory: " + scriptsDir)
 
     # Package directory (parent of scriptsDir)
-    packageDir = os.path.abspath(os.path.join(scriptsDir, os.pardir))
+    #packageDir = os.path.abspath(os.path.join(scriptsDir, os.pardir))
+    packageDir = os.path.dirname(os.path.abspath(__file__))
 
     logging.info("Package directory: " + packageDir)
 
