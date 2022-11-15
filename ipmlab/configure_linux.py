@@ -174,6 +174,7 @@ def post_install():
         try:
             logging.info("Global site package directory: " + sitePackageDirGlobal)
         except:
+            raise
             msg = "Could not establish global site package directory"
             errorExit(msg)
 
@@ -184,14 +185,13 @@ def post_install():
         # Determine which site package dir to use
         # Convert to lowercase because result of site.getsitepackages()
         # sometimes results in lowercase output (observed with Python 3.7 on Windows 10) 
-        if packageDir.lower() in sitePackageDirGlobal.lower():
+        if sitePackageDirGlobal != "" and sitePackageDirGlobal.lower() in packageDir.lower():
             sitePackageDir = sitePackageDirGlobal
-        elif packageDir.lower() in sitePackageDirUser.lower():
+        elif sitePackageDirUser.lower() in packageDir.lower():
             sitePackageDir = sitePackageDirUser
         else:
             msg = 'could not establish package dir to use'
             errorExit(msg)
-
         logging.info("Site package directory: " + sitePackageDir)
 
         # Construct path to config file
