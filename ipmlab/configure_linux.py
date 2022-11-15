@@ -1,12 +1,9 @@
 #! /usr/bin/env python3
 """Post-install / configuration for Ipmlab on Linux"""
 
-"""Post-install / configuration script for omimgr"""
-
 import os
 import sys
 import io
-import imp
 import site
 from shutil import copyfile
 import threading
@@ -19,7 +16,7 @@ import tkinter.messagebox as tkMessageBox
 def errorExit(error):
     """Show error message in messagebox and then exit after userv presses OK"""
     tkMessageBox.showerror("Error", error)
-    os._exit(0)
+    os.exit(0)
 
 
 def writeDesktopFiles(applicationsDir):
@@ -221,7 +218,7 @@ def post_install():
 
     msg = 'Ipmlab configuration completed successfully, click OK to exit!'
     tkMessageBox.showinfo("Info", msg)
-    os._exit(0)
+    os.exit(0)
 
 
 class TextHandler(logging.Handler):
