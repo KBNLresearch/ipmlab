@@ -295,7 +295,7 @@ Defines the host address that is used if the socket API is enabled (see below). 
 Defines the port that is used if the socket API is enabled (see below):
 
 ```xml
-<socketPort>65432</socketPor
+<socketPort>65432</socketPort>
 ```
 
 #### enablePPNLookup
