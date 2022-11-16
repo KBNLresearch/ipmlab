@@ -592,7 +592,7 @@ class carrierEntry(tk.Frame):
             msg = "unable to parse configuration file"
             errorExit(msg)
 
-        # Check if all files and directories exist, and exit if not
+        # Check if all needed binaries exist, and exit if not
         if not os.path.isfile(config.fiwalkBin):
             msg = "Fiwalk binary " + config.fiwalkBin + " does not exist"
             errorExit(msg)
@@ -608,9 +608,17 @@ class carrierEntry(tk.Frame):
             msg = config.imagingApplication + " is not a recognized imagingApplication value"
             errorExit(msg)
 
+        # Check if root dir exists, and exit if not
         if not os.path.isdir(config.rootDir):
             msg = "root directory " + config.rootDir + " does not exist"
-            errorExit(msg)            
+            errorExit(msg)
+
+        # Check if input device exists, and exit if not
+        try:
+            os.stat(config.inDevice)
+        except OSError:
+            msg = "inDevice " + config.inDevice + " does not exist"
+            errorExit(msg)
 
     def reset_carrier(self):
         """Reset the carrier entry fields"""
