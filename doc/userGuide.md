@@ -125,7 +125,7 @@ jobID,PPN,volumeNo,title,success,readErrors
 4. *title* - text string with the title of the carrier (or the publication it is part of). If *enablePPNLookup* is *True* the title field is extracted from the KB catalogue record. If *enablePPNLookup* is *False* the manually entered *Title* value is used.
 windows/win32/api/winioctl/ns-winioctl-get_media_types).
 5. *success* - True/False flag that indicates whether the imaging was completed successfully. A *False* value indicates problems.
-6. *readErrors* - a True/False flag that indicates whether Aaru encountered read errors.
+6. *readErrors* - a True/False flag that indicates whether Ddrescue or Aaru encountered read errors.
 
 The first line of the file contains column headers.
 
