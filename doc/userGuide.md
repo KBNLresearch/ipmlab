@@ -4,7 +4,11 @@ This User Guide assumes that Ipmlab and its dependencies have been installed and
 
 ## Getting started
 
-Launch Ipmlab by double-clicking on the Ipmlab Desktop icon. If all goes well the following window appears:
+Launch Ipmlab from your operating system's launcher menu. For Linux Mint (MATE), you can find an Ipmlab launcher in the "System Tools" menu, as shown below (notice the floppy-shaped icon):
+
+![](./img/menu-shortcut-mate.png)
+
+After clicking on it, the following window appears:
 
 ![](./img/ipmStartup.png)
 
