@@ -109,13 +109,6 @@ def post_install():
 
     logging.info("Applications directory: " + applicationsDir)
 
-    """
-    # Desktop directory
-    desktopDir = os.path.join(homeDir, 'Desktop/')
-
-    logging.info("Desktop directory: " + desktopDir)
-    """
-
     # Create applicationsDir and configRootDir if they don't exist already
     if not os.path.isdir(configRootDir):
         os.mkdir(configRootDir)
@@ -135,12 +128,6 @@ def post_install():
     if not os.access(applicationsDir, os.W_OK | os.X_OK):
         msg = 'cannot write to ' + applicationsDir
         errorExit(msg)
-
-    """
-    if not os.access(desktopDir, os.W_OK | os.X_OK):
-        msg = 'cannot write to ' + desktopDir
-        errorExit(msg)
-    """
 
     # Create configuration directory if it doesn't already exist
     configDir = os.path.join(configRootDir, packageName)
@@ -171,13 +158,8 @@ def post_install():
             if 'site-packages' in directory:
                 sitePackageDirGlobal = directory
         
-        try:
-            logging.info("Global site package directory: " + sitePackageDirGlobal)
-        except:
-            raise
-            msg = "Could not establish global site package directory"
-            errorExit(msg)
-
+        logging.info("Global site package directory: " + sitePackageDirGlobal)
+  
         # Locate user site-packages dir
         sitePackageDirUser = site.getusersitepackages()
         logging.info("User site package directory: " + sitePackageDirUser)
