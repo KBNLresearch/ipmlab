@@ -3,7 +3,6 @@
 
 import os
 import io
-import platform
 import time
 import logging
 import subprocess as sub
@@ -27,21 +26,16 @@ def extractData(writeDirectory, imageFileBaseName):
     args.append("--encoding")
     args.append("utf-8")
     args.append("--metadata")
-    if platform.system() == "Windows":
-        args.append("".join([config.inDevice, ":"]))
-        shellFlag = True
-    elif platform.system() == "Linux":
-        args.append(config.inDevice)
+    args.append(config.inDevice)
     args.append(imageFile)
 
     # Command line as string (used for logging purposes only)
     cmdStr = " ".join(args)
 
-    if platform.system() == "Linux":
-        # Unmount input device
-        logging.info("unmounting input device")
-        p1 = sub.Popen(['umount', config.inDevice], stdout=sub.PIPE, stderr=sub.PIPE, shell=False)
-        out, errors = p1.communicate()
+    # Unmount input device
+    logging.info("unmounting input device")
+    p1 = sub.Popen(['umount', config.inDevice], stdout=sub.PIPE, stderr=sub.PIPE, shell=False)
+    out, errors = p1.communicate()
  
     # Run Aaru as subprocess
     logging.info("running Aaru")

@@ -11,13 +11,11 @@ Research department,  KB / National Library of the Netherlands
 import sys
 import os
 import csv
-import imp
 import time
 import xml.etree.ElementTree as ETree
 import threading
 import uuid
 import logging
-import platform
 import queue
 import tkinter as tk
 from tkinter import filedialog as tkFileDialog
@@ -361,24 +359,14 @@ class carrierEntry(tk.Frame):
                        ") and press 'OK'")
                 tkMessageBox.showinfo("Load medium", msg)
 
-                if platform.system() == "Windows":
-                    while not mediumLoaded:
-                        try:
-                            _ = os.listdir(config.inDevice + ":\\")
-                            mediumLoaded = True
-                        except(PermissionError, OSError):
-                            msg = ("No medium found, please load medium and press 'OK'")
-                            tkMessageBox.showinfo("Load medium", msg)
-
-                elif platform.system() == "Linux":
-                    while not mediumLoaded:
-                        try:
-                            fd= os.open(config.inDevice , os.O_RDONLY)
-                            os.close(fd)
-                            mediumLoaded = True
-                        except(PermissionError, OSError):
-                            msg = ("No medium found, please load medium and press 'OK'")
-                            tkMessageBox.showinfo("Load medium", msg)
+                while not mediumLoaded:
+                    try:
+                        fd= os.open(config.inDevice , os.O_RDONLY)
+                        os.close(fd)
+                        mediumLoaded = True
+                    except(PermissionError, OSError):
+                        msg = ("No medium found, please load medium and press 'OK'")
+                        tkMessageBox.showinfo("Load medium", msg)
 
                 # Create unique identifier for this job (UUID, based on host ID and current time)
                 jobID = str(uuid.uuid1())
@@ -748,20 +736,6 @@ def errorExit(error):
     sys.exit()
 
 
-def main_is_frozen():
-    """Return True if application is frozen (Py2Exe), and False otherwise"""
-    return (hasattr(sys, "frozen") or  # new py2exe
-            hasattr(sys, "importers") or  # old py2exe
-            imp.is_frozen("__main__"))  # tools/freeze
-
-
-def get_main_dir():
-    """Return application (installation) directory"""
-    if main_is_frozen():
-        return os.path.dirname(sys.executable)
-    return os.path.dirname(sys.argv[0])
-
-
 def findElementTextOld(elt, elementPath):
     """Returns element text if it exists, errorExit if it doesn't exist"""
     elementText = elt.findtext(elementPath)
@@ -771,12 +745,14 @@ def findElementTextOld(elt, elementPath):
     else:
         return elementText
 
+
 def findElementText(elt, elementPath):
     """Returns element text if it exists, errorExit if it doesn't exist"""
     elementText = elt.findtext(elementPath)
     if elementText is None:
         elementText = ""
     return elementText
+
 
 def getConfiguration():
     """ Read configuration file, make all config variables available via
@@ -789,24 +765,13 @@ def getConfiguration():
     configFileOpenFlag = False
     configFileParsedFlag = False
 
-
-    if platform.system() == "Windows":
-        # Locate Windows profile directory
-        userDir = os.environ['USERPROFILE']
-        # Locate package directory
-        packageDir = os.path.dirname(os.path.abspath(__file__))
-        # Config directory
-        configDirUser = os.path.join(userDir, 'ipmlab')
-        configFileUser = os.path.join(configDirUser, 'config.xml')
-        configFileDefinedFlag = True
-    elif platform.system() == "Linux":
-        packageDir = os.path.dirname(os.path.abspath(__file__))
-        homeDir = os.path.normpath(os.path.expanduser("~"))
-        if packageDir.startswith(homeDir):
-            configFileUser = os.path.join(homeDir, '.config/ipmlab/config.xml')
-        else:
-            configFileUser = os.path.normpath('/etc/ipmlab/config.xml')
-        configFileDefinedFlag = True
+    packageDir = os.path.dirname(os.path.abspath(__file__))
+    homeDir = os.path.normpath(os.path.expanduser("~"))
+    if packageDir.startswith(homeDir):
+        configFileUser = os.path.join(homeDir, '.config/ipmlab/config.xml')
+    else:
+        configFileUser = os.path.normpath('/etc/ipmlab/config.xml')
+    configFileDefinedFlag = True
 
     # Check if user config file exists and exit if not
     if os.path.isfile(configFileUser):
