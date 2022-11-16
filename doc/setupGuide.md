@@ -13,11 +13,9 @@ Getting Ipmlab up running requires a number of installation and configuration st
 1. Install Tkinter if it is not installed already
 1. Install pip if it is not installed already
 1. Install Sleuthkit
-3. Install git if it is not installed already
-4. Install [dfxml_python](https://github.com/dfxml-working-group/dfxml_python)
-5. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
-6. Install Ipmlab
-7. Configure Ipmlab
+1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
+1. Install Ipmlab
+1. Configure Ipmlab
 
 Each step is described in detail below.
 
@@ -110,67 +108,6 @@ We need Sleuthkit for extracting Dfxml metadata. To install, use:
 
 ```bash
 sudo apt install sleuthkit
-```
-
-## Install Git
-
-We need Git to install dfxml_python (see below). First check if git is already installed by typing:
-
-```bash
-git --version
-```
-
-If this results in a "command not found" message, install Git using:
-
-``` bash
-sudo apt install git-all
-```
-
-Verify the installation using:
-   
-```bash
-git --version
-```
-
-If this works, we're ready to install dfxml_python.
-
-## Install dfxml_python
-
-Since no packages exist for dfxml_python, you must install this module from the source repository. This involves the following steps:
-
-1. Clone the source repository using:
-   
-   ```bash
-   git clone https://github.com/dfxml-working-group/dfxml_python.git
-   ```
-
-2. Enter the repository's root directory using:
-   
-   ```bash
-   cd dfxml_python
-   ```
-
-3. Install the software using either:
-
-   ```bash
-   pip3 install --user .
-   ```
-
-   (single-user installation), or alternatively:
-
-   ```bash
-   pip3 install .
-   ```
-
-   (global installation for all users; this might require sudo privilege).
-   
-
-If all goes well this should result in something like this:
-
-```
-Successfully built dfxml
-Installing collected packages: dfxml
-Successfully installed dfxml-1.0.2
 ```
 
 ## Install Ddrescue
