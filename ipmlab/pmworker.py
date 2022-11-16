@@ -11,7 +11,7 @@ from . import config
 from . import aaru
 from . import ddrescue
 from . import mdo
-from . import dfxml
+from . import fiwalk
 
 
 def generate_file_md5(fileIn):
@@ -134,11 +134,13 @@ def processMedium(carrierData):
 
     # Generate dfxml metadata and store as file
     logging.info('*** Generating dfxml metadata ***')
-    successDfxml = dfxml.writeDfxml(imageFile, dirMedium)
+    resultFiwalk = fiwalk.runFiwalk(dirMedium, jobID)
 
-    if not successDfxml:
+    statusFiwalk = resultFiwalk["status"]
+
+    if statusFiwalk != 0:
         success = False
-        logging.error("Could not extract or write dfxml metadata")
+        logging.error("Fiwalk exited with abnormal exit status")
 
     if config.enablePPNLookup:
         # Fetch metadata from KBMDO and store as file

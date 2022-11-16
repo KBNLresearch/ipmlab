@@ -385,6 +385,14 @@ This is a flag that -if set to *True*- enables Ipmlab to pick up Title and PPN i
 <enableSocketAPI>False</enableSocketAPI>
 ```
 
+#### fiwalkBin
+
+This points to the location of Fiwalk binary:
+
+```xml
+<fiwalkBin>/usr/bin/fiwalk</fiwalkBin>
+```
+
 #### imagingApplication
 
 This sets the application that is used for imaging. Allowed values are "aaru" and "ddrescue":
@@ -398,7 +406,7 @@ This sets the application that is used for imaging. Allowed values are "aaru" an
 This points to the location of Aaru binary:
 
 ```xml
-<aaruBin>/usr/local/bin/aaru</aaruBin>
+<aaruBin>/usr/bin/aaru</aaruBin>
 ```
 
 #### ddrescueBin

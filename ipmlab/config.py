@@ -3,6 +3,7 @@
 
 version = ""
 inDevice = ""
+fiwalkBin = ""
 aaruBin = ""
 ddrescueBin = ""
 imagingApplication = ""

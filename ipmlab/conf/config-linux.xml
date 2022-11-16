@@ -35,6 +35,9 @@ application through a socket interface
 -->
 <enableSocketAPI>True</enableSocketAPI>
 
+<!-- location of fiwalk binary-->
+<fiwalkBin>/usr/bin/fiwalk</fiwalkBin>
+
 <!-- Imaging application. Allowed values: "aaru", "ddrescue" 
 -->
 <imagingApplication>ddrescue</imagingApplication>

@@ -607,6 +607,9 @@ class carrierEntry(tk.Frame):
             errorExit(msg)
 
         # Check if all files and directories exist, and exit if not
+        if not os.path.isfile(config.fiwalkBin):
+            msg = "Fiwalk binary " + config.fiwalkBin + " does not exist"
+            errorExit(msg)
         if config.imagingApplication == "aaru":
             if not os.path.isfile(config.aaruBin):
                 msg = "Aaru binary " + config.aaruBin + " does not exist"
@@ -838,6 +841,7 @@ def getConfiguration():
         config.inDevice = findElementText(configElt, './config/inDevice')
         config.rootDir = findElementText(configElt, './config/rootDir')
         config.prefixBatch = findElementText(configElt, './config/prefixBatch')
+        config.fiwalkBin = findElementText(configElt, './config/fiwalkBin')
         config.imagingApplication = findElementText(configElt, './config/imagingApplication')
         config.aaruBin = findElementText(configElt, './config/aaruBin')
         config.ddrescueBin = findElementText(configElt, './config/ddrescueBin')
@@ -871,6 +875,7 @@ def getConfiguration():
 
         # Normalise all file paths
         config.rootDir = os.path.normpath(config.rootDir)
+        config.fiwalkBin = os.path.normpath(config.fiwalkBin)
         config.aaruBin = os.path.normpath(config.aaruBin)
         config.ddrescueBin = os.path.normpath(config.ddrescueBin)
 
