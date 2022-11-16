@@ -3,10 +3,12 @@
 """Import platform-specific configuration script"""
 
 import platform
-if platform.system() == "Windows":
-    from .configure_windows import main
-elif platform.system() == "Linux":
+import sys
+if platform.system() == "Linux":
     from .configure_linux import main
+else:
+    sys.stderr.write("ERROR: unsupported platform (only Linux is currently supported!\n")
+    sys.exit(1)
 
 if __name__ == '__main__':
     main()
