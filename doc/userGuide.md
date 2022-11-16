@@ -45,7 +45,9 @@ If the displayed title doesn't match your item (because you accidentally entered
 
 ![](./img/loadMedium.png)
 
-Before loading a floppy, always verify that its write-protect tab is in the **open** (protected) position! (**TODO: add photo/illustration here **).
+Before loading a floppy, always verify that its write-protect tab is in the **open** (protected) position! See also the figure below:
+
+![](./img/write-protection.png)
 
 Now load the first floppy into the floppy reader. After that, press *OK*. The details (*PPN*, title) of the carrier are added as an entry to the widget in the centre of the *Ipmlab* window:  
 
