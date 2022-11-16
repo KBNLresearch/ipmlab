@@ -122,7 +122,7 @@ def processMedium(carrierData):
         readErrors = resultDdrescue["readErrors"]
 
         logging.info(''.join(['ddrescue command: ', resultDdrescue['cmdStr']]))
-        logging.info(''.join(['ddrescue-status: ', str(resultDdrescue['status'])]))
+        logging.info(''.join(['ddrescue status: ', str(resultDdrescue['status'])]))
 
         if statusDdrescue != 0:
             success = False
@@ -135,8 +135,10 @@ def processMedium(carrierData):
     # Generate dfxml metadata and store as file
     logging.info('*** Generating dfxml metadata ***')
     resultFiwalk = fiwalk.runFiwalk(dirMedium, jobID)
-
     statusFiwalk = resultFiwalk["status"]
+
+    logging.info(''.join(['fiwalk command: ', resultFiwalk['cmdStr']]))
+    logging.info(''.join(['fiwalk status: ', str(resultFiwalk['status'])]))
 
     if statusFiwalk != 0:
         success = False
