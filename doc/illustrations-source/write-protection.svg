@@ -17,7 +17,7 @@
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="write-protection.svg"
-   inkscape:export-filename="/home/johan/Desktop/tmp/write-protection.png"
+   inkscape:export-filename="/home/johan/ipmlab/doc/img/write-protection.png"
    inkscape:export-xdpi="87.599998"
    inkscape:export-ydpi="87.599998">
   <defs
@@ -74,7 +74,7 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="394.50393"
+     inkscape:cx="123.07536"
      inkscape:cy="248.58293"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -93,7 +93,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -103,41 +103,41 @@
      id="layer1"
      transform="translate(0,-85.333338)">
     <image
-       sodipodi:absref="/home/johan/Desktop/tmp/write-protected-zoom.jpg"
+       sodipodi:absref="/home/johan/ipmlab/doc/illustrations-source/write-protected-zoom.jpg"
        xlink:href="write-protected-zoom.jpg"
-       width="81.352592"
-       height="68.185699"
-       preserveAspectRatio="none"
+       y="220.20847"
+       x="169.13196"
        id="image195"
-       x="169.13196"
-       y="220.20847" />
+       preserveAspectRatio="none"
+       height="68.185699"
+       width="81.352592" />
     <image
-       sodipodi:absref="/home/johan/Desktop/tmp/write-enabled-zoom.jpg"
+       sodipodi:absref="/home/johan/ipmlab/doc/illustrations-source/write-enabled-zoom.jpg"
        xlink:href="write-enabled-zoom.jpg"
-       width="74.298897"
-       height="69.90995"
-       preserveAspectRatio="none"
+       y="220.20847"
+       x="8.3081284"
        id="image206"
-       x="8.3081284"
-       y="220.20847" />
+       preserveAspectRatio="none"
+       height="69.90995"
+       width="74.298897" />
     <image
-       sodipodi:absref="/home/johan/Desktop/tmp/write-enabled.jpg"
+       sodipodi:absref="/home/johan/ipmlab/doc/illustrations-source/write-enabled.jpg"
        xlink:href="write-enabled.jpg"
-       width="115.77722"
-       height="92.64325"
-       preserveAspectRatio="none"
-       id="image217"
+       y="123.35375"
        x="8.3081284"
-       y="123.35375" />
-    <image
-       sodipodi:absref="/home/johan/Desktop/tmp/write-protected.jpg"
-       xlink:href="write-protected.jpg"
-       width="113.95016"
-       height="92.909256"
+       id="image217"
        preserveAspectRatio="none"
-       id="image228"
+       height="92.64325"
+       width="115.77722" />
+    <image
+       sodipodi:absref="/home/johan/ipmlab/doc/illustrations-source/write-protected.jpg"
+       xlink:href="write-protected.jpg"
+       y="123.35375"
        x="169.13196"
-       y="123.35375" />
+       id="image228"
+       preserveAspectRatio="none"
+       height="92.909256"
+       width="113.95016" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.69999981px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -212,11 +212,11 @@
        id="path6421"
        d="m 104.14786,240.88708 c -6.360145,0 -11.533936,5.18216 -11.533936,11.53397 0,6.36015 5.173791,11.53396 11.533936,11.53396 6.36015,0 11.53396,-5.17381 11.53396,-11.53396 0,-6.35181 -5.17381,-11.53397 -11.53396,-11.53397 z m 4.24274,14.49149 c 0.35426,0.35426 0.35426,0.93096 0,1.29345 -0.17301,0.17302 -0.40369,0.26364 -0.64261,0.26364 -0.23068,0 -0.46135,-0.0906 -0.6426,-0.26364 l -2.95753,-2.95752 -2.95753,2.95752 c -0.18125,0.17302 -0.41193,0.26364 -0.64261,0.26364 -0.23891,0 -0.46959,-0.0906 -0.642597,-0.26364 -0.35426,-0.35425 -0.35426,-0.93095 0,-1.29345 l 2.957527,-2.95752 -2.957527,-2.95753 c -0.35426,-0.35426 -0.35426,-0.93096 0,-1.28522 0.354247,-0.35425 0.930947,-0.35425 1.285207,0 l 2.95753,2.95753 2.95753,-2.95753 c 0.35426,-0.35425 0.93095,-0.35425 1.28521,0 0.35426,0.35426 0.35426,0.93096 0,1.28522 l -2.95753,2.95753 z"
        inkscape:connector-curvature="0"
-       style="stroke-width:0.02196946;fill:#ff0000;fill-opacity:1" />
+       style="fill:#ff0000;fill-opacity:1;stroke-width:0.02196946" />
     <path
        id="path6488"
        d="m 282.87182,240.59158 c -6.17891,7.00277 -11.94589,14.5205 -16.68316,22.55385 -1.13279,2.05964 -1.54472,2.16263 -3.08935,0.10298 l -6.07587,-8.13551 c -1.02982,-1.54472 0.51492,-1.95664 2.26549,-0.41193 l 5.35505,4.42817 c 5.25202,-7.1058 10.50404,-13.9025 17.71288,-18.74259 0.51492,-0.41192 1.13279,-0.41192 0.51492,0.20597 z"
        inkscape:connector-curvature="0"
-       style="fill-rule:evenodd;stroke-width:0.02196946;fill:#00b200;fill-opacity:1" />
+       style="fill:#00b200;fill-opacity:1;fill-rule:evenodd;stroke-width:0.02196946" />
   </g>
 </svg>
