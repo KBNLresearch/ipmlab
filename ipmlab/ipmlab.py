@@ -230,6 +230,12 @@ class carrierEntry(tk.Frame):
         msg = ("This will finalise the current batch.\n After finalising no further "
                "media can be added. Are you sure you want to do this?")
         if tkMessageBox.askyesno("Confirm", msg):
+            jobFile = 'eob.txt'
+            fJob = open(os.path.join(config.batchFolder, jobFile), "w", encoding="utf-8")
+            lineOut = 'EOB\n'
+            fJob.write(lineOut)
+            fJob.close()
+
             self.bFinalise.config(state='disabled')
             self.submit_button.config(state='disabled')
             if config.enablePPNLookup:
