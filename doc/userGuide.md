@@ -141,6 +141,10 @@ d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,True,False
 
 Each batch contains a log file *batch.log*. It contains detailed information about the detection and imaging subprocesses. If anything unexpected happens, checking the batch log will help you identify the problem.
 
+## The End Of Batch file
+
+After a batch is finalized, Ipmlab writes an "end of batch file (*eob.txt*) to the batch folder. It contains the text string "EOB". This file is added primarily for post-imaging quality control reasons.
+
 ## The version file
 
 Each batch contains a file *version.txt*, which holds the Ipmlab version number.

@@ -187,6 +187,7 @@ class carrierEntry(tk.Frame):
         config.batchManifest = os.path.join(config.batchFolder, 'manifest.csv')
 
         # Check if batch was already finalized, and exit if so
+        print(os.path.join(config.batchFolder, 'eob.txt'))
         if os.path.isfile(os.path.join(config.batchFolder, 'eob.txt')):
             msg = 'cannot open finalized batch'
             tkMessageBox.showerror("Error", msg)
