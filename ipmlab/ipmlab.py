@@ -186,44 +186,50 @@ class carrierEntry(tk.Frame):
         config.batchFolder = tkFileDialog.askdirectory(**self.dir_opt)
         config.batchManifest = os.path.join(config.batchFolder, 'manifest.csv')
 
-        # Set up logging
-        successLogger = True
+        # Check if batch was already finalized, and exit if so
+        if os.path.isfile(os.path.join(config.batchFolder, 'eob.txt')):
+            msg = 'cannot open finalized batch'
+            tkMessageBox.showerror("Error", msg)
+        else:
 
-        try:
-            self.setupLogger()
-            # Start polling log messages from the queue
-            self.after(100, self.poll_log_queue)
-        except OSError:
-            # Something went wrong while trying to write to lof file
-            msg = ('error trying to write log file')
-            tkMessageBox.showerror("ERROR", msg)
-            successLogger = False
+            # Set up logging
+            successLogger = True
 
-        if successLogger:
-            logging.info(''.join(['*** Opening existing batch ', config.batchFolder, ' ***']))
+            try:
+                self.setupLogger()
+                # Start polling log messages from the queue
+                self.after(100, self.poll_log_queue)
+            except OSError:
+                # Something went wrong while trying to write to lof file
+                msg = ('error trying to write log file')
+                tkMessageBox.showerror("ERROR", msg)
+                successLogger = False
 
-            if config.batchFolder != '':
+            if successLogger:
+                logging.info(''.join(['*** Opening existing batch ', config.batchFolder, ' ***']))
 
-                # Update state of buttons /widgets, taking into account whether batch was
-                # finalized by user
-                self.bNew.config(state='disabled')
-                self.bOpen.config(state='disabled')
-                self.submit_button.config(state='normal')
-                self.bFinalise.config(state='normal')
-                if config.enablePPNLookup:
-                    self.catid_entry.config(state='normal')
-                    self.usepreviousPPN_button.config(state='normal')
-                else:
-                    self.title_entry.config(state='normal')
-                    self.usepreviousTitle_button.config(state='normal')
-                self.volumeNo_entry.config(state='normal')
-                self.volumeNo_entry.delete(0, tk.END)
-                self.volumeNo_entry.insert(tk.END, "1")
+                if config.batchFolder != '':
 
-                # Flag that is True if batch is open
-                config.batchIsOpen = True
-                # Set readyToStart flag to True
-                config.readyToStart = True
+                    # Update state of buttons /widgets, taking into account whether batch was
+                    # finalized by user
+                    self.bNew.config(state='disabled')
+                    self.bOpen.config(state='disabled')
+                    self.submit_button.config(state='normal')
+                    self.bFinalise.config(state='normal')
+                    if config.enablePPNLookup:
+                        self.catid_entry.config(state='normal')
+                        self.usepreviousPPN_button.config(state='normal')
+                    else:
+                        self.title_entry.config(state='normal')
+                        self.usepreviousTitle_button.config(state='normal')
+                    self.volumeNo_entry.config(state='normal')
+                    self.volumeNo_entry.delete(0, tk.END)
+                    self.volumeNo_entry.insert(tk.END, "1")
+
+                    # Flag that is True if batch is open
+                    config.batchIsOpen = True
+                    # Set readyToStart flag to True
+                    config.readyToStart = True
 
     def on_finalise(self, event=None):
         """Finalise batch after user pressed finalise button"""
