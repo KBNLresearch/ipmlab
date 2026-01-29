@@ -120,7 +120,7 @@ sudo apt install gddrescue
 
 ## Install Aaru
 
-Not supported yet, coming soon!
+Not supported yet!
 
 <!--
 
@@ -165,19 +165,33 @@ the sharing of device reports and usage stats. Answer these questions according 
 
 ## Install Ipmlab
 
-The recommended way to install Ipmlab is to use *pip3*, as this will automatically install any Python packages that are used by Ipmlab (with the exception of dfxml_python, which was explained above).
+As of 2026, the recommended way to install Ipmlab is to use the [uv](https://docs.astral.sh/uv/) tool. First, check if uv is installed on your system by typing the uv command in a terminal:
 
-For a single-user installation, install using:
-
-```bash
-pip3 install --user ipmlab
+```
+uv
 ```
 
-For a global installation (this allows all users on the machine to use Ipmlab), use this (this might require sudo privilege):
+If this results in a help message, uv is installed. If not, you first need to install uv with the following command:
 
-```bash
-pip3 install ipmlab
 ```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Alternatively, you can use wget if your system doesn't have curl installed:
+
+```
+wget -qO- https://astral.sh/uv/install.sh | sh
+```
+
+In some cases the installation script will update your system's configuration to make the location of the uv executable globally accessible. If this happens, just close your current terminal, and open a new one for these changes to take effect. Pay attention to the screen output of the installation script for any details on this.
+
+With uv installed, use the following command to install Ipmlab:
+
+```
+uv tool install ipmlab
+```
+
+<!-- TODO: does this result in global or user install? -->
 
 ## Configuration
 
