@@ -188,15 +188,13 @@ uv tool install ipmlab
 
 ## Configuration
 
-Before Ipmlab is ready for use you need to configure it. 
-
-If you installed Ipmlab as a global install, just enter:
+Before Ipmlab is ready for use you need to configure it. You can do this by running the followinng command:
 
 ```bash
 ipmlab-configure
 ```
 
-For a user install, you may need to enter the full path to the configuration script:
+If this doesn't work, try again with the full path to the configuration script:
 
 ```bash
 ~/.local/bin/ipmlab-configure
@@ -205,17 +203,12 @@ For a user install, you may need to enter the full path to the configuration scr
 The output should look something like this:
 
 ```
-2022-11-15 16:37:53,460 - INFO - Scripts directory: /home/johan/.local/bin
-2022-11-15 16:37:53,460 - INFO - Package directory: /home/johan/.local
-2022-11-15 16:37:53,460 - INFO - Home directory: /home/johan
-2022-11-15 16:37:53,460 - INFO - Applications directory: /home/johan/.local/share/applications/
-2022-11-15 16:37:53,460 - INFO - Configuration directory: /home/johan/.config/ipmlab
-2022-11-15 16:37:53,461 - INFO - Copying configuration file ...
-2022-11-15 16:37:53,461 - INFO - Global site package directory: 
-2022-11-15 16:37:53,461 - INFO - User site package directory: /home/johan/.local/lib/python3.8/site-packages
-2022-11-15 16:37:53,461 - INFO - Site package directory: /home/johan/.local/lib/python3.8/site-packages
-2022-11-15 16:37:53,461 - INFO - copied configuration file!
-2022-11-15 16:37:53,461 - INFO - creating desktop file /home/johan/.local/share/applications/ipmlab.desktop
+2026-01-29 18:38:09,542 - INFO - Scripts directory: /home/johan/.local/bin
+2026-01-29 18:38:09,542 - INFO - Package directory: /home/johan/.local/share/uv/tools/ipmlab/lib/python3.12/site-packages/ipmlab
+2026-01-29 18:38:09,542 - INFO - Home directory: /home/johan
+2026-01-29 18:38:09,542 - INFO - Applications directory: /home/johan/.local/share/applications/
+2026-01-29 18:38:09,542 - INFO - Configuration directory: /home/johan/.config/ipmlab
+2026-01-29 18:38:09,542 - INFO - creating desktop file /home/johan/.local/share/applications/ipmlab.desktop
 Ipmlab configuration completed successfully!
 ```
 
@@ -225,17 +218,19 @@ The automatically generated configuration file needs some further manual editing
 
 ### Configuration file location
 
-If you did a user install, the configuration file is located at:
+The configuration file is located at:
 
 ```
 ~/.config/ipmlab/config.xml
 ```
 
+<!--
 For a global install, you can find it here:
 
 ```
 /etc/ipmlab/config.xml
 ```
+-->
 
 ### Configuration variables
 
