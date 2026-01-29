@@ -120,6 +120,7 @@ def processMedium(carrierData):
         imageFile = resultDdrescue["imageFile"]
         statusDdrescue = resultDdrescue["status"]
         readErrors = resultDdrescue["readErrors"]
+        badBlocks = resultDdrescue["badBlocks"]
 
         logging.info(''.join(['ddrescue command: ', resultDdrescue['cmdStr']]))
         logging.info(''.join(['ddrescue status: ', str(resultDdrescue['status'])]))
@@ -128,9 +129,9 @@ def processMedium(carrierData):
             success = False
             logging.error("Ddrescue exited with abnormal exit status")
 
-        if readErrors:
+        if badBlocks:
             success = False
-            logging.error("Ddrescue dumping resulted in read error(s)")
+            logging.error("Ddrescue dumping resulted in one or more bad blocks")
 
     # Generate dfxml metadata and store as file
     logging.info('*** Generating dfxml metadata ***')
@@ -169,7 +170,8 @@ def processMedium(carrierData):
                          carrierData['volumeNo'],
                          carrierData['title'],
                          str(success),
-                         str(readErrors)])
+                         str(readErrors),
+                         str(badBlocks)])
 
     # Open batch manifest in append mode
     bm = open(config.batchManifest, "a", encoding="utf-8")

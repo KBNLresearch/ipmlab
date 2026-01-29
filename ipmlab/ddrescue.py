@@ -2,6 +2,7 @@
 """Wrapper module for ddrescue"""
 
 import os
+import io 
 import time
 import logging
 import subprocess as sub
@@ -9,7 +10,10 @@ from . import config
 
 def getNoReadErrors(rescueLine):
     """parse ddrescue output line for values of readErrors, return number
-    of read errors"""
+    of read errors.
+    TODO: do we really need this anymore, since we're now using the number
+    of bad blocks from the map file as an indicator?"""
+
     lineItems = rescueLine.split(",")
 
     for item in lineItems:
@@ -20,6 +24,32 @@ def getNoReadErrors(rescueLine):
             noReadErrors = int(reEntry[1].strip())
 
     return noReadErrors
+
+
+def getNoBadBlocks(map):
+    """Parse ddrescue map file data and count number of bad blocks
+    This follows mapfile structure described here:
+    https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html#Mapfile-structure
+    """
+
+    noBadBlocks = 0
+    lineNo = 0
+    for line in map:
+        line = line.strip()
+        if line.startswith('#'):
+            # Line is a comment, skip
+            pass
+        elif lineNo == 0:
+            # Line is a status line, skip but increase counter
+            lineNo += 1
+        else:
+            # Line describes a data block
+            blockItems = line.split()
+            blockStatus = blockItems[2]
+            if blockStatus != '+':
+                noBadBlocks += 1
+
+    return noBadBlocks
 
 
 def extractData(writeDirectory, imageFileBaseName):
@@ -39,6 +69,9 @@ def extractData(writeDirectory, imageFileBaseName):
 
     # Number of read errors
     noReadErrors = 0
+
+    # Number of bad blocks
+    noBadBlocks = 0
 
     # Arguments
     args = [config.ddrescueBin]
@@ -106,8 +139,18 @@ def extractData(writeDirectory, imageFileBaseName):
         # I don't even want to to start thinking how one might end up here ...
         exitStatus = -99
 
-    # Set readErrors flag
+    try:
+        with io.open(mapFile, "r", encoding="utf-8") as fMap:
+            map = fMap.read().splitlines()
+            noBadBlocks = getNoBadBlocks(map)
+    except Exception:
+        logging.error("error reading ddrescue map file")
+        # Set noBadBlocks to ensure this will be flagged
+        noBadBlocks = 99
+
+    # Set readErrors and badBlocks flags
     readErrors = noReadErrors != 0
+    badBlocks = noBadBlocks != 0
 
     # All results to dictionary
     dictOut = {}
@@ -115,5 +158,6 @@ def extractData(writeDirectory, imageFileBaseName):
     dictOut["cmdStr"] = cmdStr
     dictOut["status"] = exitStatus
     dictOut["readErrors"] = readErrors
+    dictOut["badBlocks"] = badBlocks
   
     return dictOut

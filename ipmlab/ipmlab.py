@@ -122,7 +122,8 @@ class carrierEntry(tk.Frame):
                                     'volumeNo',
                                     'title',
                                     'success',
-                                    'readErrors'])
+                                    'readErrors',
+                                    'badBlocks'])
 
         # Open batch manifest in append mode
         bm = open(config.batchManifest, "a", encoding="utf-8")
