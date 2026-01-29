@@ -48,6 +48,7 @@ def getNoBadBlocks(map):
             blockStatus = blockItems[2]
             if blockStatus != '+':
                 noBadBlocks += 1
+            lineNo += 1
 
     return noBadBlocks
 
