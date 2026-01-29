@@ -24,7 +24,7 @@ Each step is described in detail below.
 As we'll be installing a few Debian packages, it's a good idea to first update the package index, to ensure the most recent versions of all packages are installed: 
 
 ```bash
-sudo apt-get update
+sudo apt update
 ```
 
 ## Add user to disk group
