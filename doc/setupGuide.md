@@ -11,7 +11,7 @@ Getting Ipmlab up running requires a number of installation and configuration st
 1. Add user to "disk" group
 1. Disable automatic mounting of removable media
 1. Install Tkinter if it is not installed already
-1. Install pip if it is not installed already
+1. Install uv if it is not installed already
 1. Install Sleuthkit
 1. Install either ddrescue, or the [Aaru Data Preservation Suite](https://www.aaru.app/) software (and configure it), or both (note: Aaru is not working as of yet!).
 1. Install Ipmlab
