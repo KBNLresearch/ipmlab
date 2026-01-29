@@ -117,7 +117,7 @@ With this setting, the *PPN* widget in the Ipmlab interface is replaced by a *Ti
 
 The batch manifest is a comma-delimited text file named *manifest.csv* which is located at the root of a batch. It contains all information that is needed to process the batch into ingest-ready Submission Information Packages further down the processing chain. For each processed carrier, it contains the following fields:
 
-jobID,PPN,volumeNo,title,success,readErrors
+jobID,PPN,volumeNo,title,success,readErrors,badBlocks
 
 1. *jobID* - internal carrier-level identifier. The image file(s) of this carrier are stored in an eponymous directory within the batch.
 2. *PPN* - identifier of the physical item in the KB Collection to which this carrier belongs. For the KB case this is the PPN identifier in the KB catalogue. If *enablePPNLookup* is set to *False*, it will be an empty (zero-length) string.
@@ -126,6 +126,7 @@ jobID,PPN,volumeNo,title,success,readErrors
 windows/win32/api/winioctl/ns-winioctl-get_media_types).
 5. *success* - True/False flag that indicates whether the imaging was completed successfully. A *False* value indicates problems.
 6. *readErrors* - a True/False flag that indicates whether Ddrescue or Aaru encountered read errors.
+7. *badBlocks* - a True/False flag that indicates whether Ddrescue recovery resulted in one or more bad blocks.
 
 The first line of the file contains column headers.
 
@@ -133,8 +134,8 @@ Example:
 
 ```csv
 jobID,PPN,volumeNo,title,success,readErrors
-ce5eca7e-f179-11ec-853c-0800272c26ff,144082667,1,INP spellingschijf,True,False
-d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,True,False
+ce5eca7e-f179-11ec-853c-0800272c26ff,144082667,1,INP spellingschijf,True,False,False
+d79c52c1-f179-11ec-9f9f-0800272c26ff,144082667,2,INP spellingschijf,True,False,False
 ```
 
 ## The log file
